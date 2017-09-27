@@ -9,7 +9,7 @@ finished = False
 # Cargo preferencias de la aplicacion
 data = DataRetriever()
 data.loadPreferences('../bin/config/preferences.json')
-fps = data.getFps();
+fps = data.getFps()
 
 # Cargo datos de niveles
 data.loadLevels('../bin/config/levels.json')
@@ -30,6 +30,7 @@ screen = pygame.display.set_mode([data.getWidth(), data.getHeight()], screenFlag
 while not finished:
     clock.tick(fps)
     for e in pygame.event.get():
+        # Se sale al pulsar Esc
         if e.type == pygame.KEYDOWN and e.key == int(data.getKeyQuit()):
             finished = True
 
