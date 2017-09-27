@@ -4,8 +4,8 @@
     "1024",
     "768"
   ],
-  "screen_icon": "../bin/assets/icon.png",
-  "screen_title": "Give'Em Hell!",
+  "window_icon": "../bin/assets/icon.png",
+  "window_title": "Give'Em Hell!",
   "fps_target": "60",
   "keys": {
     "quit":"27",
@@ -33,5 +33,10 @@
       "K_LALT",
       "None"
     ]
-  }
+  },
+  "media_suffixes":[
+    "_big",
+    "_reg",
+    "_wee"
+  ]
 }
