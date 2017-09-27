@@ -1,0 +1,37 @@
+{
+  "version": "0.1",
+  "screen_res": [
+    "1024",
+    "768"
+  ],
+  "screen_icon": "assets/icon.png",
+  "screen_title": "Give'Em Hell!",
+  "fps_target": "60",
+  "keys": {
+    "quit":"27",
+    "up": [
+      "K_w",
+      "None"
+    ],
+    "down": [
+      "K_s",
+      "None"
+    ],
+    "left": [
+      "K_a",
+      "None"
+    ],
+    "right": [
+      "K_d",
+      "None"
+    ],
+    "bt1": [
+      "K_LCTRL",
+      "None"
+    ],
+    "bt2": [
+      "K_LALT",
+      "None"
+    ]
+  }
+}
