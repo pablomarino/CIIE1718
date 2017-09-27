@@ -4,7 +4,7 @@
     "1024",
     "768"
   ],
-  "screen_icon": "assets/icon.png",
+  "screen_icon": "../bin/assets/icon.png",
   "screen_title": "Give'Em Hell!",
   "fps_target": "60",
   "keys": {
