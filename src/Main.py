@@ -6,17 +6,14 @@ clock = pygame.time.Clock()
 screenFlags = pygame.DOUBLEBUF | pygame.HWSURFACE
 finished = False
 
-# Cargo preferencias de la aplicacion
+# Instancio un objeto para cargar configuraciones
 data = DataRetriever()
-data.loadPreferences('../bin/config/preferences.json')
+data.loadPreferences('../bin/config/preferences.json')# Cargo preferencias de la aplicacion
+data.loadLevels('../bin/config/levels.json')# Cargo datos de niveles
+data.loadPlayers('../bin/config/players.json')# Cargo datos de los jugadores
 fps = data.getFps()
 
-# Cargo datos de niveles
-data.loadLevels('../bin/config/levels.json')
-
-# Cargo datos de los jugadores
-data.loadPlayers('../bin/config/players.json')
-#print(data.getPlayerSheet('beatrice'))
+# print(data.getPlayerSheet('beatrice')) # para acceder al spritesheet y posiciones de los sprites de un jugador
 
 
 # Inicializar la libreria de pygame
@@ -38,4 +35,3 @@ while not finished:
 
     pygame.display.flip()
 sys.exit()
-
