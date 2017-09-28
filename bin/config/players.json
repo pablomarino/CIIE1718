@@ -1,7 +1,7 @@
 {
   "roster":
     {
-      "beatrice": {
+      "player": {
         "file": "../bin/assets/player_beatrice.png",
         "anchor": "bottom",
         "animations": [

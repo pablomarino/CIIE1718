@@ -1,6 +1,7 @@
 import pygame
 import sys
 from src.data.DataRetriever import DataRetriever
+from src.utils.AssetLoader import AssetLoader
 
 clock = pygame.time.Clock()
 screenFlags = pygame.DOUBLEBUF | pygame.HWSURFACE
@@ -14,8 +15,7 @@ data.loadPlayers('../bin/config/players.json')        # Cargo datos de los jugad
 
 # Accedo a los metodos del singleton para obtener las configuraciones
 fps = data.getFps()
-# print(data.getPlayerSheet('beatrice'))
-
+library = AssetLoader()
 
 # Inicializar la libreria de pygame
 pygame.init()
@@ -24,6 +24,12 @@ pygame.init()
 pygame.display.set_caption(data.getWindowTitle())
 pygame.display.set_icon(pygame.image.load(data.getWindowIcon()))
 screen = pygame.display.set_mode([data.getWidth(), data.getHeight()], screenFlags)
+
+# Cargo assets Jugador
+playerSheet = library.Load(data.getPlayerSheet('player'))
+# Las posiciones de los sprites para cada animacion se obtienen
+playerAnims = data.getPlayerAnimations('player')
+
 
 while not finished:
     clock.tick(fps)

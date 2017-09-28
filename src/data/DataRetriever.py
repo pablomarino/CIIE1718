@@ -1,12 +1,12 @@
+# -*- coding: utf-8 -*-
+
 import json
 
 class DataRetriever:
     instance = None
-    # LOADERS
-    # TODO : ERRORES LOAD
     def __init__(self):
-        if not self.instance:
-            self.instance = self.__DataRetriever()
+        if not DataRetriever.instance:
+            DataRetriever.instance = DataRetriever.__DataRetriever()
         else:
             print ("Singleton already instantiated.")
 
@@ -14,9 +14,9 @@ class DataRetriever:
     class __DataRetriever:
 
         def __init__(self):
-            preferences = None
-            levels = None
-            players = None
+            self.preferences = None
+            self.levels = None
+            self.players = None
 
     def __loadConfig(self, file):
         with open(file) as preferences_file:
@@ -84,16 +84,27 @@ class DataRetriever:
     def getLevels(self):
         return self.instance.levels
 
-    def getLevelSheet(self,id):
+    def getLevelbyId(self,id):
         return self.instance.levels['world'][id]
 
 
     def getPlayers(self):
         return self.instance.players
 
-    def getPlayerSheet(self,id):
+    def getPlayer(self,id):
         return self.instance.players["roster"][id]
 
+    def getPlayerSheet(self, id):
+        return self.instance.players["roster"][id]['file']
+
+    def getPlayerAnchor(self, id):
+        return self.instance.players["roster"][id]['anchor']
+
+    def getPlayerAnimations(self, id):
+        return self.instance.players["roster"][id]['animations']
 
 
-    # SETTERS
+
+
+
+            # SETTERS

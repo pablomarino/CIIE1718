@@ -3,7 +3,8 @@
       "width":"15",
       "height":"150",
       "bgColor":"0xFF3300",
-      "z_increment":"20",
+      "gravity":["0","10"],
+      "friction":"2",
       "bglayers":[
         {
           "image":"../bin/assets/bg_l1_0.png",
