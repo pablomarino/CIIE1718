@@ -1,7 +1,6 @@
 {
   "level_1": {
-      "width":"15",
-      "height":"150",
+      "dimensions":["15", "150"],
       "bgColor":"0xFF3300",
       "gravity":["0","10"],
       "friction":"2",

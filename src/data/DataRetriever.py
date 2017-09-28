@@ -18,10 +18,12 @@ class DataRetriever:
             self.levels = None
             self.players = None
 
+
     def __loadConfig(self, file):
         with open(file) as preferences_file:
             data = json.load(preferences_file)
         return data
+
 
     def loadPreferences(self, file):
         self.instance.preferences = self.__loadConfig(file)
@@ -31,9 +33,10 @@ class DataRetriever:
 
     def loadPlayers(self, file):
         self.instance.players = self.__loadConfig(file)
-    
+
+
+
     # GETTERS
-    # TODO : Errores GETTERS
 
     def getPreferences(self):
         return self.instance.preferences
@@ -81,11 +84,30 @@ class DataRetriever:
         return self.instance.preferences['media_suffixes']
 
 
+
+
     def getLevels(self):
         return self.instance.levels
 
-    def getLevelbyId(self,id):
-        return self.instance.levels['world'][id]
+    def getLevel(self,id):
+        return self.instance.levels[id]
+
+    def getDimensions(self,id):
+        return self.instance.levels[id]['dimensions']
+
+    def getBgColor(self,id):
+        return self.instance.levels[id]['bgColor']
+
+    def getGravity(self,id):
+        return self.instance.levels[id]['gravity']
+
+    def getFriction(self,id):
+        return self.instance.levels[id]['gravity']
+
+    def getBgLayers(self, id):
+        return self.instance.levels[id]['bgLayers']
+
+
 
 
     def getPlayers(self):
@@ -102,9 +124,3 @@ class DataRetriever:
 
     def getPlayerAnimations(self, id):
         return self.instance.players["roster"][id]['animations']
-
-
-
-
-
-            # SETTERS

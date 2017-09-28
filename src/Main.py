@@ -25,10 +25,16 @@ pygame.display.set_caption(data.getWindowTitle())
 pygame.display.set_icon(pygame.image.load(data.getWindowIcon()))
 screen = pygame.display.set_mode([data.getWidth(), data.getHeight()], screenFlags)
 
+# Por ahora cargo aqui pero habria que montar un gestor de niveles
+# Cargo el escenario
+Level1 = data.getLevel('level_1')
+
+
+
 # Cargo assets Jugador
 playerSheet = library.Load(data.getPlayerSheet('player'))
 # Las posiciones de los sprites para cada animacion se obtienen
-playerAnims = data.getPlayerAnimations('player')
+playerAnimations = data.getPlayerAnimations('player')
 
 
 while not finished:
