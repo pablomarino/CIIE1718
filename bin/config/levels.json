@@ -26,13 +26,13 @@
       {"id":"ID QUE COINCIDA CON LA QUE TIENE EN PLAYERS.JSON",
       "x":" SOLO ALMACENO LA POSICION ANIMACIONES Y TAMAÑO EN PLAYERS.JSON",
       "y":""
-      },
+      }
     ],
     "items":[
       {"id":"ID QUE COINCIDA CON LA QUE TIENE EN PLAYERS.JSON",
       "x":" SOLO ALMACENO LA POSICION ANIMACIONES Y TAMAÑO EN PLAYERS.JSON",
       "y":""
-      },
+      }
     ],
     "player": {
       "id":"beatrice",
