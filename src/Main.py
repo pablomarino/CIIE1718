@@ -9,8 +9,8 @@ finished = False
 # Instancio un Singleton para cargar configuraciones
 data = DataRetriever()
 data.loadPreferences('../bin/config/preferences.json')# Cargo preferencias de la aplicacion
-data.loadLevels('../bin/config/levels.json')                 # Cargo datos de niveles
-data.loadPlayers('../bin/config/players.json')# Cargo datos de los jugadores
+data.loadLevels('../bin/config/levels.json')          # Cargo datos de niveles
+data.loadPlayers('../bin/config/players.json')        # Cargo datos de los jugadores
 
 # Accedo a los metodos del singleton para obtener las configuraciones
 fps = data.getFps()
@@ -20,7 +20,7 @@ fps = data.getFps()
 # Inicializar la libreria de pygame
 pygame.init()
 
-# Creao la pantalla
+# Creo la pantalla
 pygame.display.set_caption(data.getWindowTitle())
 pygame.display.set_icon(pygame.image.load(data.getWindowIcon()))
 screen = pygame.display.set_mode([data.getWidth(), data.getHeight()], screenFlags)

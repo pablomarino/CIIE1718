@@ -1,8 +1,43 @@
 {
   "level_1": {
-
-  },
-  "level_2": {
-
+      "width":"15",
+      "height":"150",
+      "bgColor":"0xFF3300",
+      "z_increment":"20",
+      "bglayers":[
+        {
+          "image":"../bin/assets/bg_l1_0.png",
+          "origin_x":"0",
+          "origin_y":"0",
+          "origin_z":"0",
+          "repeat_x":"False",
+          "repeat_y":"True"
+        },
+        {
+          "image":"../bin/assets/bg_l1_1.png",
+          "origin_x":"0",
+          "origin_y":"0",
+          "origin_z":"10",
+          "repeat_x":"true",
+          "repeat_y":"True"
+        }
+      ],
+    "enemies":[
+      {"id":"ID QUE COINCIDA CON LA QUE TIENE EN PLAYERS.JSON",
+      "x":" SOLO ALMACENO LA POSICION ANIMACIONES Y TAMAÑO EN PLAYERS.JSON",
+      "y":""
+      },
+    ],
+    "items":[
+      {"id":"ID QUE COINCIDA CON LA QUE TIENE EN PLAYERS.JSON",
+      "x":" SOLO ALMACENO LA POSICION ANIMACIONES Y TAMAÑO EN PLAYERS.JSON",
+      "y":""
+      },
+    ],
+    "player": {
+      "id":"beatrice",
+      "x":"",
+      "y":""
+    }
   }
 }
