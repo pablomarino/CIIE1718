@@ -3,14 +3,20 @@ import src.control.GameLevel
 from src.data.DataRetriever import DataRetriever
 import sys
 
+from src.utils.AssetLoader import AssetLoader
+
+
 class GameManager:
 
     def __init__(self,data):
         self.data = data
+        self.stack = []
         self.screenFlags = pygame.DOUBLEBUF | pygame.HWSURFACE
         self.finished = False
         self.clock = None
         self.fps = None
+        # Instancio el cargador de medios
+        self.library = AssetLoader()
 
         # Inicializamos la pantalla y el modo grafico
         pygame.display.set_caption(self.data.getWindowTitle())
@@ -21,6 +27,9 @@ class GameManager:
 
         # Accedo a los metodos del singleton para obtener las configuraciones
         self.fps = self.data.getFps()
+
+    def add(self, level):
+        self.stack.append(level)
 
     def run(self):
         while not self.finished:
@@ -34,3 +43,8 @@ class GameManager:
 
             pygame.display.flip()
         sys.exit()
+
+    def getScreen(self):
+        return self.screen
+    def getLibrary(self):
+        return self.library

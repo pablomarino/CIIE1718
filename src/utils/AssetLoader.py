@@ -13,11 +13,11 @@ class AssetLoader:
         if not AssetLoader.instance:
             AssetLoader.instance = AssetLoader.__AssetLoader()
         else:
-            print ("Singleton already instantiated.")
+            print __name__, 'Singleton already instantiated.'
 
     def getResources(self):
         return self.instance.resources
-    def Load(self, file, colorkey = None):
+    def load(self, file, colorkey = None):
         # Si el fichero está entre los recursos ya cargados
         if file in self.instance.resources:
             # Se devuelve ese recurso

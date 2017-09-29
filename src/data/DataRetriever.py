@@ -8,7 +8,7 @@ class DataRetriever:
         if not DataRetriever.instance:
             DataRetriever.instance = DataRetriever.__DataRetriever()
         else:
-            print ("Singleton already instantiated.")
+            print __name__,'Singleton already instantiated.'
 
 
     class __DataRetriever:
@@ -23,7 +23,6 @@ class DataRetriever:
         with open(file) as preferences_file:
             data = json.load(preferences_file)
         return data
-
 
     def loadPreferences(self, file):
         self.instance.preferences = self.__loadConfig(file)
@@ -84,8 +83,6 @@ class DataRetriever:
         return self.instance.preferences['media_suffixes']
 
 
-
-
     def getLevels(self):
         return self.instance.levels
 
@@ -106,8 +103,6 @@ class DataRetriever:
 
     def getBgLayers(self, id):
         return self.instance.levels[id]['bgLayers']
-
-
 
 
     def getPlayers(self):

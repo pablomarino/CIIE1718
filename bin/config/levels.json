@@ -4,6 +4,7 @@
       "bgColor":"0xFF3300",
       "gravity":["0","10"],
       "friction":"2",
+
       "bglayers":[
         {
           "image":"../bin/assets/bg_l1_0.png",
@@ -22,20 +23,22 @@
           "repeat_y":"True"
         }
       ],
+
     "enemies":[
       {"id":"ID QUE COINCIDA CON LA QUE TIENE EN PLAYERS.JSON",
       "x":" SOLO ALMACENO LA POSICION ANIMACIONES Y TAMAÑO EN PLAYERS.JSON",
       "y":""
       }
     ],
+
     "items":[
       {"id":"ID QUE COINCIDA CON LA QUE TIENE EN PLAYERS.JSON",
       "x":" SOLO ALMACENO LA POSICION ANIMACIONES Y TAMAÑO EN PLAYERS.JSON",
       "y":""
       }
     ],
+
     "player": {
-      "id":"beatrice",
       "x":"",
       "y":""
     }
