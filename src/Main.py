@@ -1,29 +1,40 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+# Importar modulos
 import pygame
-import sys
+from src.control.GameManager import *
+from src.control.GameLevel import *
 from src.data.DataRetriever import DataRetriever
 from src.utils.AssetLoader import AssetLoader
 
-clock = pygame.time.Clock()
-screenFlags = pygame.DOUBLEBUF | pygame.HWSURFACE
-finished = False
+if __name__ == '__main__':
 
-# Instancio un Singleton para cargar configuraciones
-data = DataRetriever()
-data.loadPreferences('../bin/config/preferences.json')# Cargo preferencias de la aplicacion
-data.loadLevels('../bin/config/levels.json')          # Cargo datos de niveles
-data.loadPlayers('../bin/config/players.json')        # Cargo datos de los jugadores
+    # Instancio un Singleton para cargar configuraciones
+    data = DataRetriever()
+    data.loadPreferences('../bin/config/preferences.json')  # Cargo preferencias de la aplicacion
+    data.loadLevels('../bin/config/levels.json')            # Cargo datos de niveles
+    data.loadPlayers('../bin/config/players.json')          # Cargo datos de los jugadores
 
-# Accedo a los metodos del singleton para obtener las configuraciones
-fps = data.getFps()
-library = AssetLoader()
+    # Instancio el cargador de medios
+    library = AssetLoader()
 
-# Inicializar la libreria de pygame
-pygame.init()
+    # Inicializamos la libreria de pygame
+    pygame.init()
+    # Creamos el director
+    manager = GameManager(data)
 
-# Creo la pantalla
-pygame.display.set_caption(data.getWindowTitle())
-pygame.display.set_icon(pygame.image.load(data.getWindowIcon()))
-screen = pygame.display.set_mode([data.getWidth(), data.getHeight()], screenFlags)
+    manager.run()
+
+    # Cuando se termine la ejecución, finaliza la librería
+    pygame.quit()
+'''
+import pygame
+import sys
+
+
+
+
 
 # Por ahora cargo aqui pero habria que montar un gestor de niveles
 # Cargo el escenario
@@ -48,3 +59,4 @@ while not finished:
 
     pygame.display.flip()
 sys.exit()
+'''
