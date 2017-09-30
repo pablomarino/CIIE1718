@@ -24,10 +24,15 @@ class Stage:
 
         pygame.display.update()
 
-    def update(self):
+    def update(self,clock):
         self.manager.getScreen().fill(int(self.data["bgColor"],16))
         for layer in self.layersStack:
-            layer.update()
+            layer.update(clock)
+
+    def draw(self):
+        for layer in self.layersStack:
+            layer.draw()
+
 '''
     def events(self, *args):
         raise NotImplemented("Tiene que implementar el metodo eventos.")
@@ -37,7 +42,7 @@ class Stage:
 
 '''
 
-class Layer:
+class Layer(pygame.sprite.Sprite):
     def __init__(self,manager,layer,stageWidth,stageHeight):
         self.scrollX = 0# desplazamiento por el scroll
         self.scrollY = 0
@@ -64,13 +69,12 @@ class Layer:
         else:
             self.timesY = 1
 
-        self.draw()
+    def update(self,clock):
+        self.scrollY -= math.ceil(float(self.z*clock)/40)
 
     def draw(self):
         for i in range(0,self.timesX):
             for j in range(0,self.timesY):
                 self.manager.getScreen().blit(self.image,(self.scrollX+self.x+self.imageW*i,self.scrollY+self.y+self.imageH*j))
 
-    def update(self):
-        self.scrollY -= self.z
-        self.draw()
+

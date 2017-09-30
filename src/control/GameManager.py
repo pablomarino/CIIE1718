@@ -29,16 +29,18 @@ class GameManager:
 
     def run(self):
         while not self.finished:
-            self.clock.tick(self.fps)
+            time = self.clock.tick(self.fps)
             for e in pygame.event.get():
                 # Se sale al pulsar Esc
                 if e.type == pygame.KEYDOWN and e.key == int(self.data.getKeyQuit()):
                     self.finished = True
 
-            #   Aqui ocurre la magia
-            self.stack[0].update();
+            #   Aqui ocurre la magia (HardCoded)
+            self.stack[0].update(time)
+            self.stack[0].draw()
 
             pygame.display.flip()
+        pygame.quit()
         sys.exit()
 
     def getScreen(self):

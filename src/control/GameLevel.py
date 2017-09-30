@@ -13,12 +13,13 @@ class GameLevel:
         else:
            print "Error no existe nivel con id ",id
 
-    def update(self, *args):
-        self.stage.update()
+    def update(self, clock):
+        self.stage.update(clock)
       
 
     def events(self, *args):
         raise NotImplemented("Tiene que implementar el metodo eventos.")
 
-    def draw(self, pantalla):
-        raise NotImplemented("Tiene que implementar el metodo dibujar.")
+    def draw(self):
+        self.stage.draw()
+

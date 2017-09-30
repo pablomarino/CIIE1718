@@ -21,8 +21,7 @@ if __name__ == '__main__':
     # manager.add(manager, Menu())
     manager.add(GameLevel(manager, data,"level_1"))
     manager.run()
-    # Cuando se termine la ejecución, finaliza la librería
-    pygame.quit()
+
 
 # Todo Tests de todo, Singletones, funciones...
 # Implementar como bien funciones draw y update
