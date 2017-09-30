@@ -3,7 +3,7 @@
 # -------------------------------------------------
 # Clase Escena con lo metodos abstractos
 from control.Stage import Stage
-from src.data.DataRetriever import DataRetriever
+from data.DataRetriever import DataRetriever
 class GameLevel:
     def __init__(self, manager, data, id):
         self.manager = manager

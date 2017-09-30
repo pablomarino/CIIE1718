@@ -1,9 +1,5 @@
-import pygame
-import src.control.GameLevel
-from src.data.DataRetriever import DataRetriever
-import sys
-
-from src.utils.AssetLoader import AssetLoader
+import pygame,sys
+from utils.AssetLoader import AssetLoader
 
 
 class GameManager:
