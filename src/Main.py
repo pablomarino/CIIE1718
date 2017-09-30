@@ -24,7 +24,8 @@ if __name__ == '__main__':
 
 
 # Todo Tests de todo, Singletones, funciones...
-# Implementar como bien funciones draw y update
-# Fisicas, Capas de sprites
+# Logica de draw y update
+# Mapas de jugador, items, enemigos
+# Fisicas jugador, Capas, colisiones
 # Controladores, diferentes tipos de escenas, elegir escena, eliminarla
 # Dialogos, audio, animaciones ....
