@@ -9,12 +9,13 @@ class GameLevel:
         self.manager = manager
         self.level = data.getLevel(id)
         if self.level:
-           Stage(self.manager, self.level)
+           self.stage = Stage(self.manager, self.level)
         else:
            print "Error no existe nivel con id ",id
 
     def update(self, *args):
-        raise NotImplemented("Tiene que implementar el metodo update.")
+        self.stage.update()
+      
 
     def events(self, *args):
         raise NotImplemented("Tiene que implementar el metodo eventos.")

@@ -1,25 +1,36 @@
 {
   "level_1": {
-      "dimensions":["15", "150"],
-      "bgColor":"0xFF3300",
+      "dimensions":["1", "5"],
+      "bgColor":"0x1e0203",
       "gravity":["0","10"],
       "friction":"2",
 
       "bglayers":[
         {
           "image":"../bin/assets/bg_l1_0.png",
+          "color_key":"0",
           "origin_x":"0",
           "origin_y":"0",
-          "origin_z":"0",
+          "origin_z":"1",
           "repeat_x":"False",
           "repeat_y":"True"
         },
         {
           "image":"../bin/assets/bg_l1_1.png",
+          "color_key":"-1",
           "origin_x":"0",
           "origin_y":"0",
           "origin_z":"10",
-          "repeat_x":"true",
+          "repeat_x":"True",
+          "repeat_y":"True"
+        },
+        {
+          "image":"../bin/assets/bg_l1_2.png",
+          "color_key":"0x312111",
+          "origin_x":"0",
+          "origin_y":"0",
+          "origin_z":"30",
+          "repeat_x":"False",
           "repeat_y":"True"
         }
       ],

@@ -39,7 +39,8 @@ class GameManager:
                 if e.type == pygame.KEYDOWN and e.key == int(self.data.getKeyQuit()):
                     self.finished = True
 
-                    #   Aqui ocurre la magia
+            #   Aqui ocurre la magia
+            self.stack[0].update();
 
             pygame.display.flip()
         sys.exit()

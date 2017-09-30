@@ -17,7 +17,13 @@ class AssetLoader:
 
     def getResources(self):
         return self.instance.resources
+
     def load(self, file, colorkey = None):
+        # Transparencia
+        # -1 auto
+        # 0 Ninguno
+        # 0x Hexadecimal
+
         # Si el fichero está entre los recursos ya cargados
         if file in self.instance.resources:
             # Se devuelve ese recurso
@@ -31,10 +37,14 @@ class AssetLoader:
                 print 'Cannot load image:', file
                 raise SystemExit, message
             imagen = imagen.convert()
-            if colorkey is not None:
-                if colorkey is -1:
+            if colorkey is not "0":
+                if colorkey == "-1":
                     colorkey = imagen.get_at((0, 0))
+                else:
+                    colorkey = int(colorkey,16)
+
                 imagen.set_colorkey(colorkey, RLEACCEL)
+
             # Se almacena
             self.instance.resources[file] = imagen
             # Se devuelve
