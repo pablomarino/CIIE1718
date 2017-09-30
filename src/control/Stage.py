@@ -10,7 +10,7 @@ class Stage:
 
 
     def setup(self):
-        self.manager.getScreen().fill(int(self.data["bgColor"],16))
+
         self.stageWidth = int(self.data["dimensions"][0])
         self.stageHeight = int(self.data["dimensions"][1])
 
@@ -25,6 +25,7 @@ class Stage:
         pygame.display.update()
 
     def update(self):
+        self.manager.getScreen().fill(int(self.data["bgColor"],16))
         for layer in self.layersStack:
             layer.update()
 '''
@@ -38,7 +39,7 @@ class Stage:
 
 class Layer:
     def __init__(self,manager,layer,stageWidth,stageHeight):
-        self.scrollX = 0 # desplazamiento por el scroll
+        self.scrollX = 0# desplazamiento por el scroll
         self.scrollY = 0
         self.manager = manager
         self.layer = layer
@@ -46,7 +47,7 @@ class Layer:
         self.stageHeight = stageHeight
         self.x = int(self.layer["origin_x"]) # origen en el mapa de la capa
         self.y = int(self.layer["origin_x"])
-        self.z = float(self.layer["origin_z"])
+        self.z = int(self.layer["origin_z"])
         self.image = self.manager.getLibrary().load(self.layer["image"],self.layer["color_key"])
         self.imageW, self.imageH = self.image.get_size()
         self.w, self.h = self.manager.getScreen().get_size()
@@ -71,5 +72,5 @@ class Layer:
                 self.manager.getScreen().blit(self.image,(self.scrollX+self.x+self.imageW*i,self.scrollY+self.y+self.imageH*j))
 
     def update(self):
-        self.scrollY -= self.z/10
+        self.scrollY -= self.z
         self.draw()

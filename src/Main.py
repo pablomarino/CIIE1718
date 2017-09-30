@@ -1,6 +1,14 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+
+# Todo Tests de todo, Singletones, funciones...
+# Implementar como bien funciones draw y update
+# Fisicas, Capas de sprites
+# Controladores, diferentes tipos de escenas, elegir escena, eliminarla
+# Dialogos, audio, animaciones ....
+
+
 # Importar modulos
 import pygame
 from src.control.GameManager import *
