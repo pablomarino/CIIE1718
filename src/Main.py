@@ -13,7 +13,6 @@ if __name__ == '__main__':
     data.loadLevels('../bin/config/levels.json')            # Cargo datos de niveles
     data.loadPlayers('../bin/config/players.json')          # Cargo datos de los jugadores
 
-
     # Inicializamos la libreria de pygame
     pygame.init()
     # Creamos el director
