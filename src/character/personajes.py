@@ -10,9 +10,6 @@ from GestorRecursos import *
 # -------------------------------------------------
 # -------------------------------------------------
 
-ANCHO_PANTALLA = 800
-ALTO_PANTALLA = 600
-
 # Movimientos
 QUIETO = 0
 IZQUIERDA = 1
@@ -43,7 +40,7 @@ class MiSprite(pygame.sprite.Sprite):
         self.velocidad = (0, 0)
         self.scroll   = (0, 0)
 
-    def establecerPosicion(self, posicion):
+    def setPosition(self, posicion):
         self.posicion = posicion
         self.rect.left = self.posicion[0] - self.scroll[0]
         self.rect.bottom = self.posicion[1] - self.scroll[1]
@@ -58,7 +55,7 @@ class MiSprite(pygame.sprite.Sprite):
     def incrementarPosicion(self, incremento):
         (posx, posy) = self.posicion
         (incrementox, incrementoy) = incremento
-        self.establecerPosicion((posx+incrementox, posy+incrementoy))
+        self.setPosition((posx+incrementox, posy+incrementoy))
 
     def update(self, tiempo):
         incrementox = self.velocidad[0]*tiempo
@@ -91,7 +88,7 @@ class Personaje(MiSprite):
         # El movimiento que esta realizando
         self.movimiento = QUIETO
         # Lado hacia el que esta mirando
-        self.mirando = IZQUIERDA
+        self.mirando = DERECHA
 
         # Leemos las coordenadas de un archivo de texto
         datos = GestorRecursos.CargarArchivoCoordenadas(archivoCoordenadas)
@@ -128,7 +125,7 @@ class Personaje(MiSprite):
 
 
     # Metodo base para realizar el movimiento: simplemente se le indica cual va a hacer, y lo almacena
-    def mover(self, movimiento):
+    def move(self, movimiento):
         if movimiento == ARRIBA:
             # Si estamos en el aire y el personaje quiere saltar, ignoramos este movimiento
             if self.numPostura == SPRITE_SALTANDO:
@@ -213,7 +210,7 @@ class Personaje(MiSprite):
             if (plataforma != None) and (velocidady>0) and (plataforma.rect.bottom>self.rect.bottom):
                 # Lo situamos con la parte de abajo un pixel colisionando con la plataforma
                 #  para poder detectar cuando se cae de ella
-                self.establecerPosicion((self.posicion[0], plataforma.posicion[1]-plataforma.rect.height+1))
+                self.setPosition((self.posicion[0], plataforma.posicion[1]-plataforma.rect.height+1))
                 # Lo ponemos como quieto
                 self.numPostura = SPRITE_QUIETO
                 # Y estará quieto en el eje y
@@ -246,13 +243,13 @@ class Jugador(Personaje):
         Personaje.__init__(self,'Jugador.png','coordJugador.txt', [6, 12, 6], VELOCIDAD_JUGADOR, VELOCIDAD_SALTO_JUGADOR, RETARDO_ANIMACION_JUGADOR);
 
 
-    def mover(self, teclasPulsadas, arriba, abajo, izquierda, derecha):
+    def move(self, teclasPulsadas, arriba, izquierda, derecha):
         # Indicamos la acción a realizar segun la tecla pulsada para el jugador
         if teclasPulsadas[arriba]:
-            Personaje.mover(self,ARRIBA)
+            Personaje.move(self,ARRIBA)
         elif teclasPulsadas[izquierda]:
-            Personaje.mover(self,IZQUIERDA)
+            Personaje.move(self,IZQUIERDA)
         elif teclasPulsadas[derecha]:
-            Personaje.mover(self,DERECHA)
+            Personaje.move(self,DERECHA)
         else:
-            Personaje.mover(self,QUIETO)
+            Personaje.move(self,QUIETO)
