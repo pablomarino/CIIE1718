@@ -241,7 +241,7 @@ class Player(Personaje):
     def __init__(self):
         # Invocamos al constructor de la clase padre con la configuracion de este personaje concreto
         # Personaje.__init__(self,'Jugador.png','coordJugador.txt', [6, 12, 6], VELOCIDAD_JUGADOR, VELOCIDAD_SALTO_JUGADOR, RETARDO_ANIMACION_JUGADOR);
-        Personaje.__init__(self,'player_beatrice.png','player_beatrice_coords.txt', [6, 12, 6], VELOCIDAD_JUGADOR, VELOCIDAD_SALTO_JUGADOR, RETARDO_ANIMACION_JUGADOR);
+        Personaje.__init__(self,'player_beatrice.png','player_beatrice_coords.txt', [6, 7, 6], VELOCIDAD_JUGADOR, VELOCIDAD_SALTO_JUGADOR, RETARDO_ANIMACION_JUGADOR);
 
 
     def move(self, pressedKeys, arriba, izquierda, derecha):
