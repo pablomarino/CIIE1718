@@ -6,7 +6,7 @@ import pygame
 from pygame.locals import *
 from control.Stage import Stage
 from data.DataRetriever import DataRetriever
-from character.personajes import Jugador
+from character.personajes import Player
 
 
 class GameLevel:
@@ -18,7 +18,7 @@ class GameLevel:
             self.stage = Stage(self.manager, self.level)
 
             ## Modificado para probar jugador
-            self.player = Jugador()
+            self.player = Player()
             self.player.setPosition((200, 551))
             self.grupoSprites = pygame.sprite.Group( self.player)
             self.grupoPlataformas = pygame.sprite.Group()

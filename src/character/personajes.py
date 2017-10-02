@@ -234,22 +234,22 @@ class Personaje(MiSprite):
 
 
 # -------------------------------------------------
-# Clase Jugador
+# Clase Player
 
-class Jugador(Personaje):
+class Player(Personaje):
     "Cualquier personaje del juego"
     def __init__(self):
         # Invocamos al constructor de la clase padre con la configuracion de este personaje concreto
         Personaje.__init__(self,'Jugador.png','coordJugador.txt', [6, 12, 6], VELOCIDAD_JUGADOR, VELOCIDAD_SALTO_JUGADOR, RETARDO_ANIMACION_JUGADOR);
 
 
-    def move(self, teclasPulsadas, arriba, izquierda, derecha):
+    def move(self, pressedKeys, arriba, izquierda, derecha):
         # Indicamos la acción a realizar segun la tecla pulsada para el jugador
-        if teclasPulsadas[arriba]:
+        if pressedKeys[arriba]:
             Personaje.move(self,ARRIBA)
-        elif teclasPulsadas[izquierda]:
+        elif pressedKeys[izquierda]:
             Personaje.move(self,IZQUIERDA)
-        elif teclasPulsadas[derecha]:
+        elif pressedKeys[derecha]:
             Personaje.move(self,DERECHA)
         else:
             Personaje.move(self,QUIETO)

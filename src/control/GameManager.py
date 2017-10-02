@@ -34,6 +34,7 @@ class GameManager:
                 # Se sale al pulsar Esc
                 if e.type == pygame.KEYDOWN and e.key == int(self.data.getKeyQuit()):
                     self.finished = True
+                # Call 'events' function in the current level
                 self.stack[0].events()
 
             #   Aqui ocurre la magia (HardCoded)
