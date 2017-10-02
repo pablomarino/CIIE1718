@@ -103,3 +103,6 @@ ENV/
 
 #
 .idea/
+
+# Mac OSX files
+.DS_Store
