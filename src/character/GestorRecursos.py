@@ -20,7 +20,8 @@ class GestorRecursos(object):
         # Si no ha sido cargado anteriormente
         else:
             # Se carga la imagen indicando la carpeta en la que está
-            fullname = os.path.join('../bin/assets', nombre)
+            fullname = os.path.join('../bin/assets/Sprites/main_characters', nombre)
+            #fullname = os.path.join('imagenes', nombre)
             try:
                 imagen = pygame.image.load(fullname)
             except pygame.error, message:
@@ -45,7 +46,7 @@ class GestorRecursos(object):
         # Si no ha sido cargado anteriormente
         else:
             # Se carga el recurso indicando el nombre de su carpeta
-            fullname = os.path.join('../bin/assets', nombre)
+            fullname = os.path.join('../bin/assets/Sprites/main_characters', nombre)
             pfile=open(fullname,'r')
             datos=pfile.read()
             pfile.close()
@@ -53,3 +54,6 @@ class GestorRecursos(object):
             cls.recursos[nombre] = datos
             # Se devuelve
             return datos
+
+
+
