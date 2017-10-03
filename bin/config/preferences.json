@@ -4,7 +4,7 @@
     "1024",
     "768"
   ],
-  "window_icon": "../bin/assets/icon.png",
+  "window_icon": "../bin/assets/Iconos/icon.png",
   "window_title": "Give'Em Hell!",
   "fps_target": "60",
   "keys": {
