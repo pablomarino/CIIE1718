@@ -6,7 +6,7 @@ import pygame
 from pygame.locals import *
 from control.Stage import Stage
 from data.DataRetriever import DataRetriever
-from character.personajes import Player
+from character.Player import Player
 
 
 class GameLevel:
