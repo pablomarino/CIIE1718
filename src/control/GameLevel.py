@@ -18,7 +18,7 @@ class GameLevel:
             self.stage = Stage(self.manager, self.level)
 
             ## Modificado para probar jugador
-            self.player = Player()
+            self.player = Player(data)
             self.player.setPosition((200, 551))
             self.grupoSprites = pygame.sprite.Group( self.player)
             self.grupoPlataformas = pygame.sprite.Group()

@@ -1,14 +1,7 @@
 # -*- coding: utf-8 -*-
-
-import pygame, sys, os
-from pygame.locals import *
+from character.MySprite import MySprite
 from GestorRecursos import *
 
-# -------------------------------------------------
-# -------------------------------------------------
-# Constantes
-# -------------------------------------------------
-# -------------------------------------------------
 
 # Movimientos
 QUIETO = 0
@@ -22,48 +15,10 @@ SPRITE_QUIETO = 0
 SPRITE_ANDANDO = 1
 SPRITE_SALTANDO = 2
 
-
-
 GRAVEDAD = 0.0007 # Píxeles / ms2
 
-# -------------------------------------------------
-# Clase MiSprite
-class MiSprite(pygame.sprite.Sprite):
-    "Los Sprites que tendra este juego"
-    def __init__(self):
-        pygame.sprite.Sprite.__init__(self)
-        self.posicion = (0, 0)
-        self.velocidad = (0, 0)
-        self.scroll   = (0, 0)
 
-    def setPosition(self, posicion):
-        self.posicion = posicion
-        self.rect.left = self.posicion[0] - self.scroll[0]
-        self.rect.bottom = self.posicion[1] - self.scroll[1]
-
-    def establecerPosicionPantalla(self, scrollDecorado):
-        self.scroll = scrollDecorado;
-        (scrollx, scrolly) = self.scroll;
-        (posx, posy) = self.posicion;
-        self.rect.left = posx - scrollx;
-        self.rect.bottom = posy - scrolly;
-
-    def incrementarPosicion(self, incremento):
-        (posx, posy) = self.posicion
-        (incrementox, incrementoy) = incremento
-        self.setPosition((posx+incrementox, posy+incrementoy))
-
-    def update(self, tiempo):
-        incrementox = self.velocidad[0]*tiempo
-        incrementoy = self.velocidad[1]*tiempo
-        self.incrementarPosicion((incrementox, incrementoy))
-
-
-# -------------------------------------------------
-# Clases Personaje
-
-#class Personaje(pygame.sprite.Sprite):
-class Personaje(MiSprite):
+class Character(MySprite):
     "Cualquier personaje del juego"
 
     # Parametros pasados al constructor de esta clase:
@@ -75,7 +30,7 @@ class Personaje(MiSprite):
     def __init__(self, archivoImagen, archivoCoordenadas, numImagenes, velocidadCarrera, velocidadSalto, retardoAnimacion):
 
         # Primero invocamos al constructor de la clase padre
-        MiSprite.__init__(self);
+        MySprite.__init__(self);
 
         # Se carga la hoja
         self.hoja = GestorRecursos.CargarImagen(archivoImagen, -1)
@@ -224,6 +179,6 @@ class Personaje(MiSprite):
 
         # Y llamamos al método de la superclase para que, según la velocidad y el tiempo
         #  calcule la nueva posición del Sprite
-        MiSprite.update(self, tiempo)
+        MySprite.update(self, tiempo)
         
         return
