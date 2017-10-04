@@ -89,6 +89,9 @@ class DataRetriever:
     def getLevel(self,id):
         return self.instance.levels[id]
 
+    def getPlayerPositionAt(self,id):
+        return (int(self.instance.levels[id]["player"]["x"]), int(self.instance.levels[id]["player"]["y"]))
+
     def getDimensions(self,id):
         return self.instance.levels[id]['dimensions']
 
