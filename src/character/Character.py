@@ -182,3 +182,7 @@ class Character(MySprite):
         MySprite.update(self, tiempo)
         
         return
+
+
+    def getVelocidad(self):
+        return self.velocidad

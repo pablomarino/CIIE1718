@@ -2,9 +2,10 @@ import pygame
 import math
 
 class Stage:
-    def __init__(self, manager,  data):
+    def __init__(self, manager,  data, player):
         self.manager = manager
         self.data = data
+        self.player = player
         self.layersStack = []
         self.setup()
 
@@ -20,7 +21,7 @@ class Stage:
         self.friction = int(self.data["friction"])
 
         for layer in self.data["bglayers"]:
-            self.layersStack.append(Layer(self.manager,layer,self.stageWidth,self.stageHeight))
+            self.layersStack.append(Layer(self.manager,layer,self.stageWidth,self.stageHeight,self.player))
 
         pygame.display.update()
 
@@ -43,11 +44,12 @@ class Stage:
 '''
 
 class Layer(pygame.sprite.Sprite):
-    def __init__(self,manager,layer,stageWidth,stageHeight):
+    def __init__(self,manager,layer,stageWidth,stageHeight, player):
         self.scrollX = 0# desplazamiento por el scroll
         self.scrollY = 0
         self.manager = manager
         self.layer = layer
+        self.player = player
         self.stageWidth = stageWidth
         self.stageHeight = stageHeight
         self.x = int(self.layer["origin_x"]) # origen en el mapa de la capa
@@ -70,7 +72,8 @@ class Layer(pygame.sprite.Sprite):
             self.timesY = 1
 
     def update(self,clock):
-        self.scrollY -= math.ceil(float(self.z*clock)/40)
+        self.scrollY -= math.ceil((self.player.getVelocidad()[1]*self.z*clock)/1)
+        #self.scrollY = 0 # -= math.ceil(float(self.z*clock)/40)
 
     def draw(self):
         for i in range(0,self.timesX):

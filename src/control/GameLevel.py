@@ -15,14 +15,11 @@ class GameLevel:
         self.data = data
         self.level = data.getLevel(id)
         if self.level:
-            self.stage = Stage(self.manager, self.level)
-
-            ## Modificado para probar jugador
             self.player = Player(data)
             self.player.setPosition(data.getPlayerPositionAt(id))
             self.grupoSprites = pygame.sprite.Group(self.player)
             self.grupoPlataformas = pygame.sprite.Group()
-
+            self.stage = Stage(self.manager, self.level, self.player)
         else:
            print "Error no existe nivel con id ",id
 
