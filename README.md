@@ -36,6 +36,7 @@
 
 ### [Personaje](src/character)
 * ~~Modificar estructura de clases~~
+* ~~Corregir problema de salto infinito~~
 * Cambiar constructor de [Character](src/character/Character.py) (self, data, id) y buscar los recursos a partir del id
 * Crear EnemyPlayer, clase similar a player, pero con IA
 * Traducir todas las clases
