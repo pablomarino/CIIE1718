@@ -1,13 +1,5 @@
 # -*- coding: utf-8 -*-
-from character.Character import Character
-
-
-# Movimientos
-QUIETO = 0
-IZQUIERDA = 1
-DERECHA = 2
-ARRIBA = 3
-ABAJO = 4
+from character.Character import *
 
 # Velocidades de los distintos personajes
 VELOCIDAD_JUGADOR = 0.2 # Pixeles por milisegundo
@@ -27,10 +19,10 @@ class Player(Character):
     def move(self, pressedKeys, arriba, izquierda, derecha):
         # Indicamos la acción a realizar segun la tecla pulsada para el jugador
         if pressedKeys[arriba]:
-            Character.move(self,ARRIBA)
+            Character.move(self,UP)
         elif pressedKeys[izquierda]:
-            Character.move(self,IZQUIERDA)
+            Character.move(self,LEFT)
         elif pressedKeys[derecha]:
-            Character.move(self,DERECHA)
+            Character.move(self,RIGHT)
         else:
-            Character.move(self,QUIETO)
+            Character.move(self,STOPPED)

@@ -4,11 +4,11 @@ from GestorRecursos import *
 
 
 # Movimientos
-QUIETO = 0
-IZQUIERDA = 1
-DERECHA = 2
-ARRIBA = 3
-ABAJO = 4
+STOPPED = 0
+LEFT = 1
+RIGHT = 2
+UP = 3
+DOWN = 4
 
 #Posturas
 SPRITE_QUIETO = 0
@@ -37,9 +37,9 @@ class Character(MySprite):
 
         self.hoja = self.hoja.convert_alpha()
         # El movimiento que esta realizando
-        self.movimiento = QUIETO
+        self.movimiento = STOPPED
         # Lado hacia el que esta mirando
-        self.mirando = DERECHA
+        self.mirando = RIGHT
 
         # Leemos las coordenadas de un archivo de texto
         datos = GestorRecursos.CargarArchivoCoordenadas(archivoCoordenadas)
@@ -59,7 +59,7 @@ class Character(MySprite):
         self.retardoMovimiento = 0;
 
         # En que postura esta inicialmente
-        self.numPostura = QUIETO
+        self.numPostura = STOPPED
 
         # El rectangulo del Sprite
         self.rect = pygame.Rect(100,100,self.coordenadasHoja[self.numPostura][self.numImagenPostura][2],self.coordenadasHoja[self.numPostura][self.numImagenPostura][3])
@@ -77,12 +77,12 @@ class Character(MySprite):
 
     # Metodo base para realizar el movimiento: simplemente se le indica cual va a hacer, y lo almacena
     def move(self, movimiento):
-        if movimiento == ARRIBA:
+        if movimiento == UP:
             # Si estamos en el aire y el personaje quiere saltar, ignoramos este movimiento
             if self.numPostura == SPRITE_SALTANDO:
-                self.movimiento = QUIETO
+                self.movimiento = STOPPED
             else:
-                self.movimiento = ARRIBA
+                self.movimiento = UP
         else:
             self.movimiento = movimiento
 
@@ -101,10 +101,10 @@ class Character(MySprite):
             self.image = self.hoja.subsurface(self.coordenadasHoja[self.numPostura][self.numImagenPostura])
 
             # Si esta mirando a la izquiera, cogemos la porcion de la hoja
-            if self.mirando == IZQUIERDA:
+            if self.mirando == LEFT:
                 self.image = self.hoja.subsurface(self.coordenadasHoja[self.numPostura][self.numImagenPostura])
             #  Si no, si mira a la derecha, invertimos esa imagen
-            elif self.mirando == DERECHA:
+            elif self.mirando == RIGHT:
                 self.image = pygame.transform.flip(self.hoja.subsurface(self.coordenadasHoja[self.numPostura][self.numImagenPostura]), 1, 0)
 
 
@@ -114,12 +114,12 @@ class Character(MySprite):
         (velocidadx, velocidady) = self.velocidad
 
         # Si vamos a la izquierda o a la derecha        
-        if (self.movimiento == IZQUIERDA) or (self.movimiento == DERECHA):
+        if (self.movimiento == LEFT) or (self.movimiento == RIGHT):
             # Esta mirando hacia ese lado
             self.mirando = self.movimiento
 
             # Si vamos a la izquierda, le ponemos velocidad en esa dirección
-            if self.movimiento == IZQUIERDA:
+            if self.movimiento == LEFT:
                 velocidadx = -self.velocidadCarrera
             # Si vamos a la derecha, le ponemos velocidad en esa dirección
             else:
@@ -134,14 +134,15 @@ class Character(MySprite):
                     self.numPostura = SPRITE_SALTANDO
 
         # Si queremos saltar
-        elif self.movimiento == ARRIBA:
+        elif self.movimiento == UP:
             # La postura actual sera estar saltando
             self.numPostura = SPRITE_SALTANDO
             # Le imprimimos una velocidad en el eje y
             velocidady = -self.velocidadSalto
+            self.movimiento = STOPPED
 
         # Si no se ha pulsado ninguna tecla
-        elif self.movimiento == QUIETO:
+        elif self.movimiento == STOPPED:
             # Si no estamos saltando, la postura actual será estar quieto
             if not self.numPostura == SPRITE_SALTANDO:
                 self.numPostura = SPRITE_QUIETO
