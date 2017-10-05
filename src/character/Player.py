@@ -9,11 +9,11 @@ RETARDO_ANIMACION_JUGADOR = 5 # updates que durará cada imagen del personaje
 
 class Player(Character):
     "Cualquier personaje del juego"
-    def __init__(self, data):
-        self.id = 'player'
+    def __init__(self, data, id):
         # Invocamos al constructor de la clase padre con la configuracion de este personaje concreto
-        # Character.__init__(self,'Jugador.png','coordJugador.txt', [6, 12, 6], VELOCIDAD_JUGADOR, VELOCIDAD_SALTO_JUGADOR, RETARDO_ANIMACION_JUGADOR);
-        Character.__init__(self, data.getPlayerSheet(self.id),'player_beatrice_coords.txt', [6, 7, 6], VELOCIDAD_JUGADOR, VELOCIDAD_SALTO_JUGADOR, RETARDO_ANIMACION_JUGADOR);
+        # TODO cambiar el constructor de Character por (self, data, id)
+        # Dentro del propio constructor elige el sprite y demás valores buscando en el dataRetriever
+        Character.__init__(self, data, data.getPlayerSheet(id),'player_beatrice_coords.txt', [6, 7, 6], VELOCIDAD_JUGADOR, VELOCIDAD_SALTO_JUGADOR, RETARDO_ANIMACION_JUGADOR);
 
 
     def move(self, pressedKeys, arriba, izquierda, derecha):

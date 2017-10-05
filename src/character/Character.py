@@ -11,11 +11,11 @@ UP = 3
 DOWN = 4
 
 #Posturas
-SPRITE_QUIETO = 0
-SPRITE_ANDANDO = 1
-SPRITE_SALTANDO = 2
+SPRITE_STOPPED = 0
+SPRITE_WALKING = 1
+SPRITE_JUMPING = 2
 
-GRAVEDAD = 0.0007 # Píxeles / ms2
+GRAVITY = 0.0007 # Píxeles / ms2
 
 
 class Character(MySprite):
@@ -27,13 +27,16 @@ class Character(MySprite):
     #  Numero de imagenes en cada postura
     #  Velocidad de caminar y de salto
     #  Retardo para mostrar la animacion del personaje
-    def __init__(self, archivoImagen, archivoCoordenadas, numImagenes, velocidadCarrera, velocidadSalto, retardoAnimacion):
+    def __init__(self, data, archivoImagen, archivoCoordenadas, numImagenes, velocidadCarrera, velocidadSalto, retardoAnimacion):
 
         # Primero invocamos al constructor de la clase padre
         MySprite.__init__(self);
 
         # Se carga la hoja
         self.hoja = GestorRecursos.CargarImagen(archivoImagen, -1)
+
+        # Guardamos instancia del dataRetriever
+        self.data = data
 
         self.hoja = self.hoja.convert_alpha()
         # El movimiento que esta realizando
@@ -79,7 +82,7 @@ class Character(MySprite):
     def move(self, movimiento):
         if movimiento == UP:
             # Si estamos en el aire y el personaje quiere saltar, ignoramos este movimiento
-            if self.numPostura == SPRITE_SALTANDO:
+            if self.numPostura == SPRITE_JUMPING:
                 self.movimiento = STOPPED
             else:
                 self.movimiento = UP
@@ -126,17 +129,17 @@ class Character(MySprite):
                 velocidadx = self.velocidadCarrera
 
             # Si no estamos en el aire
-            if self.numPostura != SPRITE_SALTANDO:
+            if self.numPostura != SPRITE_JUMPING:
                 # La postura actual sera estar caminando
-                self.numPostura = SPRITE_ANDANDO
+                self.numPostura = SPRITE_WALKING
                 # Ademas, si no estamos encima de ninguna plataforma, caeremos
                 if pygame.sprite.spritecollideany(self, grupoPlataformas) == None:
-                    self.numPostura = SPRITE_SALTANDO
+                    self.numPostura = SPRITE_JUMPING
 
         # Si queremos saltar
         elif self.movimiento == UP:
             # La postura actual sera estar saltando
-            self.numPostura = SPRITE_SALTANDO
+            self.numPostura = SPRITE_JUMPING
             # Le imprimimos una velocidad en el eje y
             velocidady = -self.velocidadSalto
             self.movimiento = STOPPED
@@ -144,14 +147,14 @@ class Character(MySprite):
         # Si no se ha pulsado ninguna tecla
         elif self.movimiento == STOPPED:
             # Si no estamos saltando, la postura actual será estar quieto
-            if not self.numPostura == SPRITE_SALTANDO:
-                self.numPostura = SPRITE_QUIETO
+            if not self.numPostura == SPRITE_JUMPING:
+                self.numPostura = SPRITE_STOPPED
             velocidadx = 0
 
 
 
         # Además, si estamos en el aire
-        if self.numPostura == SPRITE_SALTANDO:
+        if self.numPostura == SPRITE_JUMPING:
 
             # Miramos a ver si hay que parar de caer: si hemos llegado a una plataforma
             #  Para ello, miramos si hay colision con alguna plataforma del grupo
@@ -164,13 +167,13 @@ class Character(MySprite):
                 #  para poder detectar cuando se cae de ella
                 self.setPosition((self.posicion[0], plataforma.posicion[1]-plataforma.rect.height+1))
                 # Lo ponemos como quieto
-                self.numPostura = SPRITE_QUIETO
+                self.numPostura = SPRITE_STOPPED
                 # Y estará quieto en el eje y
                 velocidady = 0
 
             # Si no caemos en una plataforma, aplicamos el efecto de la gravedad
             else:
-                velocidady += GRAVEDAD * tiempo
+                velocidady += GRAVITY * tiempo
 
         # Actualizamos la imagen a mostrar
         self.actualizarPostura()

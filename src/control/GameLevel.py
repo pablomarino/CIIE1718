@@ -15,7 +15,7 @@ class GameLevel:
         self.data = data
         self.level = data.getLevel(id)
         if self.level:
-            self.player = Player(data)
+            self.player = Player(data, 'player')
             self.player.setPosition(data.getPlayerPositionAt(id))
             self.grupoSprites = pygame.sprite.Group(self.player)
             self.grupoPlataformas = pygame.sprite.Group()
