@@ -1,9 +1,9 @@
 
-# Modificaciones del código
+# Tareas a llevar a cabo
 
 ****
 
-## [/bin](bin)
+## [CARPETA /bin](bin)
 
 ****
 
@@ -11,11 +11,11 @@
 * Modificar el sprite del personaje + archivo de coordenadas
 
 ### [Config](bin/config)
-* Añadir VELOCIDAD_JUGADOR, VELOCIDAD_SALTO_JUGADOR, RETARDO_ANIMACION_JUGADOR a ['players.json'](bin/config/players.json)
+* Añadir VELOCIDAD_JUGADOR, VELOCIDAD_SALTO_JUGADOR, RETARDO_ANIMACION_JUGADOR a ['players.json'](bin/config/players.json), actualmente están en [Player.py](src/character/Player.py)
 
 ****
 
-## [/src](src)
+## [CARPETA /src](src)
 
 ****
 
@@ -32,7 +32,7 @@
 * Modificar el método update() para llevar a cabo las pausas
 
 ### [DataRetriever](src/data/DataRetriever.py)
-* Añadir CargarImagen y CargarArchivoCoordenadas
+* Añadir CargarImagen y CargarArchivoCoordenadas, actualmente están en [GestorRecursos.py](src/character/GestorRecursos.py)
 
 ### [Personaje](src/character)
 * ~~Modificar estructura de clases~~
