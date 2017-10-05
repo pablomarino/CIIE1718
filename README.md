@@ -27,8 +27,3 @@
 
 ### Personaje
 * ~~Modificar estructura de clases~~
-	~~- Sprite~~
-	~~- MiSprite~~
-	~~- Personaje~~
-	~~- Jugador~~
-
