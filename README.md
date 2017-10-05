@@ -5,6 +5,8 @@
 
 ## [/bin](bin)
 
+****
+
 ### [Assets](bin/assets)
 * Modificar el sprite del personaje + archivo de coordenadas
 
@@ -14,6 +16,8 @@
 ****
 
 ## [/src](src)
+
+****
 
 ### [GameManager](src/control/GameManager.py)
 * self.pila[len(self.pila)-1] en vez de pila[0]
@@ -26,7 +30,6 @@
 ### [Fase](src/control/GameLevel.py)
 * Añadir comprobación de pulsación de tecla quit()
 * Modificar el método update() para llevar a cabo las pausas
-
 
 ### [DataRetriever](src/data/DataRetriever.py)
 * Añadir CargarImagen y CargarArchivoCoordenadas
