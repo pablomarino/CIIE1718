@@ -20,12 +20,13 @@
 ****
 
 ### [GameManager](src/control/GameManager.py)
-* self.pila[len(self.pila)-1] en vez de pila[0]
-* añadir función para cambiar de escena
-	- flag para cambiar de escena a parte de flag para acabar ejecución programa
-* Mover la comprobación de pulsación de tecla ESC para la propia fase, en el bucle principal solo debería tener comprobación del flag 'exit_program'
-* Crear función de exitProgram() que se pueda llamar desde las distintas pantallas/fases
-* ~~Función para apilar escenas~~
+* ~~Función para añadir escenas a la pila~~
+* *Quizás haga falta cambiar pila[0] por pila[len(self.pila)-1]*
+* Función para eliminar escena de la pila
+* Crear función changeScene() que active un flag change_scene, que se comprobará en el bucle principal (mirar apuntes)
+* Crear función exitProgram() que active un flag exit_program, que se comprobará en el bucle principal (mirar apuntes)
+* Eliminar comprobación de pulsación de tecla ESC en el bucle principal cuando alguien lo haya implementado ya en [GameLevel.py](src/control/GameLevel.py)
+
 
 ### [Fase](src/control/GameLevel.py)
 * Añadir comprobación de pulsación de tecla quit()
@@ -36,7 +37,7 @@
 
 ### [Personaje](src/character)
 * ~~Modificar estructura de clases~~
-* ~~Corregir problema de salto infinito~~
+* ~~Corregir problema de salto infinito~
 * Cambiar constructor de [Character](src/character/Character.py) (self, data, id) y buscar los recursos a partir del id
 * Crear EnemyPlayer, clase similar a player, pero con IA
 * Traducir todas las clases
