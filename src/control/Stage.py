@@ -69,7 +69,7 @@ class Object(pygame.sprite.Sprite):
         self.stageWidth = stageWidth
         self.stageHeight = stageHeight
         self.x = int(self.layer["origin_x"]) # origen en el mapa de la capa
-        self.y = int(self.layer["origin_x"])
+        self.y = int(self.layer["origin_y"])
         self.z = int(self.layer["origin_z"])
         self.image = self.manager.getLibrary().load(self.layer["image"],self.layer["color_key"])
         self.imageW, self.imageH = self.image.get_size()
@@ -100,8 +100,8 @@ class Object(pygame.sprite.Sprite):
 
         if self.scrollY > 0 :
             self.scrollY = 0
-        elif self.scrollY < -self.stageHeight-h :
-            self.scrollY =  -self.stageHeight-h
+        elif self.scrollY < -self.stageHeight+h :
+            self.scrollY =  -self.stageHeight+h
 
     def draw(self):
         for i in range(0,self.timesX):
