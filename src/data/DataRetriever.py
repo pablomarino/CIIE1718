@@ -19,6 +19,7 @@ class DataRetriever:
             self.preferences = None
             self.levels = None
             self.players = None
+            # Keys are now added here for different locales support
             self.KEY_LEFT = K_LEFT
             self.KEY_UP = K_UP
             self.KEY_RIGHT = K_RIGHT
