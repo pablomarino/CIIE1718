@@ -2,10 +2,11 @@ import pygame
 import math
 
 class Stage:
-    def __init__(self, manager,  data, player):
+    def __init__(self, manager,  data, player, platformGroup):
         self.manager = manager
         self.data = data
         self.player = player
+        self.platformGroup = platformGroup
         self.layersStack = []
         self.setup()
 
@@ -18,10 +19,30 @@ class Stage:
         self.gravityX = int(self.data["gravity"][0])
         self.gravityY = int(self.data["gravity"][1])
 
-        self.friction = int(self.data["friction"])
+        # Fondo
+        for l in self.data["bglayers"]:
+            bglayer = Object(self.manager, l, self.stageWidth, self.stageHeight, self.player)
+            self.layersStack.append(bglayer)
 
-        for layer in self.data["bglayers"]:
-            self.layersStack.append(Layer(self.manager,layer,self.stageWidth,self.stageHeight,self.player))
+        # Plataformas
+        for p in self.data["platforms"]:
+            platform = Object(self.manager,p,self.stageWidth,self.stageHeight,self.player)
+            #self.platformGroup.add(platform)
+            self.layersStack.append(platform)
+
+        # Items
+        for i in self.data["items"]:
+            item =Object(self.manager,i,self.stageWidth,self.stageHeight,self.player)
+            self.layersStack.append(item)
+
+        # Enemies
+        for e in self.data["enemies"]:
+            enemy = Object(self.manager, e, self.stageWidth, self.stageHeight, self.player)
+            self.layersStack.append(enemy)
+
+        # Jugador
+
+
 
         pygame.display.update()
 
@@ -34,16 +55,11 @@ class Stage:
         for layer in self.layersStack:
             layer.draw()
 
-'''
     def events(self, *args):
         raise NotImplemented("Tiene que implementar el metodo eventos.")
 
-    def draw(self, pantalla):
-        raise NotImplemented("Tiene que implementar el metodo dibujar.")
 
-'''
-
-class Layer(pygame.sprite.Sprite):
+class Object(pygame.sprite.Sprite):
     def __init__(self,manager,layer,stageWidth,stageHeight, player):
         self.scrollX = 0# desplazamiento por el scroll
         self.scrollY = 0
@@ -57,23 +73,35 @@ class Layer(pygame.sprite.Sprite):
         self.z = int(self.layer["origin_z"])
         self.image = self.manager.getLibrary().load(self.layer["image"],self.layer["color_key"])
         self.imageW, self.imageH = self.image.get_size()
-        self.w, self.h = self.manager.getScreen().get_size()
 
         # Si se repite Horizontalmente
         if self.layer["repeat_x"]=="True": # Si se repite horizontalmente
-            self.timesX = int(math.ceil(float(self.w*self.stageWidth)/ self.imageW))
+            self.timesX = int(math.ceil(float( self.z*self.stageWidth)/ self.imageW))
         else:
             self.timesX = 1
 
-        # Si se repite verticalmente ademas multiplico por origin_z
+        # Si se repite verticalmente
         if self.layer["repeat_y"] == "True":
-            self.timesY = int(math.ceil(float(self.h* self.z * self.stageHeight) / self.imageH))
+            self.timesY = int(math.ceil(float( self.z * self.stageHeight) / self.imageH))
         else:
             self.timesY = 1
 
     def update(self,clock):
-        self.scrollY -= math.ceil((self.player.getVelocidad()[1]*self.z*clock)/1)
-        #self.scrollY = 0 # -= math.ceil(float(self.z*clock)/40)
+        self.scrollX -= math.ceil((self.player.getVelocidad()[0] * self.z * clock) / 1)
+        self.scrollY -= math.ceil((self.player.getVelocidad()[1] * self.z * clock) / 1)
+        w,h = self.manager.getScreen().get_size()
+
+        # me aseguro de que no se salga la pantalla
+        if self.scrollX < self.stageWidth - w:
+            self.scrollX = self.stageWidth - w
+        elif self.scrollX > 0 :
+            self.scrollX = 0
+
+
+        if self.scrollY > 0 :
+            self.scrollY = 0
+        elif self.scrollY < -self.stageHeight-h :
+            self.scrollY =  -self.stageHeight-h
 
     def draw(self):
         for i in range(0,self.timesX):

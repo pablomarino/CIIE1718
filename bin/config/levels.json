@@ -1,15 +1,14 @@
 {
   "level_1": {
     "dimensions": [
-      "1",
-      "2"
+      "1024",
+      "4000"
     ],
     "bgColor": "0x1e0203",
     "gravity": [
       "0",
       "10"
     ],
-    "friction": "2",
     "bglayers": [
       {
         "image": "../bin/assets/backgrounds/bg_l1_0.png",
@@ -40,23 +39,34 @@
       }
     ],
 
-    "platforms": {
-      "origin_z": "4",
-      "map": []
-    },
+    "platforms": [
 
-    "enemies":[
-      {"id":"ID QUE COINCIDA CON LA QUE TIENE EN PLAYERS.JSON",
-      "x":" SOLO ALMACENO LA POSICION ANIMACIONES Y TAMAÑO EN PLAYERS.JSON",
-      "y":""
+        {
+        "image": "../bin/assets/backgrounds/bg_l1_ceil.png",
+        "color_key": "0xff3300",
+        "origin_x": "0",
+        "origin_y": "0",
+        "origin_z": "5",
+        "repeat_x": "False",
+        "repeat_y": "False"
+      },
+        {
+        "image": "../bin/assets/backgrounds/bg_l1_floor.png",
+        "color_key": "0xff3300",
+        "origin_x": "0",
+        "origin_y": "3750",
+        "origin_z": "1",
+        "repeat_x": "False",
+        "repeat_y": "False"
       }
     ],
 
+    "enemies":[
+
+    ],
+
     "items":[
-      {"id":"ID QUE COINCIDA CON LA QUE TIENE EN PLAYERS.JSON",
-      "x":" SOLO ALMACENO LA POSICION ANIMACIONES Y TAMAÑO EN PLAYERS.JSON",
-      "y":""
-      }
+
     ],
 
     "player": {

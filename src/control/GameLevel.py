@@ -19,7 +19,9 @@ class GameLevel:
             self.player.setPosition(data.getPlayerPositionAt(id))
             self.grupoSprites = pygame.sprite.Group(self.player)
             self.grupoPlataformas = pygame.sprite.Group()
-            self.stage = Stage(self.manager, self.level, self.player)
+            self.grupoItems = pygame.sprite.Group()
+            self.grupoEnemies = pygame.sprite.Group()
+            self.stage = Stage(self.manager, self.level, self.player,self.grupoPlataformas)
         else:
            print "Error no existe nivel con id ",id
 
