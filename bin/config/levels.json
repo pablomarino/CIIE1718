@@ -50,14 +50,14 @@
       {
         "image": "../bin/assets/backgrounds/bg_l1_platform_0.png",
         "color_key": "0xff3300",
-        "origin_x": "300",
-        "origin_y": "200"
+        "origin_x": "200",
+        "origin_y": "550"
       },
       {
         "image": "../bin/assets/backgrounds/bg_l1_platform_1.png",
         "color_key": "0xff3300",
-        "origin_x": "400",
-        "origin_y": "800"
+        "origin_x": "500",
+        "origin_y": "700"
       },
       {
         "image": "../bin/assets/backgrounds/bg_l1_floor.png",
