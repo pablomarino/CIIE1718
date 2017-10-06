@@ -12,32 +12,32 @@ from character.Player import Player
 class GameLevel:
     def __init__(self, manager, data, id):
         self.manager = manager
+
         self.data = data
         self.level = data.getLevel(id)
+
+        self.spriteGroup = pygame.sprite.Group()
+        self.platformGroup = pygame.sprite.Group()
+        self.itemGroup = pygame.sprite.Group()
+        self.enemyGroup = pygame.sprite.Group()
+        
         if self.level:
             self.player = Player(data, 'player')
             self.player.setPosition(data.getPlayerPositionAt(id))
-            self.grupoSprites = pygame.sprite.Group(self.player)
-            self.grupoPlataformas = pygame.sprite.Group()
-            self.grupoItems = pygame.sprite.Group()
-            self.grupoEnemies = pygame.sprite.Group()
-            self.stage = Stage(self.manager, self.level, self.player,self.grupoPlataformas)
+            self.spriteGroup.add(self.player)
+            
+            self.stage = Stage(self.manager, self.level, self.player,self.platformGroup)
         else:
            print "Error no existe nivel con id ",id
 
     def update(self, clock):
+        self.player.update(self.platformGroup, clock)
         self.stage.update(clock)
-        # Update character
-        self.player.update(self.grupoPlataformas, clock)
-      
 
     def events(self):
-        pressedKeys = pygame.key.get_pressed()
-        self.player.move(pressedKeys, K_UP, K_LEFT, K_RIGHT)
-        # raise NotImplemented("Tiene que implementar el metodo eventos.")
+        self.player.move(pygame.key.get_pressed(), K_UP, K_LEFT, K_RIGHT)
 
     def draw(self):
         self.stage.draw()
-        ## Draw character
-        self.grupoSprites.draw(self.manager.getScreen())
+        self.spriteGroup.draw(self.manager.getScreen())
 
