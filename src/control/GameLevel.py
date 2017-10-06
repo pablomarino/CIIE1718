@@ -1,11 +1,8 @@
 # -*- encoding: utf-8 -*-
 
-# -------------------------------------------------
-# Clase Escena con lo metodos abstractos
 import pygame
 from pygame.locals import *
 from control.Stage import Stage
-from data.DataRetriever import DataRetriever
 from character.Player import Player
 
 
