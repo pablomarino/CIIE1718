@@ -27,7 +27,6 @@
 * **Crear función exitProgram()** que active un flag **exit_program**, que se comprobará en el bucle principal (mirar apuntes)
 * **Eliminar** comprobación de pulsación de **tecla ESC** en el bucle principal **cuando alguien lo haya implementado ya en [GameLevel.py](src/control/GameLevel.py)**
 
-
 ### [Fase](src/control/GameLevel.py)
 * Añadir comprobación de **pulsación de tecla ESC**
 * Modificar el método update() para llevar a cabo las pausas
@@ -37,9 +36,10 @@
 
 ### [Personaje](src/character)
 * ~~Modificar estructura de clases~~
-* ~~Corregir problema de salto infinito~
+* ~~Corregir problema de salto infinito~~
 * Cambiar **constructor** de [Character](src/character/Character.py) (self, data, id) y buscar los recursos a partir del id
 * Crear **EnemyPlayer**, clase similar a player, pero con IA
 * **Traducir** todas las clases
+* Corregir problema de movimientos mientras el personaje está en el aire
 
 
