@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 
 import json
+import pygame
+from pygame.locals import *
 
 class DataRetriever:
     instance = None
@@ -17,6 +19,9 @@ class DataRetriever:
             self.preferences = None
             self.levels = None
             self.players = None
+            self.KEY_LEFT = K_LEFT
+            self.KEY_UP = K_UP
+            self.KEY_RIGHT = K_RIGHT
 
 
     def __loadConfig(self, file):
@@ -61,17 +66,28 @@ class DataRetriever:
     def getKeyQuit(self):
         return self.instance.preferences['keys']['quit']
 
-    def getKeyUp(self):
-        return self.instance.preferences['keys']['up']
+    # def getKeyUp(self):
+    #     return self.instance.preferences['keys']['up']
 
-    def getKeyDown(self):
-        return self.instance.preferences['keys']['down']
+    # def getKeyDown(self):
+    #     return self.instance.preferences['keys']['down']
+
+    # def getKeyLeft(self):
+    #     return self.instance.preferences['keys']['left']
+
+    # def getKeyRight(self):
+    #     return self.instance.preferences['keys']['right']
+
+    def getKeyUp(self):
+        return self.instance.KEY_UP
 
     def getKeyLeft(self):
-        return self.instance.preferences['keys']['left']
+        return self.instance.KEY_LEFT
 
     def getKeyRight(self):
-        return self.instance.preferences['keys']['right']
+        return self.instance.KEY_RIGHT
+
+        
 
     def getKeyBt1(self):
         return self.instance.preferences['keys']['bt1']
@@ -122,3 +138,13 @@ class DataRetriever:
 
     def getPlayerAnimations(self, id):
         return self.instance.players["roster"][id]['animations']
+
+
+    def getPlayerSpeed(self):
+        return self.instance.players["player_speed"]
+
+    def getPlayerJumpSpeed(self):
+        return self.instance.players["player_jump_speed"]
+
+    def getPlayerAnimationDelay(self):
+        return self.instance.players["player_animation_delay"]

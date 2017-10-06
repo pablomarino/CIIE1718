@@ -1,4 +1,7 @@
 {
+  "player_speed":0.2,
+  "player_jump_speed":0.3,
+  "player_animation_delay":5,
   "roster":
     {
       "player": {

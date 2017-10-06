@@ -32,7 +32,7 @@ class GameLevel:
         self.stage.update(clock)
 
     def events(self):
-        self.player.move(pygame.key.get_pressed(), K_UP, K_LEFT, K_RIGHT)
+        self.player.move(pygame.key.get_pressed())
 
     def draw(self):
         self.stage.draw()
