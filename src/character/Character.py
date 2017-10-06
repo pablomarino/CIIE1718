@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from character.MySprite import MySprite
+from view.MySprite import MySprite
 from GestorRecursos import *
 
 
