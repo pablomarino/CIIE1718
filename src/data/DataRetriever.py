@@ -117,12 +117,8 @@ class DataRetriever:
     def getGravity(self,id):
         return self.instance.levels[id]['gravity']
 
-    def getFriction(self,id):
-        return self.instance.levels[id]['gravity']
-
     def getBgLayers(self, id):
         return self.instance.levels[id]['bgLayers']
-
 
     def getPlayers(self):
         return self.instance.players

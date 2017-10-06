@@ -47,5 +47,6 @@ class GameManager:
 
     def getScreen(self):
         return self.screen
+
     def getLibrary(self):
         return self.library

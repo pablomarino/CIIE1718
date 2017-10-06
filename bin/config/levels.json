@@ -39,25 +39,31 @@
       }
     ],
 
+    "platforms_z":"5",
     "platforms": [
-
         {
         "image": "../bin/assets/backgrounds/bg_l1_ceil.png",
         "color_key": "0xff3300",
         "origin_x": "0",
-        "origin_y": "0",
-        "origin_z": "5",
-        "repeat_x": "False",
-        "repeat_y": "False"
+        "origin_y": "0"
       },
-        {
+      {
+        "image": "../bin/assets/backgrounds/bg_l1_platform_0.png",
+        "color_key": "0xff3300",
+        "origin_x": "300",
+        "origin_y": "200"
+      },
+      {
+        "image": "../bin/assets/backgrounds/bg_l1_platform_1.png",
+        "color_key": "0xff3300",
+        "origin_x": "400",
+        "origin_y": "800"
+      },
+      {
         "image": "../bin/assets/backgrounds/bg_l1_floor.png",
         "color_key": "0xff3300",
         "origin_x": "0",
-        "origin_y": "3750",
-        "origin_z": "5",
-        "repeat_x": "False",
-        "repeat_y": "False"
+        "origin_y": "3919"
       }
     ],
 

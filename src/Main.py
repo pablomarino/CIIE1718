@@ -21,11 +21,3 @@ if __name__ == '__main__':
     # manager.add(manager, Menu())
     manager.add(GameLevel(manager, data,"level_1"))
     manager.run()
-
-
-# Todo Tests de todo, Singletones, funciones...
-# Logica de draw y update
-# Mapas de jugador, items, enemigos
-# Fisicas jugador, Capas, colisiones
-# Controladores, diferentes tipos de escenas, elegir escena, eliminarla
-# Dialogos, audio, animaciones ....
