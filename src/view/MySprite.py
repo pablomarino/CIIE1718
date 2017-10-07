@@ -16,6 +16,9 @@ class MySprite(pygame.sprite.Sprite):
         self.rect.left = self.posicion[0] - self.scroll[0]
         self.rect.bottom = self.posicion[1] - self.scroll[1]
 
+    def getPosition(self):
+        return self.posicion
+
     def establecerPosicionPantalla(self, scrollDecorado):
         self.scroll = scrollDecorado;
         (scrollx, scrolly) = self.scroll;

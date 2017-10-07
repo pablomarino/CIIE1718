@@ -165,6 +165,7 @@ class Character(MySprite):
             if (plataforma != None) and (velocidady>0) and (plataforma.rect.bottom>self.rect.bottom):
                 # Lo situamos con la parte de abajo un pixel colisionando con la plataforma
                 #  para poder detectar cuando se cae de ella
+                print self.posicion[0], plataforma.posicion[1],plataforma.rect.height, plataforma.posicion[1]-plataforma.rect.height+1
                 self.setPosition((self.posicion[0], plataforma.posicion[1]-plataforma.rect.height+1))
                 # Lo ponemos como quieto
                 self.numPostura = SPRITE_STOPPED
