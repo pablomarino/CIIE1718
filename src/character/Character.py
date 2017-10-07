@@ -190,3 +190,4 @@ class Character(MySprite):
 
     def getVelocidad(self):
         return self.velocidad
+

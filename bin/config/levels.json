@@ -60,6 +60,12 @@
         "origin_y": "700"
       },
       {
+        "image": "../bin/assets/backgrounds/bg_l1_platform_1.png",
+        "color_key": "-1",
+        "origin_x": "200",
+        "origin_y": "700"
+      },
+      {
         "image": "../bin/assets/backgrounds/bg_l1_floor.png",
         "color_key": "0xff3300",
         "origin_x": "0",

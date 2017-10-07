@@ -1,7 +1,6 @@
 # -*- encoding: utf-8 -*-
 
 import pygame
-from pygame.locals import *
 from control.Stage import Stage
 from character.Player import Player
 
