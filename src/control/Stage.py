@@ -2,7 +2,7 @@
 
 import pygame, math
 
-from src.view.MySprite import MySprite
+from view.MySprite import MySprite
 
 
 class Stage:

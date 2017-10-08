@@ -6,6 +6,7 @@
     {
       "player": {
         "file": "../bin/assets/sprites/main_characters/player_beatrice.png",
+        "file_coords": "../bin/assets/sprites/main_characters/player_beatrice_coords.txt",
         "anchor": "bottom",
         "animations": [
           {
@@ -92,6 +93,7 @@
       },
       "dante": {
         "file": "../bin/assets/player_dante.png",
+        "file_coords": "",
         "anchor": "bottom",
         "animations": [
           {

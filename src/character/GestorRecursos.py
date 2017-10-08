@@ -46,7 +46,8 @@ class GestorRecursos(object):
         # Si no ha sido cargado anteriormente
         else:
             # Se carga el recurso indicando el nombre de su carpeta
-            fullname = os.path.join('../bin/assets/Sprites/main_characters', nombre)
+            # fullname = os.path.join('../bin/assets/sprites/main_characters', nombre)
+            fullname = os.path.join('', nombre)
             pfile=open(fullname,'r')
             datos=pfile.read()
             pfile.close()

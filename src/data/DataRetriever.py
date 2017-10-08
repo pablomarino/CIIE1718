@@ -130,6 +130,9 @@ class DataRetriever:
     def getPlayerSheet(self, id):
         return self.instance.players["roster"][id]['file']
 
+    def getPlayerSheetCoords(self, id):
+        return self.instance.players["roster"][id]['file_coords']    
+
     def getPlayerAnchor(self, id):
         return self.instance.players["roster"][id]['anchor']
 

@@ -10,7 +10,7 @@ class Player(Character):
         Character.__init__(self, 
             data, 
             data.getPlayerSheet(id),
-            'player_beatrice_coords.txt', 
+            data.getPlayerSheetCoords(id),
             [6, 7, 6], 
             data.getPlayerSpeed(), 
             data.getPlayerJumpSpeed(), 
