@@ -1,0 +1,14 @@
+Main characters:
+- beatrice
+- dante
+- satanas (Solo un sprite)
+
+Enemies:
+
+
+Items:
+- items1 (por orden: corazón, comida, moneda 1, moneda 2, moneda 3, reloj)
+
+
+Platforms:
+- No encontré (Necesario usar un editor de mapas?)
