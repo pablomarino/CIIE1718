@@ -5,7 +5,7 @@
   "roster":
     {
       "player": {
-        "file": "../bin/assets/sprites/main_characters/player_beatrice.png",
+        "file": "../bin/assets/sprites/main_characters/beatrice.png",
         "file_coords": "../bin/assets/sprites/main_characters/player_beatrice_coords.txt",
         "anchor": "bottom",
         "animations": [
