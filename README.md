@@ -1,7 +1,7 @@
 
 # Tareas a llevar a cabo
 
-****
+
 
 ## [CARPETA /bin](bin)
 
@@ -13,7 +13,7 @@
 ### [Config](bin/config)
 * ~~Añadir **VELOCIDAD_JUGADOR, VELOCIDAD_SALTO_JUGADOR, RETARDO_ANIMACION_JUGADOR** a ['players.json'](bin/config/players.json), actualmente están en [Player.py](src/character/Player.py)~~
 
-****
+<br><br>
 
 ## [CARPETA /src](src)
 
