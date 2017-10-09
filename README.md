@@ -21,11 +21,11 @@
 
 ### [GameManager](src/control/GameManager.py)
 * ~~Función para añadir escenas a la pila~~
-* *Quizás haga falta cambiar pila[0] por pila[len(self.pila)-1]*
 * Función para **eliminar escena de la pila**
 * **Crear función changeScene()** que active un flag **change_scene**, que se comprobará en el bucle principal (mirar apuntes)
 * **Crear función exitProgram()** que active un flag **exit_program**, que se comprobará en el bucle principal (mirar apuntes)
 * **Eliminar** comprobación de pulsación de **tecla ESC** en el bucle principal **cuando alguien lo haya implementado ya en [GameLevel.py](src/control/GameLevel.py)**
+> **Nota:** Quizás haga falta cambiar pila[0] por pila[len(self.pila)-1]
 
 ### [Fase](src/control/GameLevel.py)
 * Añadir comprobación de **pulsación de tecla ESC**
