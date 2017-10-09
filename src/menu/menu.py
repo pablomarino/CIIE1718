@@ -49,7 +49,7 @@ class Boton(ElementoGUI):
 
 class BotonJugar(Boton):
     def __init__(self, pantalla):
-        Boton.__init__(self, pantalla, 'boton_verde.png', (580,530))
+        Boton.__init__(self, pantalla, 'boton_amarillo.png', (580,530))
     def accion(self):
         self.pantalla.menu.ejecutarJuego()
 
@@ -61,7 +61,7 @@ class BotonOpciones(Boton):
 
 class BotonSalir(Boton):
     def __init__(self, pantalla):
-        Boton.__init__(self, pantalla, 'boton_rojo.png', (580,590))
+        Boton.__init__(self, pantalla, 'boton_amarillo.png', (580,590))
     def accion(self):
         self.pantalla.menu.salirPrograma()
 
