@@ -8,10 +8,10 @@
 ****
 
 ### [Assets](bin/assets)
-* Modificar el **sprite del personaje + archivo de coordenadas**
+* ~~Modificar el **sprite del personaje + archivo de coordenadas**~
 
 ### [Config](bin/config)
-* Añadir **VELOCIDAD_JUGADOR, VELOCIDAD_SALTO_JUGADOR, RETARDO_ANIMACION_JUGADOR** a ['players.json'](bin/config/players.json), actualmente están en [Player.py](src/character/Player.py)
+* ~~Añadir **VELOCIDAD_JUGADOR, VELOCIDAD_SALTO_JUGADOR, RETARDO_ANIMACION_JUGADOR** a ['players.json'](bin/config/players.json), actualmente están en [Player.py](src/character/Player.py)~~
 
 ****
 
