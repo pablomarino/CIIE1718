@@ -11,7 +11,7 @@ class Player(Character):
             data, 
             data.getPlayerSheet(id),
             data.getPlayerSheetCoords(id),
-            [5, 9, 5], 
+            [5, 9, 5, 3], 
             data.getPlayerSpeed(), 
             data.getPlayerJumpSpeed(), 
             data.getPlayerAnimationDelay());

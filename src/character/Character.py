@@ -14,6 +14,7 @@ DOWN = 4
 SPRITE_STOPPED = 0
 SPRITE_WALKING = 1
 SPRITE_JUMPING = 2
+SPRITE_DYING = 3
 
 GRAVITY = 0.0007 # Píxeles / ms2
 
@@ -31,6 +32,9 @@ class Character(MySprite):
 
         # Primero invocamos al constructor de la clase padre
         MySprite.__init__(self);
+
+        # Guardamos el número de posturas del personaje
+        self.numberOfPostures = len(numImagenes)
 
         # Se carga la hoja
         self.hoja = GestorRecursos.CargarImagen(archivoImagen, -1)
@@ -51,7 +55,7 @@ class Character(MySprite):
         self.numImagenPostura = 0;
         cont = 0;
         self.coordenadasHoja = [];
-        for linea in range(0, 3):
+        for linea in range(0, self.numberOfPostures):
             self.coordenadasHoja.append([])
             tmp = self.coordenadasHoja[linea]
             for postura in range(1, numImagenes[linea]+1):
