@@ -37,9 +37,10 @@
 ### [Personaje](src/character)
 * ~~Modificar estructura de clases~~
 * ~~Corregir problema de salto infinito~~
-* Cambiar **constructor** de [Character](src/character/Character.py) (self, data, id) y buscar los recursos a partir del id
+* ~~Cambiar **constructor** de [Character](src/character/Character.py) (self, data, id) y buscar los recursos a partir del id~~
 * Crear **EnemyPlayer**, clase similar a player, pero con IA
 * **Traducir** todas las clases
-* Corregir problema de movimientos mientras el personaje está en el aire
+* Cuando el personaje salta no permite moverse a los lados
+* Crear una nueva postura del personaje que sea FALLING para tener una animación solo de caída, independiente de la animación de salto.
 
 
