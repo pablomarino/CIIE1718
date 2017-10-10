@@ -15,7 +15,7 @@ class GestorRecursos(object):
     def CargarImagen(cls, nombre, colorkey=None):
         # Si el nombre de archivo está entre los recursos ya cargados
         if nombre in cls.recursos:
-            # Se devuelve ese recurso
+        # Se devuelve ese recurso
             return cls.recursos[nombre]
         # Si no ha sido cargado anteriormente
         else:

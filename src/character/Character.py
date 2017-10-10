@@ -66,7 +66,7 @@ class Character(MySprite):
         self.retardoMovimiento = 0;
 
         # En que postura esta inicialmente
-        self.numPostura = STOPPED
+        self.numPostura = SPRITE_JUMPING
 
         # El rectangulo del Sprite
         self.rect = pygame.Rect(100,100,self.coordenadasHoja[self.numPostura][self.numImagenPostura][2],self.coordenadasHoja[self.numPostura][self.numImagenPostura][3])
@@ -116,6 +116,8 @@ class Character(MySprite):
 
 
     def update(self, grupoPlataformas, tiempo):
+
+        print(pygame.sprite.spritecollideany(self, grupoPlataformas))
 
         # Las velocidades a las que iba hasta este momento
         (velocidadx, velocidady) = self.velocidad
@@ -170,7 +172,7 @@ class Character(MySprite):
                 # Lo situamos con la parte de abajo un pixel colisionando con la plataforma
                 #  para poder detectar cuando se cae de ella
                 print self.posicion[0], plataforma.posicion[1],plataforma.rect.height, plataforma.posicion[1]-plataforma.rect.height+1
-                self.setPosition((self.posicion[0], plataforma.posicion[1]-plataforma.rect.height+1))
+                self.setPosition((self.posicion[0], plataforma.posicion[1]-plataforma.rect.height+2))
                 # Lo ponemos como quieto
                 self.numPostura = SPRITE_STOPPED
                 # Y estará quieto en el eje y
