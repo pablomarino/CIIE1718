@@ -1,7 +1,10 @@
 # -*- encoding: utf-8 -*-
 
 import pygame
-from control.Stage import Stage
+
+from control.stage.Stage import Stage
+from control.stage.Platform import Platform
+from control.stage.Background import *
 from character.Player import Player
 
 
