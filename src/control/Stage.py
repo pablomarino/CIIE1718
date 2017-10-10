@@ -18,26 +18,27 @@ class Stage:
         self.setup()
 
     def setup(self):
-
+        # Dimensiones de la pantalla
         self.stageWidth = int(self.data["dimensions"][0])
         self.stageHeight = int(self.data["dimensions"][1])
 
+        # Gravedad
         self.gravityX = int(self.data["gravity"][0])
         self.gravityY = int(self.data["gravity"][1])
 
+        # Cordenada Z de la capa de plataformas
         self.platforms_z = int(self.data["platforms_z"])
 
-        # Fondo
+        # Genero las capas del Fondo
         for l in self.data["bglayers"]:
             bglayer = BgLayer(self.manager, l,self.player,  (self.stageWidth, self.stageHeight))
             self.backgroundStack.append(bglayer)
 
 
-        # Plataformas
+        # Genero las Plataformas
         for p in self.data["platforms"]:
             platform = Platform(self.manager,p, self.player,(self.stageWidth,self.stageHeight),  self.platforms_z)
             self.platformGroup.add(platform)
-
 
 
         '''
@@ -91,8 +92,6 @@ class BgLayer(MySprite):
         # Limites del scroll
         self.scrollLimits = ( self.levelDimensions[0] - self.stageDimensions[0],
                              -self.levelDimensions[1] + self.stageDimensions[1])
-        # Easing del movimiento del scroll
-        self.scrollDelay = .2
 
         # Posicion de la plataforma
         self.position = (int(self.data["origin_x"]), int(self.data["origin_y"]))
@@ -123,8 +122,8 @@ class BgLayer(MySprite):
 
     def update(self ,clock):
         tmpPV=self.player.getVelocidad()
-        self.scrollValue[0] -= math.ceil(tmpPV[0] * self.z * clock * self.scrollDelay)
-        self.scrollValue[1] -= math.ceil(tmpPV[1] * self.z * clock * self.scrollDelay)
+        self.scrollValue[0] -= math.ceil(tmpPV[0] * self.z * clock)
+        self.scrollValue[1] -= math.ceil(tmpPV[1] * self.z * clock)
         
        # me aseguro de que no se salga la pantalla
 
@@ -153,21 +152,18 @@ class Platform(MySprite):
         # Super
         MySprite.__init__(self)
 
-        # Ref. a Gamemanager
+        # Referencia a Gamemanager
         self.manager = manager
-        # JSON
+        # Datos del JSON
         self.data = data
         # Dimensiones de la pantalla
         self.stageDimensions = self.manager.getScreen().get_size()
-        ## puede que plataformas no lo necesite
         # Dimensiones del nivel
         self.levelDimensions = dimensions
         # valor del scroll
         self.scrollValue = list((0,0))
         # Limites del scroll
-        self.scrollLimits=(self.levelDimensions[0] - self.stageDimensions[0],-self.levelDimensions[1] + self.stageDimensions[1])
-        # Easing del movimiento del scroll
-        self.scrollDelay = 1#.12
+        self.scrollLimits=(self.levelDimensions[0] - self.stageDimensions[0], -self.levelDimensions[1] + self.stageDimensions[1])
         # Posicion de la plataforma
         self.position = (int(self.data["origin_x"]), int(self.data["origin_y"]))
         self.z = origin_z
@@ -184,8 +180,14 @@ class Platform(MySprite):
         self.setPosition(self.position)
 
     def update(self ,clock):
-        self.setPosition((self.player.getPosition()[0]-self.startPos[0],self.player.getPosition()[1]-self.startPos[1]))
-        #self.incrementarPosicion((0,math.ceil(self.player.getVelocidad()[1] *clock * -self.scrollDelay)))
+        pass
+        # el no jugador esta en el centro de la pantalla
+        # y no he superado el limite superior de la pantalla
+        # y no he superado el limite inferior de la pantalla
+        # Actualizo el scroll
+
+        # self.setPosition((self.player.getPosition()[0]-self.startPos[0],self.player.getPosition()[1]-self.startPos[1]))
+        # self.incrementarPosicion((0,math.ceil(self.player.getVelocidad()[1] *clock )))
 
 
 
