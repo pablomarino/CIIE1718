@@ -20,21 +20,21 @@
         "repeat_y": "True"
       },
       {
-        "image": "../bin/assets/backgrounds/bg_l1_1.png",
-        "color_key": "-1",
-        "origin_x": "0",
-        "origin_y": "0",
-        "origin_z": "2",
-        "repeat_x": "True",
-        "repeat_y": "True"
-      },
-      {
         "image": "../bin/assets/backgrounds/bg_l1_2.png",
         "color_key": "0x312111",
         "origin_x": "0",
         "origin_y": "0",
         "origin_z": "5",
         "repeat_x": "False",
+        "repeat_y": "True"
+      },
+      {
+        "image": "../bin/assets/backgrounds/bg_l1_1.png",
+        "color_key": "-1",
+        "origin_x": "0",
+        "origin_y": "0",
+        "origin_z": "2",
+        "repeat_x": "True",
         "repeat_y": "True"
       }
     ],

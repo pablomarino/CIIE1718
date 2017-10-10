@@ -10,8 +10,10 @@ class Stage:
         self.manager = manager
         self.data = data
         self.player = player
+        self.playerStartPosition = self.player.getPosition()
+        self.scrollValue = list((0, 0))
 
-        self.backgroundStack = self.itemStack = self.enemyStack = []
+        self.itemStack = self.enemyStack = []
 
         self.platformGroup = platformGroup
 
@@ -29,17 +31,13 @@ class Stage:
         # Cordenada Z de la capa de plataformas
         self.platforms_z = int(self.data["platforms_z"])
 
-        # Genero las capas del Fondo
-        for l in self.data["bglayers"]:
-            bglayer = BgLayer(self.manager, l,self.player,  (self.stageWidth, self.stageHeight))
-            self.backgroundStack.append(bglayer)
-
+        # Genero la capa del Fondo
+        self.backGround = BackGround(self.manager, self.data["bglayers"], self.player,(self.stageWidth,self.stageHeight))
 
         # Genero las Plataformas
         for p in self.data["platforms"]:
             platform = Platform(self.manager,p, self.player,(self.stageWidth,self.stageHeight),  self.platforms_z)
             self.platformGroup.add(platform)
-
 
         '''
         # Items
@@ -57,20 +55,48 @@ class Stage:
 
 
     def update(self,clock):
+        self.scrollValue = (0,#abs(self.player.getPosition()[0]-self.playerStartPosition[0]),
+            (self.player.getPosition()[1]-self.playerStartPosition[1]))
         self.manager.getScreen().fill(int(self.data["bgColor"], 16))
-        for l in self.backgroundStack:
-            l.update(clock)
+        self.backGround.update(clock,self.scrollValue)
         for p in self.platformGroup:
-            p.update(clock)
+            p.update(clock,self.scrollValue)
 
     def draw(self):
-        for l in self.backgroundStack:
-            l.draw()
+        self.backGround.draw()
         self.platformGroup.draw(self.manager.getScreen())
 
     def events(self, *args):
         raise NotImplemented("Tiene que implementar el metodo eventos.")
 
+class BackGround():
+
+    def __init__(self, manager, data, player, stageDimensions):
+        self.scrollValue = list((0, 0))
+        self.backgroundStack = []
+        self.manager = manager
+        self.data = data
+        self.player = player
+        self.stageDimensions = stageDimensions
+
+        for l in self.data:
+            bglayer = BgLayer(self.manager, l,self.player,  (self.stageDimensions[0], self.stageDimensions[1]))
+            self.backgroundStack.append(bglayer)
+
+    def getScrollValue(self):
+        return self.scrollValue
+
+    def update(self, clock, scrollValue):
+        for l in self.backgroundStack:
+            l.update(clock,scrollValue)
+
+
+    def draw(self):
+        for l in self.backgroundStack:
+            l.draw()
+
+    def events(self, *args):
+        raise NotImplemented("Tiene que implementar el metodo eventos.")
 ## BGLAYER
 
 class BgLayer(MySprite):
@@ -120,13 +146,12 @@ class BgLayer(MySprite):
             self.timesY = 1
 
 
-    def update(self ,clock):
-        tmpPV=self.player.getVelocidad()
-        self.scrollValue[0] -= math.ceil(tmpPV[0] * self.z * clock)
-        self.scrollValue[1] -= math.ceil(tmpPV[1] * self.z * clock)
-        
-       # me aseguro de que no se salga la pantalla
+    def update(self ,clock, scrollValue):
+        self.scrollValue[0] = -(scrollValue[0] * self.z)
+        self.scrollValue[1] = -(scrollValue[1] * self.z)
 
+        # me aseguro de que no se salga la pantalla
+        '''
         if self.scrollValue[0] < self.scrollLimits[0]:
             self.scrollValue[0] = self.scrollLimits[0]
         elif self.scrollValue[0] > 0 :
@@ -136,7 +161,7 @@ class BgLayer(MySprite):
             self.scrollValue[1] = 0
         elif self.scrollValue[1] < self.scrollLimits[1]:
             self.scrollValue[1] = self.scrollLimits[1]
-
+        '''
     def draw(self):
         for i in range(0, self.timesX):
             for j in range(0, self.timesY):
@@ -179,16 +204,16 @@ class Platform(MySprite):
         self.rect = pygame.Rect(self.position[0],self.position[1],self.imageW,self.imageH)
         self.setPosition(self.position)
 
-    def update(self ,clock):
-        pass
+    def update(self ,clock,scrollValue):
+        self.scrollValue= scrollValue
+        targetX = (self.position[0] - self.scrollValue[0])
+        targetY = (self.position[1] - self.scrollValue[1])
+        self.setPosition((targetX,targetY))
+        # print self.player.getPosition(), self.scrollValue, self.position[0], self.position[1]
         # el no jugador esta en el centro de la pantalla
         # y no he superado el limite superior de la pantalla
         # y no he superado el limite inferior de la pantalla
         # Actualizo el scroll
-
-        # self.setPosition((self.player.getPosition()[0]-self.startPos[0],self.player.getPosition()[1]-self.startPos[1]))
-        # self.incrementarPosicion((0,math.ceil(self.player.getVelocidad()[1] *clock )))
-
 
 
 
