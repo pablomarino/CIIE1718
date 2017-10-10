@@ -20,16 +20,16 @@ class Asmodeo(Enemy):
             data, 
             data.getPlayerSheet(id),
             data.getPlayerSheetCoords(id),
-            [5, 9, 5, 3], 
+            [5, 9, 5, 3], //??
             data.getPlayerSpeed(), 
             data.getPlayerJumpSpeed(), 
             data.getPlayerAnimationDelay());
 
     def move_cpu(self, data, player):
-         if self.rect.left>0 and self.rect.right<data.getWidht() and self.rect.bottom>0 and self.rect.top<data.getHeight():
-            if player.posicion[0]<self.posicion[0]:
-                        player.move(self,LEFT)
-                    else:
-                        player.move(self,RIGHT)
-                else:
-                    player.move(self,STOPPED)
+        if self.rect.left>0 and self.rect.right<data.getWidht() and self.rect.bottom>0 and self.rect.top<data.getHeight():
+            if player.position[0]<self.position[0]:
+                Character.move(self,LEFT)
+            else:
+                Character.move(self,RIGHT)
+        else:
+            Character.move(self,STOPPED)
