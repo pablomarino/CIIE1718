@@ -4,8 +4,7 @@ import pygame, math
 
 from control.stage.Background import *
 from control.stage.Platform import *
-from view.MySprite import MySprite
-
+import math
 
 class Stage:
     def __init__(self, manager,  data, player, platformGroup, spriteGroup):
@@ -59,9 +58,13 @@ class Stage:
 
 
     def update(self,clock):
+        self.manager.getScreen().fill(int(self.data["bgColor"], 16)) # en windows es necesario =\
+        # Calculo la distancia entre la posicion inicial del jugador y la actual
+        # Este valor se le pasa a Background y Platform para que realice el scroll
+        # la componente x es 0 pq no hacemos scroll horizontal
         self.scrollValue = (
-            0,#(self.player.getPosition()[0]-self.playerStartPosition[0]),
-            (self.player.getPosition()[1]-self.playerStartPosition[1]))
+            0,  # (self.player.getPosition()[0]-self.playerStartPosition[0]),
+            int(math.ceil(self.player.getPosition()[1]-self.playerStartPosition[1])))
         self.background.update(clock, self.scrollValue)
         for p in self.platformGroup:
             p.update(clock, self.scrollValue)

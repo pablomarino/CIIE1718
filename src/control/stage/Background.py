@@ -82,9 +82,7 @@ class BgLayer(MySprite):
 
 
     def update(self ,clock, scrollValue):
-        self.scrollValue[0] = -(scrollValue[0] * self.z)
-        self.scrollValue[1] = -(scrollValue[1] * self.z)
-
+        # Todo comprobar valores a partir de los que es necesario realizar el scroll
         # me aseguro de que no se salga la pantalla
         '''
         if self.scrollValue[0] < self.scrollLimits[0]:
@@ -97,10 +95,13 @@ class BgLayer(MySprite):
         elif self.scrollValue[1] < self.scrollLimits[1]:
             self.scrollValue[1] = self.scrollLimits[1]
         '''
+        self.scrollValue = (-scrollValue[0] * self.z, - scrollValue[1] * self.z)
+
+
     def draw(self):
         for i in range(0, self.timesX):
             for j in range(0, self.timesY):
                 self.manager.getScreen().blit(self.image, (
-                self.scrollValue[0] +self.position[0] + self.imageW * i,
-                self.scrollValue[1] +self.position[1] + self.imageH * j)
-                )
+                    self.scrollValue[0] +self.position[0] + self.imageW * i,
+                    self.scrollValue[1] +self.position[1] + self.imageH * j)
+                    )

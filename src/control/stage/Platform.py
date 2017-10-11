@@ -22,8 +22,6 @@ class Platform(MySprite):
         self.z = origin_z
         # Jugador
         self.player = player
-        # Posicion inicial del jugador
-        self.startPos = self.player.getPosition()
         # Obtengo la imagen
         self.image = self.manager.getLibrary().load(self.data["image"],self.data["color_key"])
         # Guardo sus dimensiones
@@ -33,11 +31,10 @@ class Platform(MySprite):
         self.setPosition(self.position)
 
     def update(self ,clock, scrollValue):
-        self.scrollValue = scrollValue
-        # targetX = (self.position[0] - self.scrollValue[0])
-        # targetY = (self.position[1] - self.scrollValue[1])
-        targetX = (self.position[0])
-        targetY = (self.position[1])
+        self.scrollValue = scrollValue*self.z
+        #print scrollValue
+        targetX = self.position[0]-self.scrollValue[0]*self.z
+        targetY = self.position[1]-self.scrollValue[1]*self.z
         self.setPosition((targetX,targetY))
         
         # print self.player.getPosition(), self.scrollValue, self.position[0], self.position[1]

@@ -21,7 +21,7 @@ class AssetLoader:
     def load(self, file, colorkey = None):
         # Transparencia
         # -1 auto
-        # 0 Ninguno
+        # metele un color que no haya si no quieres transparencia =P
         # 0x Hexadecimal
 
         # Si el fichero está entre los recursos ya cargados
