@@ -8,12 +8,14 @@ from view.MySprite import MySprite
 
 
 class Stage:
-    def __init__(self, manager,  data, player, platformGroup):
+    def __init__(self, manager,  data, player, platformGroup, spriteGroup):
         self.manager = manager
         self.data = data
         self.player = player
         self.playerStartPosition = self.player.getPosition()
         self.scrollValue = list((0, 0))
+
+        self.spriteGroup = spriteGroup
 
         self.itemStack = self.enemyStack = []
 
@@ -60,13 +62,15 @@ class Stage:
         self.scrollValue = (
             0,#(self.player.getPosition()[0]-self.playerStartPosition[0]),
             (self.player.getPosition()[1]-self.playerStartPosition[1]))
-        self.background.update(clock,self.scrollValue)
+        self.background.update(clock, self.scrollValue)
         for p in self.platformGroup:
-            p.update(clock,self.scrollValue)
+            p.update(clock, self.scrollValue)
+        self.player.update(self.platformGroup, clock)
 
     def draw(self):
         self.background.draw()
         self.platformGroup.draw(self.manager.getScreen())
+        self.spriteGroup.draw(self.manager.getScreen())
 
     def events(self, *args):
         raise NotImplemented("Tiene que implementar el metodo eventos.")

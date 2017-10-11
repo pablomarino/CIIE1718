@@ -156,6 +156,7 @@ class Character(MySprite):
             if not self.numPostura == SPRITE_JUMPING:
                 self.numPostura = SPRITE_STOPPED
             velocidadx = 0
+            # TODO decidir si poner velocidadY = 0
 
 
 
