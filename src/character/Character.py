@@ -184,7 +184,7 @@ class Character(MySprite):
                 velocidady += GRAVITY * tiempo
                 ###
                 ###
-                ###
+                ### todo Hay que limitar la velocidad de caida y al llegar al maximo si choca con plataforma muere
                 ###
                 ###
                 if velocidady>0.01:velocidady=0.05
@@ -205,3 +205,5 @@ class Character(MySprite):
     def getVelocidad(self):
         return self.velocidad
 
+    def getDoUpdateScroll(self):
+        return self.numPostura == SPRITE_JUMPING

@@ -62,9 +62,10 @@ class Stage:
         # Calculo la distancia entre la posicion inicial del jugador y la actual
         # Este valor se le pasa a Background y Platform para que realice el scroll
         # la componente x es 0 pq no hacemos scroll horizontal
-        self.scrollValue = (
-            0,  # (self.player.getPosition()[0]-self.playerStartPosition[0]),
-            int(math.ceil(self.player.getPosition()[1]-self.playerStartPosition[1])))
+        if self.player.getDoUpdateScroll(): # solo actualizo el scroll si esta saltando
+            self.scrollValue = (
+                0,  # (self.player.getPosition()[0]-self.playerStartPosition[0]),
+                int(math.ceil(self.player.getPosition()[1]-self.playerStartPosition[1])))
         self.background.update(clock, self.scrollValue)
         for p in self.platformGroup:
             p.update(clock, self.scrollValue)
