@@ -32,11 +32,14 @@ class Platform(MySprite):
         self.rect = pygame.Rect(self.position[0],self.position[1],self.imageW,self.imageH)
         self.setPosition(self.position)
 
-    def update(self ,clock,scrollValue):
-        self.scrollValue= scrollValue
-        targetX = (self.position[0] - self.scrollValue[0])
-        targetY = (self.position[1] - self.scrollValue[1])
+    def update(self ,clock, scrollValue):
+        self.scrollValue = scrollValue
+        # targetX = (self.position[0] - self.scrollValue[0])
+        # targetY = (self.position[1] - self.scrollValue[1])
+        targetX = (self.position[0])
+        targetY = (self.position[1])
         self.setPosition((targetX,targetY))
+        
         # print self.player.getPosition(), self.scrollValue, self.position[0], self.position[1]
         # el no jugador esta en el centro de la pantalla
         # y no he superado el limite superior de la pantalla
