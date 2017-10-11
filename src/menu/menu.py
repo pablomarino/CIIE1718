@@ -203,7 +203,7 @@ class Menu(Escena):
         self.pantallaActual = 0
 
     def opcionesJuego(self):
+        #opt = Options(self.director)
+        #self.director.apilarEscena(fase)
         raise NotImplemented("Tiene que implementar el metodo ejecutar.")
 
-    # def mostrarPantallaConfiguracion(self):
-    #    self.pantallaActual = ...
