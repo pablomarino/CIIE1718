@@ -7,7 +7,7 @@ from control.stage.Platform import *
 import math
 
 class Stage:
-    def __init__(self, manager,  data, player, platformGroup, spriteGroup):
+    def __init__(self, manager, data, player, platformGroup, spriteGroup, enemy1):
         self.manager = manager
         self.data = data
         self.player = player
@@ -16,6 +16,10 @@ class Stage:
         self.spriteGroup = spriteGroup
         self.itemStack = self.enemyStack = []
         self.platformGroup = platformGroup
+        # TODO esto está metido a lo bestia para hacer pruebas
+        self.enemy1 = enemy1
+        self.enemyGroup = pygame.sprite.Group()
+        self.enemyGroup.add(self.enemy1)
         self.setup()
 
     def setup(self):
@@ -63,11 +67,13 @@ class Stage:
             p.update(clock, self.playerDisplacement)
 
         self.player.update(self.platformGroup, clock,self.playerDisplacement)
+        self.enemy1.update(self.platformGroup, clock,self.playerDisplacement)
 
     def draw(self):
         self.background.draw()
         self.platformGroup.draw(self.manager.getScreen())
         self.spriteGroup.draw(self.manager.getScreen())
+        self.enemyGroup.draw(self.manager.getScreen())
 
     def events(self, *args):
         raise NotImplemented("Tiene que implementar el metodo eventos.")

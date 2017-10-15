@@ -28,7 +28,7 @@ class GameLevel:
             self.enemy1 = Asmodeo(data)
             self.enemy1.setPosition(data.getPlayerPositionAt(id))
 
-            self.stage = Stage(self.manager, self.level, self.player, self.platformGroup, self.spriteGroup)
+            self.stage = Stage(self.manager, self.level, self.player, self.platformGroup, self.spriteGroup, self.enemy1)
         else:
             print "Error no existe nivel con id ", id
 
