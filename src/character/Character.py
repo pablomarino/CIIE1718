@@ -115,9 +115,9 @@ class Character(MySprite):
                 self.image = pygame.transform.flip(self.hoja.subsurface(self.coordenadasHoja[self.numPostura][self.numImagenPostura]), 1, 0)
 
 
-    def update(self, grupoPlataformas, tiempo):
+    def update(self, grupoPlataformas, tiempo,scroll):
 
-        print(pygame.sprite.spritecollideany(self, grupoPlataformas))
+        # print(pygame.sprite.spritecollideany(self, grupoPlataformas))
 
         # Las velocidades a las que iba hasta este momento
         (velocidadx, velocidady) = self.velocidad
@@ -187,7 +187,7 @@ class Character(MySprite):
                 ### todo Hay que limitar la velocidad de caida y al llegar al maximo si choca con plataforma muere
                 ###
                 ###
-                if velocidady>0.01:velocidady=0.05
+                if velocidady>0.25:velocidady=0.25
 
         # Actualizamos la imagen a mostrar
         self.actualizarPostura()
@@ -198,12 +198,13 @@ class Character(MySprite):
         # Y llamamos al método de la superclase para que, según la velocidad y el tiempo
         #  calcule la nueva posición del Sprite
         MySprite.update(self, tiempo)
-        
-        return
 
+        if self.getDoUpdateScroll():
+            self.establecerPosicionPantalla((scroll[0],-scroll[1]))
 
     def getVelocidad(self):
         return self.velocidad
 
     def getDoUpdateScroll(self):
+        # todo Si se añade sprite de caida habra que añadirl aqui SPRITE_FALLING
         return self.numPostura == SPRITE_JUMPING

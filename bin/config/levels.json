@@ -5,11 +5,16 @@
       "4000"
     ],
     "bgColor": "0x1e0203",
-    "gravity": [
-      "0",
-      "10"
-    ],
     "bglayers": [
+            {
+        "image": "../bin/assets/backgrounds/bg_l1_2.png",
+        "color_key": "0x312111",
+        "origin_x": "0",
+        "origin_y": "0",
+        "origin_z": "5",
+        "repeat_x": "False",
+        "repeat_y": "True"
+      },
       {
         "image": "../bin/assets/backgrounds/bg_l1_0.png",
         "color_key": "0",
@@ -19,15 +24,7 @@
         "repeat_x": "False",
         "repeat_y": "True"
       },
-      {
-        "image": "../bin/assets/backgrounds/bg_l1_2.png",
-        "color_key": "0x312111",
-        "origin_x": "0",
-        "origin_y": "0",
-        "origin_z": "5",
-        "repeat_x": "False",
-        "repeat_y": "True"
-      },
+
       {
         "image": "../bin/assets/backgrounds/bg_l1_1.png",
         "color_key": "-1",
@@ -45,7 +42,7 @@
         "image": "../bin/assets/backgrounds/bg_l1_ceil.png",
         "color_key": "0xff3300",
         "origin_x": "0",
-        "origin_y": "0"
+        "origin_y": "81"
       },
       {
         "image": "../bin/assets/backgrounds/bg_l1_platform_0.png",
@@ -69,7 +66,7 @@
         "image": "../bin/assets/backgrounds/bg_l1_floor.png",
         "color_key": "0xff3300",
         "origin_x": "0",
-        "origin_y": "3919"
+        "origin_y": "4081"
       }
     ],
 
