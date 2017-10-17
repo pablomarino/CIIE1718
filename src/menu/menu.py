@@ -49,19 +49,14 @@ class Boton(ElementoGUI):
 
 class BotonJugar(Boton):
     def __init__(self, pantalla):
-        Boton.__init__(self, pantalla, 'boton.png', (580,530))
+        Boton.__init__(self, pantalla, 'boton.png', (640,530))
     def accion(self):
         self.pantalla.menu.ejecutarJuego()
 
-class BotonOpciones(Boton):
-    def __init__(self, pantalla):
-        Boton.__init__(self, pantalla, 'boton.png', (580,560))
-    def accion(self):
-        self.pantalla.menu.opcionesJuego()
 
 class BotonSalir(Boton):
     def __init__(self, pantalla):
-        Boton.__init__(self, pantalla, 'boton.png', (580,590))
+        Boton.__init__(self, pantalla, 'boton.png', (640,560))
     def accion(self):
         self.pantalla.menu.salirPrograma()
 
@@ -83,23 +78,15 @@ class TextoJugar(TextoGUI):
     def __init__(self, pantalla):
         # La fuente la debería cargar el estor de recursos
         fuente = pygame.font.SysFont('arial', 26);
-        TextoGUI.__init__(self, pantalla, fuente, (255, 255, 255), 'Jugar', (610, 535))
+        TextoGUI.__init__(self, pantalla, fuente, (255, 255, 255), 'Jugar', (670, 535))
     def accion(self):
         self.pantalla.menu.ejecutarJuego()
-
-class TextoOpciones(TextoGUI):
-    def __init__(self, pantalla):
-        # La fuente la debería cargar el estor de recursos
-        fuente = pygame.font.SysFont('arial', 26);
-        TextoGUI.__init__(self, pantalla, fuente, (255, 255, 255), 'Opciones', (610, 565))
-    def accion(self):
-        self.pantalla.menu.opcionesJuego()
 
 class TextoSalir(TextoGUI):
     def __init__(self, pantalla):
         # La fuente la debería cargar el estor de recursos
         fuente = pygame.font.SysFont('arial', 26);
-        TextoGUI.__init__(self, pantalla, fuente, (255, 255, 255), 'Salir', (610, 595))
+        TextoGUI.__init__(self, pantalla, fuente, (255, 255, 255), 'Salir', (670, 565))
     def accion(self):
         self.pantalla.menu.salirPrograma()
 
@@ -140,17 +127,13 @@ class PantallaInicialGUI(PantallaGUI):
         PantallaGUI.__init__(self, menu, 'fondo.jpg')
         # Creamos los botones y los metemos en la lista
         botonJugar = BotonJugar(self)
-        botonOpciones = BotonOpciones(self)
         botonSalir = BotonSalir(self)
         self.elementosGUI.append(botonJugar)
-        self.elementosGUI.append(botonOpciones)
         self.elementosGUI.append(botonSalir)
         # Creamos el texto y lo metemos en la lista
         textoJugar = TextoJugar(self)
-        textoOpciones = TextoOpciones(self)
         textoSalir = TextoSalir(self)
         self.elementosGUI.append(textoJugar)
-        self.elementosGUI.append(textoOpciones)
         self.elementosGUI.append(textoSalir)
 
 # -------------------------------------------------
@@ -202,8 +185,4 @@ class Menu(Escena):
     def mostrarPantallaInicial(self):
         self.pantallaActual = 0
 
-    def opcionesJuego(self):
-        #opt = Options(self.director)
-        #self.director.apilarEscena(fase)
-        raise NotImplemented("Tiene que implementar el metodo ejecutar.")
-
+    
