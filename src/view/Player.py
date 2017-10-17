@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from character.Character import *
+from view.Character import *
 
 
 class Player(Character):

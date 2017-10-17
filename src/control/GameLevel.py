@@ -3,8 +3,8 @@
 import pygame
 
 from control.stage.Stage import Stage
-from character.Player import Player
-from character.Enemy import Asmodeo
+from view.Player import Player
+from view.Enemy import Asmodeo
 
 
 class GameLevel:
