@@ -2,6 +2,34 @@
 # Tareas a llevar a cabo
 
 
+## Jose
+* Hud
+* Mover character para la carpeta view
+* Mover menu para la carpeta
+
+## Pablo
+* character corregir salto
+* character corregir scroll enemigo
+* items
+
+## Matías
+* director cargar menu y transición entre fases
+
+## Uxía
+* memoria
+
+## Óscar
+* Audio
+
+
+<br><br><br><br><br><br><br>
+
+
+
+
+
+
+
 
 ## [CARPETA /bin](bin)
 
