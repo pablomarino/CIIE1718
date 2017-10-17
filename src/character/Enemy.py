@@ -19,9 +19,8 @@ class Enemy(Character):
     def move_cpu(self, data, player):
         return
 
-
 # -------------------------------------------------
-# Asmodeo
+# Asmodeo (fase 1)
 
 class Asmodeo(Enemy):
     def __init__(self, data):
@@ -36,3 +35,23 @@ class Asmodeo(Enemy):
                 Character.move(self, RIGHT)
         else:
             Character.move(self, STOPPED)'''
+
+# -------------------------------------------------
+# Belcebu (fase 2)
+
+class Belcebu(Enemy):
+    def __init__(self, data):
+        Enemy.__init__(self, data, "asmodeo")
+
+    def move_cpu(self, data, player):
+        pass
+
+# -------------------------------------------------
+# Mammon (fase 3)
+
+class Mammon(Enemy):
+    def __init__(self, data):
+        Enemy.__init__(self, data, "mammon")
+
+    def move_cpu(self, data, player):
+        pass
