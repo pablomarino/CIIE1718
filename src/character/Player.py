@@ -5,11 +5,12 @@ from character.Character import *
 class Player(Character):
     "Cualquier personaje del juego"
 
-    def __init__(self, data, id):
+    def __init__(self, manager, data, id):
         # Invocamos al constructor de la clase padre con la configuracion de este personaje concreto
         # TODO cambiar el constructor de Character por (self, data, id)
         # Dentro del propio constructor elige el sprite y demás valores buscando en el dataRetriever
         Character.__init__(self,
+                           manager,
                            data,
                            data.getPlayerSheet(id),
                            data.getPlayerSheetCoords(id),

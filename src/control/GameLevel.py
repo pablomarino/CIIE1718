@@ -20,12 +20,12 @@ class GameLevel:
         self.enemyGroup = pygame.sprite.Group()
 
         if self.level:
-            self.player = Player(data, 'player')
+            self.player = Player(manager, data, 'player')
             self.player.setPosition(data.getPlayerPositionAt(id))
             self.spriteGroup.add(self.player)
 
             # TODO crear enemigos de una forma más natural
-            self.enemy1 = Asmodeo(data)
+            self.enemy1 = Asmodeo(manager, data)
             self.enemy1.setPosition(data.getPlayerPositionAt(id))
 
             self.stage = Stage(self.manager, self.level, self.player, self.platformGroup, self.spriteGroup, self.enemy1)
