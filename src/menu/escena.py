@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 
-ANCHO_PANTALLA = 800
-ALTO_PANTALLA = 600
+ANCHO_PANTALLA = 1024
+ALTO_PANTALLA = 768
 
 # -------------------------------------------------
 # Clase Escena con lo metodos abstractos
