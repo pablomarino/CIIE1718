@@ -3,8 +3,8 @@
 
 
 ## Jose
-* Hud
-* Mover character para la carpeta view
+* ~~Hud~~
+* ~~Mover character para la carpeta view~~
 * Mover menu para la carpeta
 
 ## Pablo
@@ -13,13 +13,14 @@
 * items
 
 ## Matías
-* director cargar menu y transición entre fases
+* director cargar menu
+* transición entre fases
 
 ## Uxía
 * memoria
 
 ## Óscar
-* Audio
+* ~~Audio~~
 
 
 <br><br><br><br><br><br><br>
@@ -65,7 +66,7 @@
 ### [Personaje](src/character)
 * ~~Modificar estructura de clases~~
 * ~~Corregir problema de salto infinito~~
-* ~~Cambiar **constructor** de [Character](src/character/Character.py) (self, data, id) y buscar los recursos a partir del id~
+* ~~Cambiar **constructor** de [Character](src/character/Character.py) (self, data, id) y buscar los recursos a partir del id~~
 * Crear **EnemyPlayer**, clase similar a player, pero con IA
 * **Traducir** todas las clases
 * Cuando el personaje **salta** permitir **moverse a los lados.**
