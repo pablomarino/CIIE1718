@@ -9,7 +9,7 @@ import math
 
 
 class Stage:
-    def __init__(self, manager, data, player, platformGroup, spriteGroup, enemy1):
+    def __init__(self, manager, data, player, platformGroup, spriteGroup, enemyGroup):
         self.manager = manager
         self.data = data
         self.player = player
@@ -18,10 +18,7 @@ class Stage:
         self.spriteGroup = spriteGroup
         self.itemStack = self.enemyStack = []
         self.platformGroup = platformGroup
-        # TODO esto está metido a lo bestia para hacer pruebas
-        self.enemy1 = enemy1
-        self.enemyGroup = pygame.sprite.Group()
-        self.enemyGroup.add(self.enemy1)
+        self.enemyGroup = enemyGroup
         self.setup()
 
     def setup(self):
@@ -72,7 +69,7 @@ class Stage:
             p.update(clock, self.playerDisplacement)
 
         self.player.update(self.platformGroup, clock, self.playerDisplacement)
-        self.enemy1.update(self.platformGroup, clock, self.playerDisplacement)
+        self.enemyGroup.update(self.platformGroup, clock, self.playerDisplacement)
 
     def draw(self):
         self.background.draw()

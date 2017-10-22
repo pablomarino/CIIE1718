@@ -2,9 +2,6 @@
 from view.Character import *
 
 
-# -------------------------------------------------
-# Clase Enemy
-
 class Enemy(Character):
     def __init__(self, manager, data, id):
         Character.__init__(self,
@@ -20,8 +17,6 @@ class Enemy(Character):
     def move_cpu(self, data, player):
         return
 
-# -------------------------------------------------
-# Asmodeo (fase 1)
 
 class Asmodeo(Enemy):
     def __init__(self, manager, data):
@@ -37,8 +32,6 @@ class Asmodeo(Enemy):
         else:
             Character.move(self, STOPPED)'''
 
-# -------------------------------------------------
-# Belcebu (fase 2)
 
 class Belcebu(Enemy):
     def __init__(self, manager, data):
@@ -46,9 +39,6 @@ class Belcebu(Enemy):
 
     def move_cpu(self, data, player):
         pass
-
-# -------------------------------------------------
-# Mammon (fase 3)
 
 class Mammon(Enemy):
     def __init__(self, manager, data):
