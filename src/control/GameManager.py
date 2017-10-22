@@ -1,10 +1,9 @@
-import pygame,sys
+import pygame, sys
 from utils.AssetLoader import AssetLoader
 
 
 class GameManager:
-
-    def __init__(self,data):
+    def __init__(self, data):
         self.data = data
         self.stack = []
         self.screenFlags = pygame.DOUBLEBUF | pygame.HWSURFACE
@@ -28,16 +27,16 @@ class GameManager:
         self.stack.append(level)
 
     def changeScene(self):
-        self.finished_scene=True
-        if len(self.stack)>0:
-            self.stack.pop() 
+        self.finished_scene = True
+        if len(self.stack) > 0:
+            self.stack.pop()
 
     def endGame(self):
-        self.stack=[]
-        self.finished=True
+        self.stack = []
+        self.finished = True
 
     def addScene(self, scene):
-        self.finished_scene=True
+        self.finished_scene = True
         self.stack.append(scene)
 
     def run(self):
@@ -48,13 +47,13 @@ class GameManager:
                 if e.type == pygame.KEYDOWN and e.key == int(self.data.getKeyQuit()):
                     self.endGame()
                 # Call 'events' function in the current level
-                if len(self.stack)>0:
-                    self.stack[len(self.stack)-1 ].events()
+                if len(self.stack) > 0:
+                    self.stack[len(self.stack) - 1].events()
 
-            #   Aqui ocurre la magia (HardCoded)
-            if len(self.stack)>0:
-                self.stack[len(self.stack)-1].update(time)
-                self.stack[len(self.stack)-1].draw()
+            # Aqui ocurre la magia (HardCoded)
+            if len(self.stack) > 0:
+                self.stack[len(self.stack) - 1].update(time)
+                self.stack[len(self.stack) - 1].draw()
 
             pygame.display.flip()
         pygame.quit()
@@ -65,3 +64,6 @@ class GameManager:
 
     def getLibrary(self):
         return self.library
+
+    def getDataRetriever(self):
+        return self.data

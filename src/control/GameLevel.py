@@ -14,6 +14,10 @@ class GameLevel:
         self.data = data
         self.level = data.getLevel(id)
 
+        # Add music to the game
+        pygame.mixer.music.load(self.data.getMusicFile())
+        pygame.mixer.music.play()
+
         self.spriteGroup = pygame.sprite.Group()
         self.platformGroup = pygame.sprite.Group()
         self.itemGroup = pygame.sprite.Group()

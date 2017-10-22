@@ -40,7 +40,7 @@ class Stage:
             self.platformGroup.add(platform)
 
         # Creamos el HUD
-        self.HUD = HUD(self.manager.getScreen(), self.player)
+        self.HUD = HUD(self.manager.getDataRetriever(), self.manager.getScreen(), self.player)
 
         '''
         # Items

@@ -7,8 +7,13 @@
   "window_icon": "../bin/assets/icon.png",
   "window_title": "Give'Em Hell!",
   "fps_target": "60",
+  "music_file": "../bin/assets/sounds/background/musica.ogg",
+  "hud_pos_y": "50",
+  "hud_font_color": "",
+  "hud_font_size": "20",
+  "hud_font_type": "../bin/assets/fonts/fast99.ttf",
   "keys": {
-    "quit":"27",
+    "quit": "27",
     "up": [
       "K_w",
       "None"
