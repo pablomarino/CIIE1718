@@ -23,6 +23,7 @@ class Player(Character):
         # Indicamos la acción a realizar segun la tecla pulsada para el jugador
         if pressedKeys[self.data.getKeyUp()]:
             Character.move(self, UP)
+            pygame.mixer.Sound('../bin/assets/sounds/player/salto.wav').play()
         elif pressedKeys[self.data.getKeyLeft()]:
             Character.move(self, LEFT)
         elif pressedKeys[self.data.getKeyRight()]:

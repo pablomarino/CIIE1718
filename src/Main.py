@@ -16,6 +16,8 @@ if __name__ == '__main__':
 
     # Inicializamos la libreria de pygame
     pygame.init()
+    pygame.mixer.music.load('../bin/assets/sounds/background/musica.ogg')
+    pygame.mixer.music.play()
     # Creamos el director
     manager = GameManager(data)
     # manager.add(manager, Menu())
