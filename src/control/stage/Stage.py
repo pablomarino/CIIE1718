@@ -62,7 +62,7 @@ class Stage:
                 0,  # int(math.ceil(self.playerStartPosition[0]-self.player.getPosition()[0])),
                 int(math.ceil(self.playerStartPosition[1] - self.player.getGlobalPosition()[1]))
             )
-        print "player ", self.player.getGlobalPosition()[1], self.player.getLocalPosition()[1]
+        # print "player ", self.player.getGlobalPosition()[1], self.player.getLocalPosition()[1]
         self.background.update(clock, self.playerDisplacement)
 
         for p in self.platformGroup:

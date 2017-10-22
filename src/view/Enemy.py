@@ -17,6 +17,9 @@ class Enemy(Character):
     def move_cpu(self, data, player):
         return
 
+    def getDoUpdateScroll(self):
+        return True
+
 
 class Asmodeo(Enemy):
     def __init__(self, manager, data):
@@ -46,3 +49,5 @@ class Mammon(Enemy):
 
     def move_cpu(self, data, player):
         pass
+
+
