@@ -43,11 +43,10 @@ class Belcebu(Enemy):
     def move_cpu(self, data, player):
         pass
 
+
 class Mammon(Enemy):
     def __init__(self, manager, data):
         Enemy.__init__(self, manager, data, "mammon")
 
     def move_cpu(self, data, player):
         pass
-
-

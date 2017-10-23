@@ -7,8 +7,10 @@ from view.Player import Player
 from view.Enemy import Asmodeo
 import sys
 
+
 def str_to_class(str):
     return getattr(sys.modules[__name__], str)
+
 
 class GameLevel:
     def __init__(self, manager, data, id):
@@ -19,7 +21,7 @@ class GameLevel:
 
         # Add music to the game
         pygame.mixer.music.load(self.data.getMusicFile())
-        pygame.mixer.music.play()
+        # pygame.mixer.music.play()
 
         self.spriteGroup = pygame.sprite.Group()
         self.platformGroup = pygame.sprite.Group()
@@ -31,17 +33,17 @@ class GameLevel:
             self.player.setPosition(data.getPlayerPositionAt(id))
             self.spriteGroup.add(self.player)
 
-
             # TODO crear enemigos de una forma más natural
 
             for e in self.level["enemies"]:
                 tmp = str_to_class(e["kind"])(manager, data)
-                tmp.setPosition((int(e["x"]),int(e["y"])))
+                tmp.setPosition((int(e["x"]), int(e["y"])))
                 self.enemyGroup.add(tmp)
             # self.enemy1 = Asmodeo(manager, data)
             # self.enemy1.setPosition(data.getPlayerPositionAt(id))
 
-            self.stage = Stage(self.manager, self.level, self.player, self.platformGroup, self.spriteGroup, self.enemyGroup)
+            self.stage = Stage(self.manager, self.level, self.player, self.platformGroup, self.spriteGroup,
+                               self.enemyGroup)
         else:
             print "Error no existe nivel con id ", id
 

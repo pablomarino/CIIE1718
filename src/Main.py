@@ -10,14 +10,14 @@ import pygame
 if __name__ == '__main__':
     # Instancio un Singleton para cargar configuraciones
     data = DataRetriever()
-    data.loadPreferences('../bin/config/preferences.json')  # Cargo preferencias de la aplicacion
-    data.loadLevels('../bin/config/levels.json')            # Cargo datos de niveles
-    data.loadPlayers('../bin/config/players.json')          # Cargo datos de los jugadores
+    data.loadPreferences('../bin/config/preferences.json')      # Cargo preferencias de la aplicacion
+    data.loadLevels('../bin/config/levels.json')                # Cargo datos de niveles
+    data.loadPlayers('../bin/config/players.json')              # Cargo datos de los jugadores
 
     # Inicializamos la libreria de pygame
     pygame.init()
     # Creamos el director
     manager = GameManager(data)
     # manager.add(manager, Menu())
-    manager.add(GameLevel(manager, data,"level_1"))
+    manager.add(GameLevel(manager, data, "level_1"))
     manager.run()
