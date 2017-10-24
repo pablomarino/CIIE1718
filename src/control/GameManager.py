@@ -1,5 +1,5 @@
 import pygame, sys
-from utils.AssetLoader import AssetLoader
+from src.utils.AssetLoader import AssetLoader
 
 
 class GameManager:
