@@ -58,6 +58,7 @@ class Player(Character):
     def attack(self, pressedKeys):
         if pressedKeys[self.data.getSpace()]:
             print "test"
+            Character.attack(self, ATTACK)
 
     def move(self, pressedKeys):
         # Indicamos la acción a realizar segun la tecla pulsada para el jugador
