@@ -9,7 +9,7 @@
 
 ## Pablo
 * character corregir salto
-* character corregir scroll enemigo
+* ~~character corregir scroll enemigo~~
 * items
 
 ## Matías

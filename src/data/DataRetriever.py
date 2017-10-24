@@ -24,6 +24,7 @@ class DataRetriever:
             self.KEY_LEFT = K_LEFT
             self.KEY_UP = K_UP
             self.KEY_RIGHT = K_RIGHT
+            self.SPACE = K_SPACE
 
     def __loadConfig(self, file):
         with open(file) as preferences_file:
@@ -98,6 +99,9 @@ class DataRetriever:
 
     # def getKeyRight(self):
     #     return self.instance.preferences['keys']['right']
+
+    def getSpace(self):
+        return self.instance.SPACE
 
     def getKeyUp(self):
         return self.instance.KEY_UP

@@ -14,6 +14,8 @@ class Enemy(Character):
                            data.getPlayerJumpSpeed(),
                            data.getPlayerAnimationDelay());
 
+        self.health = 100;
+
     def move_cpu(self, data, player):
         return
 

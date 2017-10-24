@@ -14,7 +14,7 @@ class Player(Character):
                            data,
                            data.getPlayerSheet(id),
                            data.getPlayerSheetCoords(id),
-                           [5, 9, 5, 3],
+                           [5, 6, 5, 4],
                            data.getPlayerSpeed(),
                            data.getPlayerJumpSpeed(),
                            data.getPlayerAnimationDelay())
@@ -23,6 +23,7 @@ class Player(Character):
         self.lives = 3
         self.health = 100
         self.maxHealth = 100
+        self.attack = 50;
 
     def getLives(self):
         return self.lives
@@ -53,6 +54,10 @@ class Player(Character):
 
     def setMaxHealth(self, value):
         self.maxHealth = value
+
+    def attack(self, pressedKeys):
+        if pressedKeys[self.data.getSpace()]:
+            print "test"
 
     def move(self, pressedKeys):
         # Indicamos la acción a realizar segun la tecla pulsada para el jugador

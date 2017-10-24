@@ -1,64 +1,48 @@
 # -*- coding: utf-8 -*-
-from view.MySprite import MySprite
+
+from view.MySprite import *
 import pygame
 
-# Movimientos
-STOPPED = 0
-LEFT = 1
-RIGHT = 2
-UP = 3
-DOWN = 4
-
-# Posturas
-SPRITE_STOPPED = 0
+STOPPED     = 0 # Movimientos
+LEFT        = 1
+RIGHT       = 2
+UP          = 3
+DOWN        = 4
+UPLEFT      = 5
+UPRIGHT     = 6
+DOWNLEFT    = 7
+DOWNRIGHT   = 8
+SPRITE_STOPPED = 0 # Posturas
 SPRITE_WALKING = 1
 SPRITE_JUMPING = 2
-SPRITE_DYING = 3
-
+SPRITE_DYING   = 3
 GRAVITY = 0.0007  # Píxeles / ms2
 
 
 class Character(MySprite):
-    "Cualquier personaje del juego"
 
-    # Parametros pasados al constructor de esta clase:
-    #  Archivo con la hoja de Sprites
-    #  Archivo con las coordenadoas dentro de la hoja
-    #  Numero de imagenes en cada postura
-    #  Velocidad de caminar y de salto
-    #  Retardo para mostrar la animacion del personaje
     def __init__(self, manager, data, archivoImagen, archivoCoordenadas, numImagenes, velocidadCarrera, velocidadSalto,
                  retardoAnimacion):
-
-        # Primero invocamos al constructor de la clase padre
         MySprite.__init__(self);
-
-        # Guardamos el número de posturas del personaje
         self.numberOfPostures = len(numImagenes)
-
-        # TODO igual no hace falta guardarla
-        # Guardamos instancia del manager
         self.manager = manager
-
-        # Se carga la hoja
-        self.hoja = manager.getLibrary().load(archivoImagen, -1)
-
-        # Guardamos instancia del dataRetriever
+        self.hoja = manager.getLibrary().load(archivoImagen, -1).convert_alpha() # Se carga la hoja
         self.data = data
+        self.movimiento = STOPPED # El movimiento que esta realizando
+        self.mirando = RIGHT # Lado hacia el que esta mirando
+        self.numPostura = 1
+        self.numImagenPostura = 0
+        self.coordenadasHoja = []
+        self.retardoMovimiento = 0
+        self.numPostura = SPRITE_JUMPING # En que postura esta inicialmente
+        self.velocidadCarrera = velocidadCarrera
+        self.velocidadSalto = velocidadSalto
+        self.retardoAnimacion = retardoAnimacion # El retardo en la animacion del personaje
 
-        self.hoja = self.hoja.convert_alpha()
-        # El movimiento que esta realizando
-        self.movimiento = STOPPED
-        # Lado hacia el que esta mirando
-        self.mirando = RIGHT
-
-        # Leemos las coordenadas de un archivo de texto
-        datos = manager.getLibrary().loadCoordsFile(archivoCoordenadas)
+        datos = manager.getLibrary().loadCoordsFile(archivoCoordenadas)# Leemos las coordenadas de un archivo de texto
         datos = datos.split()
-        self.numPostura = 1;
-        self.numImagenPostura = 0;
+
         cont = 0;
-        self.coordenadasHoja = [];
         for linea in range(0, self.numberOfPostures):
             self.coordenadasHoja.append([])
             tmp = self.coordenadasHoja[linea]
@@ -66,30 +50,11 @@ class Character(MySprite):
                 tmp.append(
                     pygame.Rect((int(datos[cont]), int(datos[cont + 1])), (int(datos[cont + 2]), int(datos[cont + 3]))))
                 cont += 4
-
-        # El retardo a la hora de cambiar la imagen del Sprite (para que no se mueva demasiado rápido)
-        self.retardoMovimiento = 0;
-
-        # En que postura esta inicialmente
-        self.numPostura = SPRITE_JUMPING
-
-        # El rectangulo del Sprite
         self.rect = pygame.Rect(100, 100, self.coordenadasHoja[self.numPostura][self.numImagenPostura][2],
                                 self.coordenadasHoja[self.numPostura][self.numImagenPostura][3])
-
-        # Las velocidades de caminar y salto
-        self.velocidadCarrera = velocidadCarrera
-        self.velocidadSalto = velocidadSalto
-
-        # El retardo en la animacion del personaje (podria y deberia ser distinto para cada postura)
-        self.retardoAnimacion = retardoAnimacion
-
-        # Y actualizamos la postura del Sprite inicial, llamando al metodo correspondiente
         self.actualizarPostura()
 
-    # Metodo base para realizar el movimiento: simplemente se le indica cual va a hacer, y lo almacena
     def move(self, movimiento):
-        # TODO corregir problema de salto diagonal
         if movimiento == UP:
             # Si estamos en el aire y el personaje quiere saltar, ignoramos este movimiento
             if self.numPostura == SPRITE_JUMPING:
@@ -120,24 +85,26 @@ class Character(MySprite):
                 self.image = pygame.transform.flip(
                     self.hoja.subsurface(self.coordenadasHoja[self.numPostura][self.numImagenPostura]), 1, 0)
 
+
+    def getVelocidad(self):
+        return self.velocidad
+
+    def getDoUpdateScroll(self):
+        # Si se añade animacion de caida habra que añadirlo aqui
+        return self.numPostura == SPRITE_JUMPING
+
     def update(self, grupoPlataformas, tiempo, scroll):
-
-        # print(pygame.sprite.spritecollideany(self, grupoPlataformas))
-
-        # Las velocidades a las que iba hasta este momento
-        (velocidadx, velocidady) = self.velocidad
-
-        # Si vamos a la izquierda o a la derecha        
+        (vx, vy) = self.velocidad
         if (self.movimiento == LEFT) or (self.movimiento == RIGHT):
             # Esta mirando hacia ese lado
             self.mirando = self.movimiento
 
             # Si vamos a la izquierda, le ponemos velocidad en esa dirección
             if self.movimiento == LEFT:
-                velocidadx = -self.velocidadCarrera
+                vx = -self.velocidadCarrera
             # Si vamos a la derecha, le ponemos velocidad en esa dirección
             else:
-                velocidadx = self.velocidadCarrera
+                vx = self.velocidadCarrera
 
             # Si no estamos en el aire
             if self.numPostura != SPRITE_JUMPING:
@@ -152,7 +119,7 @@ class Character(MySprite):
             # La postura actual sera estar saltando
             self.numPostura = SPRITE_JUMPING
             # Le imprimimos una velocidad en el eje y
-            velocidady = -self.velocidadSalto
+            vy = -self.velocidadSalto
             self.movimiento = STOPPED
 
         # Si no se ha pulsado ninguna tecla
@@ -160,7 +127,7 @@ class Character(MySprite):
             # Si no estamos saltando, la postura actual será estar quieto
             if not self.numPostura == SPRITE_JUMPING:
                 self.numPostura = SPRITE_STOPPED
-            velocidadx = 0
+            vx = 0
             # TODO decidir si poner velocidadY = 0
 
         # Además, si estamos en el aire
@@ -172,7 +139,7 @@ class Character(MySprite):
             #  Ademas, esa colision solo nos interesa cuando estamos cayendo
             #  y solo es efectiva cuando caemos encima, no de lado, es decir,
             #  cuando nuestra posicion inferior esta por encima de la parte de abajo de la plataforma
-            if (plataforma != None) and (velocidady > 0) and (plataforma.rect.bottom > self.rect.bottom):
+            if (plataforma != None) and (vy > 0) and (plataforma.rect.bottom > self.rect.bottom):
                 # Lo situamos con la parte de abajo un pixel colisionando con la plataforma
                 #  para poder detectar cuando se cae de ella
                 # print self.posicion[0], plataforma.posicion[1],plataforma.rect.height, plataforma.posicion[1]-plataforma.rect.height+1
@@ -180,23 +147,23 @@ class Character(MySprite):
                 # Lo ponemos como quieto
                 self.numPostura = SPRITE_STOPPED
                 # Y estará quieto en el eje y
-                velocidady = 0
+                vy = 0
 
             # Si no caemos en una plataforma, aplicamos el efecto de la gravedad
             else:
-                velocidady += GRAVITY * tiempo
+                vy += GRAVITY * tiempo
                 ###
                 ###
                 ### todo Hay que limitar la velocidad de caida y al llegar al maximo si choca con plataforma muere
                 ###
                 ###
-                if velocidady > 0.25: velocidady = 0.25
+                if vy > 0.25: vy = 0.25
 
         # Actualizamos la imagen a mostrar
         self.actualizarPostura()
 
-        # Aplicamos la velocidad en cada eje      
-        self.velocidad = (velocidadx, velocidady)
+        # Aplicamos la velocidad en cada eje
+        self.velocidad = (vx, vy)
 
         # Y llamamos al método de la superclase para que, según la velocidad y el tiempo
         #  calcule la nueva posición del Sprite
@@ -204,10 +171,3 @@ class Character(MySprite):
 
         if self.getDoUpdateScroll():
             self.establecerPosicionPantalla((scroll[0], -scroll[1]))
-
-    def getVelocidad(self):
-        return self.velocidad
-
-    def getDoUpdateScroll(self):
-        # todo Si se añade sprite de caida habra que añadirl aqui SPRITE_FALLING
-        return self.numPostura == SPRITE_JUMPING
