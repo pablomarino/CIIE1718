@@ -12,6 +12,8 @@
   "hud_font_color": "",
   "hud_font_size": "20",
   "hud_font_type": "../bin/assets/fonts/fast99.ttf",
+  "button": "../bin/assets/menu/boton.png",
+  "menu_background": "../bin/assets/menu/fondo.jpg",
   "keys": {
     "quit": "27",
     "up": [

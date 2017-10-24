@@ -1,8 +1,9 @@
 # -*- encoding: utf-8 -*-
+import sys
 
 from stage.Stage import *
-from view.Enemy import *
-from view.Player import Player
+from src.view.Enemy import *
+from src.view.Player import Player
 
 
 def str_to_class(str):

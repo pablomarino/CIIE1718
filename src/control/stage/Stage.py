@@ -7,9 +7,13 @@ from control.stage.Platform import *
 from control.HUD import HUD
 import math
 
+from src.control.stage.Scene import Scene
 
-class Stage:
+
+class Stage(Scene):
+
     def __init__(self, manager, data, player, platformGroup, spriteGroup, enemyGroup):
+        Scene.__init__(self, manager)
         self.manager = manager
         self.data = data
         self.player = player

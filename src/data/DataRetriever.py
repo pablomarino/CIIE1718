@@ -82,6 +82,12 @@ class DataRetriever:
     def getKeyQuit(self):
         return self.instance.preferences['keys']['quit']
 
+    def getButtonFile(self):
+        return self.instance.preferences['button']
+
+    def getBackgroundFile(self):
+        return self.instance.preferences['menu_background']
+
     # def getKeyUp(self):
     #     return self.instance.preferences['keys']['up']
 
