@@ -12,10 +12,11 @@ UPLEFT      = 5
 UPRIGHT     = 6
 DOWNLEFT    = 7
 DOWNRIGHT   = 8
+ATTACK      = 9
 SPRITE_STOPPED = 0 # Posturas
 SPRITE_WALKING = 1
 SPRITE_JUMPING = 2
-SPRITE_DYING   = 3
+SPRITE_ATTACKING   = 3
 GRAVITY = 0.0007  # Píxeles / ms2
 
 
@@ -64,6 +65,9 @@ class Character(MySprite):
         else:
             self.movimiento = movimiento
 
+    def attack(self, movimiento):
+        self.movimiento = movimiento
+
     def actualizarPostura(self):
         self.retardoMovimiento -= 1
         # Miramos si ha pasado el retardo para dibujar una nueva postura
@@ -95,6 +99,10 @@ class Character(MySprite):
 
     def update(self, grupoPlataformas, tiempo, scroll):
         (vx, vy) = self.velocidad
+
+        if self.movimiento == ATTACK:
+            self.numPostura = SPRITE_ATTACKING
+            
         if (self.movimiento == LEFT) or (self.movimiento == RIGHT):
             # Esta mirando hacia ese lado
             self.mirando = self.movimiento
