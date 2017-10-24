@@ -19,8 +19,9 @@ if __name__ == '__main__':
     pygame.init()
     # Creamos el director
     manager = GameManager(data)
-    Menu= Menu(manager)
-    # manager.add(manager, Menu())
-    manager.add(Menu)
-    #manager.add(GameLevel(manager, data, "level_1"))
+
+    # Menu= Menu(manager)
+    # manager.add(Menu)
+
+    manager.add(GameLevel(manager, data, "level_1"))
     manager.run()
