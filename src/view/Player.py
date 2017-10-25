@@ -19,6 +19,8 @@ class Player(Character):
                            data.getPlayerJumpSpeed(),
                            data.getPlayerAnimationDelay())
 
+        self.data = data
+
         # Variables propias del jugador
         self.lives = 3
         self.health = 100
@@ -40,6 +42,8 @@ class Player(Character):
             print "Game Over!"
             self.alive = False
         else:
+            # TODO Actualizar el scroll cuando se reinicia la posición del jugador
+            self.setPosition(self.data.getPlayerPositionAt("level_1"))
             self.setHealth(100)
 
     def getHealth(self):

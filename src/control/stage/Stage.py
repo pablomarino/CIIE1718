@@ -88,7 +88,6 @@ class Stage(Scene):
                 numerocolumna = 0
                 numerofila = numerofila + 1
 
-
     def update(self, clock):
         self.manager.getScreen().fill(int(self.data["bgColor"], 16))  # en windows es necesario =\ en mac no
         # Calculo la distancia entre la posicion inicial del jugador y la actual
@@ -108,7 +107,7 @@ class Stage(Scene):
         self.player.update(self.platformGroup, clock, self.playerDisplacement)
         self.enemyGroup.update(self.platformGroup, clock, self.playerDisplacement)
         self.player.enemy_coll(self.enemyGroup, self.player)
-
+        self.HUD.update()
 
     def draw(self):
         self.background.draw()
@@ -117,10 +116,8 @@ class Stage(Scene):
         self.enemyGroup.draw(self.manager.getScreen())
         self.HUD.draw()
 
-
     def events(self, *args):
         raise NotImplemented("Tiene que implementar el metodo eventos.")
-
 
     def getDoUpdateScroll(self):
         # TODO Implementar

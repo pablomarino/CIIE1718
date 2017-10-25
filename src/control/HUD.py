@@ -20,44 +20,70 @@ class HUD:
         self.text_lives = 'Lives {0}'
         self.text_health = 'Health {0}/{1}'
 
+        # Game state variables
+        self.gameOver = False
+
     def update(self):
-        pass
+        # TODO comprobar gameOver de otra manerea
+        if (self.player.getHealth() == 0) & (self.player.getLives() == 0):
+            self.gameOver = True
 
     def events(self):
-        # TODO implement events function in the HUD?
         pass
 
     def draw(self):
-        # Player x position
-        self.text_to_screen(
-            self.text_pos_x.format(self.player.getGlobalPosition()[0]),
-            150,
-            self.pos_y
-        )
+        # Gameover alert
+        if self.gameOver:
+            self.centered_text_to_screen(
+                "GAME OVER",
+                150
+            )
+        else:
+            # TODO cambiar las posiciones de cada uno de los elementos
+            # Player x position
+            self.text_to_screen(
+                self.text_pos_x.format(self.player.getGlobalPosition()[0]),
+                150,
+                self.pos_y,
+                self.font_size
+            )
 
-        # Player health
-        self.text_to_screen(
-            self.text_health.format(self.player.getHealth(), self.player.getMaxHealth()),
-            550,
-            self.pos_y
-        )
+            # Player health
+            self.text_to_screen(
+                self.text_health.format(self.player.getHealth(), self.player.getMaxHealth()),
+                550,
+                self.pos_y,
+                self.font_size
+            )
 
-        # Player lives
-        self.text_to_screen(
-            self.text_lives.format(self.player.getLives()),
-            self.data.getWidth() - 150,
-            self.pos_y
-        )
+            # Player lives
+            self.text_to_screen(
+                self.text_lives.format(self.player.getLives()),
+                self.data.getWidth() - 150,
+                self.pos_y,
+                self.font_size
+            )
 
-    def text_to_screen(self, text, x, y, color=(200, 200, 200)):
+    def text_to_screen(self, text, x, y, font_size):
 
-        # TODO add font size, color, and font type to levels.json
         try:
-
+            color = (200, 200, 200)
             text = str(text)
-            font = pygame.font.Font(self.font_type, self.font_size)
+            font = pygame.font.Font(self.font_type, font_size)
             text = font.render(text, True, color)
             self.screen.blit(text, (x, y))
+
+        except Exception, e:
+            raise e
+
+    def centered_text_to_screen(self, text, font_size):
+        try:
+            color = (200, 200, 200)
+            text = str(text)
+            font = pygame.font.Font(self.font_type, font_size)
+            text = font.render(text, True, color)
+            text_rect = text.get_rect(center=(1024 / 2, 768 / 2))
+            self.screen.blit(text, text_rect)
 
         except Exception, e:
             raise e
