@@ -19,11 +19,12 @@ class Player(Character):
                            data.getPlayerJumpSpeed(),
                            data.getPlayerAnimationDelay())
 
-        # TODO crear variables con los valores necesarios para el jugador (vidas, salud... etc)
+        # Variables propias del jugador
         self.lives = 3
         self.health = 100
         self.maxHealth = 100
-        self.attack = 50;
+        self.attack = 50
+        self.alive = True
 
     def getLives(self):
         return self.lives
@@ -36,6 +37,8 @@ class Player(Character):
         if self.lives <= 0:
             self.lives = 0
             # TODO GameOver
+            print "Game Over!"
+            self.alive = False
 
     def getHealth(self):
         return self.health
@@ -50,8 +53,8 @@ class Player(Character):
             self.health = self.maxHealth
 
     def decreaseHealth(self):
-        self.health = self.health -10
-        if self.health <=0:
+        self.health = self.health - 10
+        if self.health <= 0:
             self.decreaseLives()
             self.setHealth(100)
 
@@ -68,13 +71,14 @@ class Player(Character):
 
     def move(self, pressedKeys):
         # Indicamos la acción a realizar segun la tecla pulsada para el jugador
-        if pressedKeys[self.data.getKeyUp()]:
-            Character.move(self, UP)
-            # TODO esto está mal, se reproduce siempre el sonido, aunque el jugador no salte
-            pygame.mixer.Sound('../bin/assets/sounds/player/salto.wav').play()
-        elif pressedKeys[self.data.getKeyLeft()]:
-            Character.move(self, LEFT)
-        elif pressedKeys[self.data.getKeyRight()]:
-            Character.move(self, RIGHT)
-        else:
-            Character.move(self, STOPPED)
+        if self.alive:
+            if pressedKeys[self.data.getKeyUp()]:
+                Character.move(self, UP)
+                # TODO esto está mal, se reproduce siempre el sonido, aunque el jugador no salte
+                pygame.mixer.Sound('../bin/assets/sounds/player/salto.wav').play()
+            elif pressedKeys[self.data.getKeyLeft()]:
+                Character.move(self, LEFT)
+            elif pressedKeys[self.data.getKeyRight()]:
+                Character.move(self, RIGHT)
+            else:
+                Character.move(self, STOPPED)

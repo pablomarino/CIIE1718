@@ -4,6 +4,11 @@ from control.HUD import HUD
 from control.stage.Background import *
 from control.stage.Platform import Platform
 from src.control.stage.Scene import Scene
+from view.Enemy import *
+
+
+def str_to_class(str):
+    return getattr(sys.modules[__name__], str)
 
 
 class Stage(Scene):
@@ -32,9 +37,7 @@ class Stage(Scene):
 
         self.mapFile = self.data["map_file"]
         # TODO los 3 tipos de plataforma tienen el miso sprite
-        self.platform1file = self.data["platform1_file"]
-        self.platform2file = self.data["platform2_file"]
-        self.platform3file = self.data["platform3_file"]
+        self.platformfiles = self.data["platform_files"]
 
         # Genero las Plataformas
         # for p in self.data["platforms"]:
@@ -72,14 +75,19 @@ class Stage(Scene):
                         # platform = Platform(self.manager, p, self.platforms_z)
                         platform = Platform(self.manager
                                             , (numerocolumna * 55, numerofila * 55)
-                                            , self.platform1file
+                                            , self.platformfiles[0]
                                             , self.platforms_z)
                         self.platformGroup.add(platform)
-                        pass
-                        # print letter
+
+                    if letter == "e":
+                        tmp = str_to_class(self.data["enemies"][0])(self.manager, self.manager.getDataRetriever())
+                        tmp.setPosition((numerocolumna * 55, numerofila * 55))
+                        self.enemyGroup.add(tmp)
+
                     numerocolumna = numerocolumna + 1
                 numerocolumna = 0
                 numerofila = numerofila + 1
+
 
     def update(self, clock):
         self.manager.getScreen().fill(int(self.data["bgColor"], 16))  # en windows es necesario =\ en mac no
@@ -101,6 +109,7 @@ class Stage(Scene):
         self.enemyGroup.update(self.platformGroup, clock, self.playerDisplacement)
         self.player.enemy_coll(self.enemyGroup, self.player)
 
+
     def draw(self):
         self.background.draw()
         self.platformGroup.draw(self.manager.getScreen())
@@ -108,8 +117,10 @@ class Stage(Scene):
         self.enemyGroup.draw(self.manager.getScreen())
         self.HUD.draw()
 
+
     def events(self, *args):
         raise NotImplemented("Tiene que implementar el metodo eventos.")
+
 
     def getDoUpdateScroll(self):
         # TODO Implementar

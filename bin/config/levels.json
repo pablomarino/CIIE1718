@@ -36,20 +36,13 @@
     ],
     "platforms_z": "5",
     "map_file": "../bin/config/levels/level1.txt",
-    "platform1_file": "../bin/assets/backgrounds/bg_l1_platform_2.png",
-    "platform2_file": "../bin/assets/backgrounds/bg_l1_platform_2.png",
-    "platform3_file": "../bin/assets/backgrounds/bg_l1_platform_2.png",
+    "platform_files": [
+      "../bin/assets/backgrounds/bg_l1_platform_2.png",
+      "../bin/assets/backgrounds/bg_l1_platform_2.png",
+      "../bin/assets/backgrounds/bg_l1_platform_2.png"
+    ],
     "enemies": [
-      {
-        "kind": "Asmodeo",
-        "x": "600",
-        "y": "300"
-      },
-      {
-        "kind": "Asmodeo",
-        "x": "250",
-        "y": "450"
-      }
+      "Asmodeo"
     ],
     "items": [
     ],

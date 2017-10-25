@@ -5,8 +5,7 @@ from stage.Stage import *
 from view.Enemy import *
 
 
-def str_to_class(str):
-    return getattr(sys.modules[__name__], str)
+
 
 
 class GameLevel:
@@ -31,10 +30,10 @@ class GameLevel:
             self.player.setPosition(data.getPlayerPositionAt(id))
             self.spriteGroup.add(self.player)
 
-            for e in self.level["enemies"]:
-                tmp = str_to_class(e["kind"])(manager, data)
-                tmp.setPosition((int(e["x"]), int(e["y"])))
-                self.enemyGroup.add(tmp)
+            # for e in self.level["enemies"]:
+            #     tmp = str_to_class(e["kind"])(manager, data)
+            #     tmp.setPosition((int(e["x"]), int(e["y"])))
+            #     self.enemyGroup.add(tmp)
             # self.enemy1 = Asmodeo(manager, data)
             # self.enemy1.setPosition(data.getPlayerPositionAt(id))
 
