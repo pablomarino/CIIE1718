@@ -6,7 +6,7 @@
     ],
     "bgColor": "0x1e0203",
     "bglayers": [
-            {
+      {
         "image": "../bin/assets/backgrounds/bg_l1_2.png",
         "color_key": "0x312111",
         "origin_x": "0",
@@ -34,61 +34,28 @@
         "repeat_y": "True"
       }
     ],
-
-    "platforms_z":"5",
-    "platforms": [
-        {
-        "image": "../bin/assets/backgrounds/bg_l1_ceil.png",
-        "color_key": "0xff3300",
-        "origin_x": "0",
-        "origin_y": "81"
+    "platforms_z": "5",
+    "map_file": "../bin/config/levels/level1.txt",
+    "platform1_file": "../bin/assets/backgrounds/bg_l1_platform_2.png",
+    "platform2_file": "../bin/assets/backgrounds/bg_l1_platform_2.png",
+    "platform3_file": "../bin/assets/backgrounds/bg_l1_platform_2.png",
+    "enemies": [
+      {
+        "kind": "Asmodeo",
+        "x": "600",
+        "y": "300"
       },
       {
-        "image": "../bin/assets/backgrounds/bg_l1_platform_0.png",
-        "color_key": "0xff3300",
-        "origin_x": "200",
-        "origin_y": "550"
-      },
-      {
-        "image": "../bin/assets/backgrounds/bg_l1_platform_1.png",
-        "color_key": "-1",
-        "origin_x": "500",
-        "origin_y": "700"
-      },
-      {
-        "image": "../bin/assets/backgrounds/bg_l1_platform_1.png",
-        "color_key": "-1",
-        "origin_x": "200",
-        "origin_y": "700"
-      },
-      {
-        "image": "../bin/assets/backgrounds/bg_l1_floor.png",
-        "color_key": "0xff3300",
-        "origin_x": "0",
-        "origin_y": "4081"
+        "kind": "Asmodeo",
+        "x": "250",
+        "y": "450"
       }
     ],
-
-    "enemies":[
-      {
-        "kind":"Asmodeo",
-        "x":"600",
-        "y":"300"
-      },
-      {
-        "kind":"Asmodeo",
-        "x":"250",
-        "y":"450"
-      }
+    "items": [
     ],
-
-    "items":[
-
-    ],
-
     "player": {
-      "x":"200",
-      "y":"300"
+      "x": "200",
+      "y": "300"
     }
   }
 }

@@ -1,17 +1,12 @@
 # -*- encoding: utf-8 -*-
 
-import pygame, math
-
-from control.stage.Background import *
-from control.stage.Platform import *
 from control.HUD import HUD
-import math
-
+from control.stage.Background import *
+from control.stage.Platform import Platform
 from src.control.stage.Scene import Scene
 
 
 class Stage(Scene):
-
     def __init__(self, manager, data, player, platformGroup, spriteGroup, enemyGroup):
         Scene.__init__(self, manager)
         self.manager = manager
@@ -35,10 +30,18 @@ class Stage(Scene):
         # Genero la capa del Fondo
         self.background = BackGround(self.manager, self.data["bglayers"], self.player, self.levelDimensions)
 
+        self.mapFile = self.data["map_file"]
+        self.platform1file = self.data["platform1_file"]
+        self.platform2file = self.data["platform2_file"]
+        self.platform3file = self.data["platform3_file"]
+
         # Genero las Plataformas
-        for p in self.data["platforms"]:
-            platform = Platform(self.manager, p, self.platforms_z)
-            self.platformGroup.add(platform)
+        # for p in self.data["platforms"]:
+        #     platform = Platform(self.manager, p, self.platforms_z)
+        #     self.platformGroup.add(platform)
+
+        # Creamos el nivel a partir de fichero de texto
+        self.create_level()
 
         # Creamos el HUD
         self.HUD = HUD(self.manager.getDataRetriever(), self.manager.getScreen(), self.player)
@@ -55,6 +58,27 @@ class Stage(Scene):
             enemy = Enemy(self.manager, e, self.levelWidth, self.levelHeight, self.player)
             self.enemyStack.append(enemy)
         '''
+
+    def create_level(self):
+        numerocolumna = 0
+        numerofila = 0
+
+        with open(self.mapFile, "r") as f:
+            for line in f:
+                for letter in line:
+                    # print letter
+                    if letter == "1":
+                        # platform = Platform(self.manager, p, self.platforms_z)
+                        platform = Platform(self.manager
+                                            , (numerocolumna * 55, numerofila * 55)
+                                            , self.platform1file
+                                            , self.platforms_z)
+                        self.platformGroup.add(platform)
+                        pass
+                        # print letter
+                    numerocolumna = numerocolumna + 1
+                numerocolumna = 0
+                numerofila = numerofila + 1
 
     def update(self, clock):
         self.manager.getScreen().fill(int(self.data["bgColor"], 16))  # en windows es necesario =\ en mac no
