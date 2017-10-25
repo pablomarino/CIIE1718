@@ -98,8 +98,9 @@ class Character(MySprite):
         return self.numPostura == SPRITE_JUMPING
 
     def enemy_coll(self, grupoEnemigos, player):
-        if (pygame.sprite.spritecollideany(self, grupoEnemigos)!= None):
-            player.decreaseHealth()
+        if player.alive:
+            if (pygame.sprite.spritecollideany(self, grupoEnemigos)!= None):
+                player.decreaseHealth()
 
     def update(self, grupoPlataformas, tiempo, scroll):
         (vx, vy) = self.velocidad

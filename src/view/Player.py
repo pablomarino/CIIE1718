@@ -39,6 +39,8 @@ class Player(Character):
             # TODO GameOver
             print "Game Over!"
             self.alive = False
+        else:
+            self.setHealth(100)
 
     def getHealth(self):
         return self.health
@@ -56,7 +58,6 @@ class Player(Character):
         self.health = self.health - 10
         if self.health <= 0:
             self.decreaseLives()
-            self.setHealth(100)
 
     def getMaxHealth(self):
         return self.maxHealth
@@ -82,3 +83,6 @@ class Player(Character):
                 Character.move(self, RIGHT)
             else:
                 Character.move(self, STOPPED)
+        else:
+            # Crear animación de jugador muerto
+            Character.move(self, STOPPED)
