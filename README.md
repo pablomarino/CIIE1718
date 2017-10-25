@@ -5,7 +5,9 @@
 ## Jose
 * ~~Hud~~
 * ~~Mover character para la carpeta view~~
-* Mover menu para la carpeta
+* ~~Mover menu para la carpeta~~
+* Impedir que jugador se salga de la pantalla en el eje x
+* Creación de mapas desde fichero txt
 
 ## Pablo
 * character corregir salto
@@ -13,14 +15,17 @@
 * items
 
 ## Matías
-* director cargar menu
+* ~~director cargar menu~~
+* empezar el juego con el menu, y cargar los niveles desde ahí
 * transición entre fases
 
 ## Uxía
 * memoria
+* colisión jugador con enemigos
 
 ## Óscar
 * ~~Audio~~
+* Implementar ataque del jugador
 
 
 <br><br><br><br><br><br><br>

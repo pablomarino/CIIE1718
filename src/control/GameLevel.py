@@ -1,9 +1,8 @@
 # -*- encoding: utf-8 -*-
-import sys
 
-from stage.Stage import *
-from src.view.Enemy import *
 from src.view.Player import Player
+from stage.Stage import *
+from view.Enemy import *
 
 
 def str_to_class(str):
@@ -27,7 +26,7 @@ class GameLevel:
         self.enemyGroup = pygame.sprite.Group()
 
         if self.level:
-            # TODO solo crear nuevo jugador si es 'none', si no recuperar instancia anterior
+            # TODO tener en cuenta, valores de vida y demás se reinician al pasar de nivel,se crea un jugador nuevo
             self.player = Player(manager, data, 'player')
             self.player.setPosition(data.getPlayerPositionAt(id))
             self.spriteGroup.add(self.player)
