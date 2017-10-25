@@ -7,7 +7,7 @@
 * ~~Mover character para la carpeta view~~
 * ~~Mover menu para la carpeta~~
 * Impedir que jugador se salga de la pantalla en el eje x
-* Creación de mapas desde fichero txt
+* ~~Creación de mapas desde fichero txt~~
 
 ## Pablo
 * character corregir salto
