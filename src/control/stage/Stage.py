@@ -31,6 +31,7 @@ class Stage(Scene):
         self.background = BackGround(self.manager, self.data["bglayers"], self.player, self.levelDimensions)
 
         self.mapFile = self.data["map_file"]
+        # TODO los 3 tipos de plataforma tienen el miso sprite
         self.platform1file = self.data["platform1_file"]
         self.platform2file = self.data["platform2_file"]
         self.platform3file = self.data["platform3_file"]
