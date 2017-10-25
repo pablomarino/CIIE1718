@@ -5,7 +5,7 @@
 from control.GameManager import *
 from control.GameLevel import *
 from data.DataRetriever import DataRetriever
-from src.control.stage.Menu import Menu
+from control.stage.Menu import Menu
 import pygame
 
 if __name__ == '__main__':

@@ -1,6 +1,6 @@
 # -*- encoding: utf-8 -*-
 
-from src.view.Player import Player
+from view.Player import Player
 from stage.Stage import *
 from view.Enemy import *
 

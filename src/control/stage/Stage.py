@@ -3,7 +3,7 @@
 from control.HUD import HUD
 from control.stage.Background import *
 from control.stage.Platform import Platform
-from src.control.stage.Scene import Scene
+from control.stage.Scene import Scene
 from view.Enemy import *
 
 

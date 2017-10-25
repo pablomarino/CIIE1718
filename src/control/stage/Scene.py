@@ -1,6 +1,6 @@
 # -*- encoding: utf-8 -*-
-from src.control.GameManager import GameManager
-from src.data.DataRetriever import DataRetriever
+from control.GameManager import GameManager
+from data.DataRetriever import DataRetriever
 
 
 

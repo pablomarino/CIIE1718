@@ -2,10 +2,10 @@
 
 import pygame
 from pygame.locals import *
-from src.control.GameLevel import *
+from control.GameLevel import *
 #from gestorRecursos import *
-from src.data.DataRetriever import DataRetriever
-from src.control.GameManager import *
+from data.DataRetriever import DataRetriever
+from control.GameManager import *
 #from fase import Fase
 
 
