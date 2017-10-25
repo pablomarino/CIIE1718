@@ -49,6 +49,12 @@ class Player(Character):
         if self.health >= self.maxHealth:
             self.health = self.maxHealth
 
+    def decreaseHealth(self):
+        self.health = self.health -10
+        if self.health <=0:
+            self.decreaseLives()
+            self.setHealth(100)
+
     def getMaxHealth(self):
         return self.maxHealth
 

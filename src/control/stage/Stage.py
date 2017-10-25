@@ -99,6 +99,7 @@ class Stage(Scene):
 
         self.player.update(self.platformGroup, clock, self.playerDisplacement)
         self.enemyGroup.update(self.platformGroup, clock, self.playerDisplacement)
+        self.player.enemy_coll(self.enemyGroup, self.player)
 
     def draw(self):
         self.background.draw()
