@@ -1,48 +1,45 @@
 # -*- coding: utf-8 -*-
 
 from view.MySprite import *
-import pygame
-from time import time
 
-STOPPED     = 0 # Movimientos
-LEFT        = 1
-RIGHT       = 2
-UP          = 3
-DOWN        = 4
-UPLEFT      = 5
-UPRIGHT     = 6
-DOWNLEFT    = 7
-DOWNRIGHT   = 8
-ATTACK      = 9
-SPRITE_STOPPED = 0 # Posturas
+STOPPED = 0  # Movimientos
+LEFT = 1
+RIGHT = 2
+UP = 3
+DOWN = 4
+UPLEFT = 5
+UPRIGHT = 6
+DOWNLEFT = 7
+DOWNRIGHT = 8
+ATTACK = 9
+SPRITE_STOPPED = 0  # Posturas
 SPRITE_WALKING = 1
 SPRITE_JUMPING = 2
-SPRITE_ATTACKING   = 3
+SPRITE_ATTACKING = 3
 GRAVITY = 0.0007  # Píxeles / ms2
 
 
 class Character(MySprite):
-
     def __init__(self, manager, data, archivoImagen, archivoCoordenadas, numImagenes, velocidadCarrera, velocidadSalto,
                  retardoAnimacion):
         MySprite.__init__(self);
         self.numberOfPostures = len(numImagenes)
         self.manager = manager
-        self.hoja = manager.getLibrary().load(archivoImagen, -1).convert_alpha() # Se carga la hoja
+        self.hoja = manager.getLibrary().load(archivoImagen, -1).convert_alpha()  # Se carga la hoja
         self.data = data
-        self.movimiento = STOPPED # El movimiento que esta realizando
-        self.mirando = RIGHT # Lado hacia el que esta mirando
+        self.movimiento = STOPPED  # El movimiento que esta realizando
+        self.mirando = RIGHT  # Lado hacia el que esta mirando
         self.numPostura = 1
         self.numImagenPostura = 0
         self.coordenadasHoja = []
         self.retardoMovimiento = 0
-        self.numPostura = SPRITE_JUMPING # En que postura esta inicialmente
+        self.numPostura = SPRITE_JUMPING  # En que postura esta inicialmente
         self.velocidadCarrera = velocidadCarrera
         self.velocidadSalto = velocidadSalto
-        self.retardoAnimacion = retardoAnimacion # El retardo en la animacion del personaje
+        self.retardoAnimacion = retardoAnimacion  # El retardo en la animacion del personaje
         self.tiempo_colision = 0
 
-        datos = manager.getLibrary().loadCoordsFile(archivoCoordenadas)# Leemos las coordenadas de un archivo de texto
+        datos = manager.getLibrary().loadCoordsFile(archivoCoordenadas)  # Leemos las coordenadas de un archivo de texto
         datos = datos.split()
 
         cont = 0;
@@ -91,7 +88,6 @@ class Character(MySprite):
                 self.image = pygame.transform.flip(
                     self.hoja.subsurface(self.coordenadasHoja[self.numPostura][self.numImagenPostura]), 1, 0)
 
-
     def getVelocidad(self):
         return self.velocidad
 
@@ -99,19 +95,12 @@ class Character(MySprite):
         # Si se añade animacion de caida habra que añadirlo aqui
         return self.numPostura == SPRITE_JUMPING
 
-    def enemy_coll(self, grupoEnemigos, player):
-        if player.alive:
-            if (pygame.sprite.spritecollideany(self, grupoEnemigos)!= None):
-                if (self.tiempo_colision < time()):
-                    player.decreaseHealth()
-                    self.tiempo_colision = time() + 2
-                    
     def update(self, grupoPlataformas, tiempo, scroll):
         (vx, vy) = self.velocidad
 
         if self.movimiento == ATTACK:
             self.numPostura = SPRITE_ATTACKING
-            
+
         if (self.movimiento == LEFT) or (self.movimiento == RIGHT):
             # Esta mirando hacia ese lado
             self.mirando = self.movimiento

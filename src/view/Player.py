@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+from time import time
+
 from view.Character import *
 
 
@@ -60,6 +62,7 @@ class Player(Character):
 
     def decreaseHealth(self):
         self.health = self.health - 10
+        # TODO reproducir sonido, y probablemente mover jugador hacia un lado, pegar un salto, o algo similar
         if self.health <= 0:
             self.decreaseLives()
 
@@ -90,3 +93,12 @@ class Player(Character):
         else:
             # Crear animación de jugador muerto
             Character.move(self, STOPPED)
+
+    def update(self, platformGroup, clock, playerDisplacement, enemygroup):
+        if self.alive:
+            if pygame.sprite.spritecollideany(self, enemygroup) is not None:
+                if self.tiempo_colision < time():
+                    self.decreaseHealth()
+                    pygame.mixer.Sound('../bin/assets/sounds/player/enemy_hit_1.wav').play()
+                    self.tiempo_colision = time() + 1
+        Character.update(self, platformGroup, clock, playerDisplacement)
