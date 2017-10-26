@@ -2,6 +2,7 @@
 
 from view.MySprite import *
 import pygame
+from time import time
 
 STOPPED     = 0 # Movimientos
 LEFT        = 1
@@ -39,6 +40,7 @@ class Character(MySprite):
         self.velocidadCarrera = velocidadCarrera
         self.velocidadSalto = velocidadSalto
         self.retardoAnimacion = retardoAnimacion # El retardo en la animacion del personaje
+        self.tiempo_colision = 0
 
         datos = manager.getLibrary().loadCoordsFile(archivoCoordenadas)# Leemos las coordenadas de un archivo de texto
         datos = datos.split()
@@ -100,8 +102,10 @@ class Character(MySprite):
     def enemy_coll(self, grupoEnemigos, player):
         if player.alive:
             if (pygame.sprite.spritecollideany(self, grupoEnemigos)!= None):
-                player.decreaseHealth()
-
+                if (self.tiempo_colision < time()):
+                    player.decreaseHealth()
+                    self.tiempo_colision = time() + 2
+                    
     def update(self, grupoPlataformas, tiempo, scroll):
         (vx, vy) = self.velocidad
 
