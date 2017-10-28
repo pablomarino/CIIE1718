@@ -22,7 +22,6 @@ class Enemy(Character):
     def getDoUpdateScroll(self):
         return True
 
-
 class Asmodeo(Enemy):
     def __init__(self, manager, data):
         Enemy.__init__(self, manager, data, "asmodeo")

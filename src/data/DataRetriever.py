@@ -23,6 +23,7 @@ class DataRetriever:
             # Keys are now added here for different locales support
             self.KEY_LEFT = K_LEFT
             self.KEY_UP = K_UP
+            self.KEY_DOWN = K_DOWN
             self.KEY_RIGHT = K_RIGHT
             self.SPACE = K_SPACE
 
@@ -105,6 +106,9 @@ class DataRetriever:
 
     def getKeyUp(self):
         return self.instance.KEY_UP
+
+    def getKeyDown(self):
+        return self.instance.KEY_DOWN
 
     def getKeyLeft(self):
         return self.instance.KEY_LEFT

@@ -80,10 +80,18 @@ class Player(Character):
     def move(self, pressedKeys):
         # Indicamos la acción a realizar segun la tecla pulsada para el jugador
         if self.alive:
-            if pressedKeys[self.data.getKeyUp()]:
+            if pressedKeys[self.data.getKeyUp()] and pressedKeys[self.data.getKeyLeft()]:
+                Character.move(self, UPLEFT)
+            elif pressedKeys[self.data.getKeyUp()] and pressedKeys[self.data.getKeyRight()]:
+                Character.move(self, UPRIGHT)
+            elif pressedKeys[self.data.getKeyUp()]:
                 Character.move(self, UP)
-                # TODO esto está mal, se reproduce siempre el sonido, aunque el jugador no salte
-                pygame.mixer.Sound('../bin/assets/sounds/player/salto.wav').play()
+            elif pressedKeys[self.data.getKeyDown()] and pressedKeys[self.data.getKeyLeft()]:
+                Character.move(self, DOWNLEFT)
+            elif pressedKeys[self.data.getKeyDown()] and pressedKeys[self.data.getKeyRight()]:
+                Character.move(self, DOWNRIGHT)
+            elif pressedKeys[self.data.getKeyDown()]:
+                Character.move(self, DOWN)
             elif pressedKeys[self.data.getKeyLeft()]:
                 Character.move(self, LEFT)
             elif pressedKeys[self.data.getKeyRight()]:
