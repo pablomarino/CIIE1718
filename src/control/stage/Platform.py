@@ -4,7 +4,7 @@ from view.MySprite import *
 class Platform(MySprite):
     def __init__(self, manager, position, imageFile, origin_z):
         # Super
-        MySprite.__init__(self)
+        MySprite.__init__(self, manager)
         # Dimensiones de la pantalla
         self.stageDimensions = manager.getScreen().get_size()
         # Posicion de la plataforma

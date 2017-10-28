@@ -1,5 +1,6 @@
 # -*- encoding: utf-8 -*-
 
+import sys
 from control.HUD import HUD
 from control.stage.Background import *
 from control.stage.Platform import Platform
