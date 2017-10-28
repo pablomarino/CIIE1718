@@ -8,7 +8,7 @@
 * ~~Mover menu para la carpeta~~
 * ~~Creación de mapas desde fichero txt~~
 * ~~Creación de enemigos desde fichero txt~~
-* Impedir que jugador se salga de la pantalla en el eje x
+* ~~Impedir que jugador se salga de la pantalla en el eje x~~
 * Mover enemigos
 
 ## Pablo
@@ -23,7 +23,7 @@
 
 ## Uxía
 * memoria
-* colisión jugador con enemigos
+* ~~colisión jugador con enemigos~~
 
 ## Óscar
 * ~~Audio~~

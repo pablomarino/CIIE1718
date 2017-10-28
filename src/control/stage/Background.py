@@ -1,8 +1,9 @@
-from view.MySprite import *
 import math
 
-class BackGround():
+from view.MySprite import *
 
+
+class BackGround():
     def __init__(self, manager, data, player, levelDimensions):
         self.scroll = list((0, 0))
         self.backgroundStack = []
@@ -20,8 +21,7 @@ class BackGround():
 
     def update(self, clock, scroll):
         for l in self.backgroundStack:
-            l.update(clock,scroll)
-
+            l.update(clock, scroll)
 
     def draw(self):
         for l in self.backgroundStack:
@@ -31,13 +31,12 @@ class BackGround():
         raise NotImplemented("Tiene que implementar el metodo eventos.")
 
 
-
 ## BGLAYER
 
 class BgLayer(MySprite):
-    def __init__(self,parent, data):
+    def __init__(self, parent, data):
         # Super
-        MySprite.__init__(self)
+        MySprite.__init__(self, parent.manager)
 
         # Ref. a Gamemanager
         self.manager = parent.manager
@@ -63,27 +62,26 @@ class BgLayer(MySprite):
         # Posicion inicial del jugador
         self.startPos = self.player.getGlobalPosition()
         # Obtengo la imagen
-        self.image = self.manager.getLibrary().load(self.data["image"],self.data["color_key"])
+        self.image = self.manager.getLibrary().load(self.data["image"], self.data["color_key"])
         # Guardo sus dimensiones
         self.imageW, self.imageH = self.image.get_size()
         # El rectangulo del Sprite
-        self.rect = pygame.Rect(self.position[0],self.position[1],self.imageW,self.imageH)
-
+        self.rect = pygame.Rect(self.position[0], self.position[1], self.imageW, self.imageH)
 
         # Si se repite Horizontalmente
-        if self.data["repeat_x"]=="True": # Si se repite horizontalmente
-            self.timesX = int(math.ceil(float(self.z*self.levelDimensions[0]) / self.imageW))
+        if self.data["repeat_x"] == "True":  # Si se repite horizontalmente
+            self.timesX = int(math.ceil(float(self.z * self.levelDimensions[0]) / self.imageW))
         else:
             self.timesX = 1
 
         # Si se repite verticalmente
         if self.data["repeat_y"] == "True":
-            self.timesY = int(math.ceil(float(self.z*self.levelDimensions[1]) / self.imageH))
+            self.timesY = int(math.ceil(float(self.z * self.levelDimensions[1]) / self.imageH))
         else:
             self.timesY = 1
         self.z = 1
 
-    def update(self ,clock, scroll):
+    def update(self, clock, scroll):
         # Todo comprobar valores a partir de los que es necesario realizar el scroll
         # me aseguro de que no se salga la pantalla
         '''
@@ -97,13 +95,13 @@ class BgLayer(MySprite):
         elif self.scroll[1] < self.scrollLimits[1]:
             self.scroll[1] = self.scrollLimits[1]
         '''
-        #self.targetX = self.position[0] + scroll[0] * self.z
-        #self.targetY = self.position[1] + scroll[1] * self.z
-        self.establecerPosicionPantalla((-scroll[0]* self.z, -scroll[1]* self.z))
-
+        # self.targetX = self.position[0] + scroll[0] * self.z
+        # self.targetY = self.position[1] + scroll[1] * self.z
+        self.establecerPosicionPantalla((-scroll[0] * self.z, -scroll[1] * self.z))
 
     def draw(self):
         for i in range(0, self.timesX):
             for j in range(0, self.timesY):
-                #self.manager.getScreen().blit(self.image, (self.targetX + self.imageW * i,self.targetY + self.imageH * j))
-                self.manager.getScreen().blit(self.image,(self.rect.left*self.z + self.imageW * i, self.rect.bottom*self.z  + self.imageH * j))
+                # self.manager.getScreen().blit(self.image, (self.targetX + self.imageW * i,self.targetY + self.imageH * j))
+                self.manager.getScreen().blit(self.image, (
+                    self.rect.left * self.z + self.imageW * i, self.rect.bottom * self.z + self.imageH * j))

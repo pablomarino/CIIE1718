@@ -1,16 +1,16 @@
 # -*- coding: utf-8 -*-
 
-import pygame, sys, os
-import math
-from pygame.locals import *
+import pygame
 
 
 class MySprite(pygame.sprite.Sprite):
-    def __init__(self):
+    def __init__(self, manager):
         pygame.sprite.Sprite.__init__(self)
+        self.manager = manager
         self.posicion = (0, 0)
         self.velocidad = (0, 0)
         self.scroll = (0, 0)
+        self.screen_width = self.manager.getDataRetriever().getWidth()
 
     def setPosition(self, posicion):
         self.posicion = posicion
@@ -27,7 +27,13 @@ class MySprite(pygame.sprite.Sprite):
     def incrementarPosicion(self, incremento):
         (posx, posy) = self.posicion
         (incrementox, incrementoy) = incremento
-        self.setPosition((posx + incrementox, posy + incrementoy))
+        newposx = posx + incrementox
+        if newposx <= 0:
+            newposx = 0
+        if newposx >= self.screen_width - self.getRect().width:
+            # print self.getRect().width
+            newposx = self.screen_width - self.getRect().width
+        self.setPosition((newposx, posy + incrementoy))
 
     def update(self, clock):
         incrementox = self.velocidad[0] * clock

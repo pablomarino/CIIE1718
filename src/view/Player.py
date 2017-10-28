@@ -17,8 +17,8 @@ class Player(Character):
                            data.getPlayerSheet(id),
                            data.getPlayerSheetCoords(id),
                            [5, 6, 5, 4],
-                           data.getPlayerSpeed(),
-                           data.getPlayerJumpSpeed(),
+                           data.getCharacterSpeed("player"),
+                           data.getCharacterJumpSpeed("player"),
                            data.getPlayerAnimationDelay())
 
         self.data = data
@@ -62,7 +62,7 @@ class Player(Character):
 
     def decreaseHealth(self):
         self.health = self.health - 10
-        # TODO reproducir sonido, y probablemente mover jugador hacia un lado, pegar un salto, o algo similar
+        # TODO mover jugador hacia un lado, pegar un salto, o algo similar
         if self.health <= 0:
             self.decreaseLives()
 
@@ -78,6 +78,8 @@ class Player(Character):
             Character.attack(self, ATTACK)
 
     def move(self, pressedKeys):
+        # TODO Cuando el jugador está cayendo en diagonal, mantiene dirección a pesar de que no haya teclas pulsadas
+
         # Indicamos la acción a realizar segun la tecla pulsada para el jugador
         if self.alive:
             if pressedKeys[self.data.getKeyUp()] and pressedKeys[self.data.getKeyLeft()]:
@@ -107,6 +109,7 @@ class Player(Character):
             if pygame.sprite.spritecollideany(self, enemygroup) is not None:
                 if self.tiempo_colision < time():
                     self.decreaseHealth()
+                    # TODO decidir si emitir sonido aquí, o dentro de la propia función decreaseLives()
                     pygame.mixer.Sound('../bin/assets/sounds/player/enemy_hit_1.wav').play()
                     self.tiempo_colision = time() + 1
         Character.update(self, platformGroup, clock, playerDisplacement)

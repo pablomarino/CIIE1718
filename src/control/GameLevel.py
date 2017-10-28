@@ -1,11 +1,9 @@
 # -*- encoding: utf-8 -*-
 
-from view.Player import Player
 from stage.Stage import *
-from src.view.Enemy import *
 
-
-
+from view.Enemy import *
+from view.Player import Player
 
 
 class GameLevel:
@@ -48,7 +46,7 @@ class GameLevel:
         # self.player.update(self.platformGroup, clock)
 
     def events(self):
-        self.player.move(pygame.key.get_pressed())
+        self.stage.events()
 
     def draw(self):
         self.stage.draw()

@@ -168,11 +168,11 @@ class DataRetriever:
     def getPlayerAnimations(self, id):
         return self.instance.players["roster"][id]['animations']
 
-    def getPlayerSpeed(self):
-        return self.instance.players["player_speed"]
+    def getCharacterSpeed(self, id):
+        return self.instance.players["roster"][id]['speed']
 
-    def getPlayerJumpSpeed(self):
-        return self.instance.players["player_jump_speed"]
+    def getCharacterJumpSpeed(self, id):
+        return self.instance.players["roster"][id]['jump_speed']
 
     def getPlayerAnimationDelay(self):
         return self.instance.players["player_animation_delay"]
