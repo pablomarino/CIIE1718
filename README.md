@@ -9,7 +9,7 @@
 * ~~Creación de mapas desde fichero txt~~
 * ~~Creación de enemigos desde fichero txt~~
 * ~~Impedir que jugador se salga de la pantalla en el eje x~~
-* Mover enemigos
+* ~~Mover enemigos~~
 
 ## Pablo
 * ~~character corregir salto~~
@@ -18,8 +18,8 @@
 
 ## Matías
 * ~~director cargar menu~~
-* empezar el juego con el menu, y cargar los niveles desde ahí
-* transición entre fases
+* ~~empezar el juego con el menu, y cargar los niveles desde ahí~~
+* Crear un objeto (puerta) que al tocarlo, permita transición entre fases
 
 ## Uxía
 * memoria
