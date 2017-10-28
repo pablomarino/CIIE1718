@@ -2,7 +2,7 @@
 
 from view.Player import Player
 from stage.Stage import *
-from view.Enemy import *
+from src.view.Enemy import *
 
 
 
@@ -16,6 +16,7 @@ class GameLevel:
         self.level = data.getLevel(id)
 
         # Add music to the game
+        import pygame
         pygame.mixer.music.load(self.data.getMusicFile())
         # pygame.mixer.music.play()
 

@@ -210,8 +210,8 @@ class Character(MySprite):
             print "MOVE_UPLEFT"
         elif self.movimiento == UPRIGHT:
             print "MOVE_UPRIGHT"
-        elif self.movimiento == STOPPED:
-            print "MOVE_STOPPED"
+        # elif self.movimiento == STOPPED:
+        #     print "MOVE_STOPPED"
         elif self.movimiento == LEFT:
             print "MOVE_LEFT"
         elif self.movimiento == RIGHT:

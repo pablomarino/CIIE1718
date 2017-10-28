@@ -14,6 +14,8 @@ from control.GameManager import *
 
 # -------------------------------------------------
 # Clase abstracta ElementoGUI
+from src.control.GameLevel import GameLevel
+
 
 class ElementoGUI:
     def __init__(self, pantalla, rectangulo):
@@ -199,9 +201,10 @@ class Menu(Scene):
         self.director.salirPrograma()
 
     def ejecutarJuego(self):
-        #fase = Fase(self.director)
-        #self.director.apilarEscena(fase)
-        raise NotImplemented("Tiene que implementar el metodo ejecutar.")
+        print "Hola"
+        self.manager.changeScene()
+        self.manager.add(GameLevel(self.manager, self.manager.data, "level_1"))
+        #raise NotImplemented("Tiene que implementar el metodo ejecutar.")
 
     def mostrarPantallaInicial(self):
         self.pantallaActual = 0

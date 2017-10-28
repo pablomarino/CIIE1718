@@ -20,8 +20,8 @@ if __name__ == '__main__':
     # Creamos el director
     manager = GameManager(data)
 
-    # Menu= Menu(manager)
-    # manager.add(Menu)
+    #Menu= Menu(manager)
+    #manager.add(Menu)
 
     manager.add(GameLevel(manager, data, "level_1"))
     manager.run()

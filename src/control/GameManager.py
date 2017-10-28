@@ -1,6 +1,8 @@
 import pygame, sys
 from utils.AssetLoader import AssetLoader
 
+from src.control.GameLevel import GameLevel
+
 
 class GameManager:
     def __init__(self, data):
@@ -47,6 +49,9 @@ class GameManager:
                 if e.type == pygame.KEYDOWN and e.key == int(self.data.getKeyQuit()):
                     self.endGame()
                 # Call 'events' function in the current level
+                if e.type == pygame.KEYDOWN and e.key == int(self.data.getKeyReturn()):
+                    self.changeScene()
+                    self.add(GameLevel(self, self.data,"level_2"))
                 if len(self.stack) > 0:
                     self.stack[len(self.stack) - 1].events()
 
