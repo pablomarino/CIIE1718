@@ -99,7 +99,8 @@ class Character(MySprite):
         (vx, vy) = self.velocidad
         self.printMovimiento()
 
-        if self.movimiento == ATTACK: self.numPostura = SPRITE_ATTACKING
+        if self.movimiento == ATTACK:
+            self.numPostura = SPRITE_ATTACKING
 
         if self.movimiento == UP:
             # La postura actual sera estar saltando

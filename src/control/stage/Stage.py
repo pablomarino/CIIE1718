@@ -64,29 +64,40 @@ class Stage(Scene):
         '''
 
     def create_level(self):
-        numerocolumna = 0
-        numerofila = 0
+        MAP_UNIT_WIDTH = 55
+        MAP_UNIT_HEIGHT = 55
+        column_number = 0
+        row_number = 0
 
         with open(self.mapFile, "r") as f:
             for line in f:
                 for letter in line:
-                    # print letter
+                    # Create platform
                     if letter == "1":
-                        # platform = Platform(self.manager, p, self.platforms_z)
-                        platform = Platform(self.manager
-                                            , (numerocolumna * 55, numerofila * 55)
-                                            , self.platformfiles[0]
-                                            , self.platforms_z)
+                        platform = Platform(
+                            self.manager,
+                            (column_number * MAP_UNIT_WIDTH, row_number * MAP_UNIT_HEIGHT),
+                            self.platformfiles[0],
+                            self.platforms_z)
                         self.platformGroup.add(platform)
 
+                    # Create enemies
                     if letter == "e":
                         tmp = str_to_class(self.data["enemies"][0])(self.manager, self.manager.getDataRetriever())
-                        tmp.setPosition((numerocolumna * 55, numerofila * 55))
+                        tmp.setPosition((column_number * MAP_UNIT_WIDTH, row_number * MAP_UNIT_HEIGHT))
                         self.enemyGroup.add(tmp)
 
-                    numerocolumna = numerocolumna + 1
-                numerocolumna = 0
-                numerofila = numerofila + 1
+                    # Create items
+                    if letter == "h":
+                        # TODO create items
+                        # tmp = Heart(self.manager, self.manager.getDataRetriever())
+                        # tmp.setPosition((numerocolumna * MAP_UNIT_WIDTH, numerofila * MAP_UNIT_HEIGHT))
+                        # self.enemyGroup.add(tmp)
+                        pass
+
+                    column_number = column_number + 1
+                column_number = 0
+                row_number = row_number + 1
 
     def update(self, clock):
         self.manager.getScreen().fill(int(self.data["bgColor"], 16))  # en windows es necesario =\ en mac no

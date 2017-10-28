@@ -78,6 +78,8 @@ class Player(Character):
             Character.attack(self, ATTACK)
 
     def move(self, pressedKeys):
+        # TODO Cuando el jugador está cayendo en diagonal, mantiene dirección a pesar de que no haya teclas pulsadas
+
         # Indicamos la acción a realizar segun la tecla pulsada para el jugador
         if self.alive:
             if pressedKeys[self.data.getKeyUp()] and pressedKeys[self.data.getKeyLeft()]:
