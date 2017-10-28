@@ -95,7 +95,16 @@ class Character(MySprite):
         # Si se añade animacion de caida habra que añadirlo aqui
         return self.numPostura == SPRITE_JUMPING
 
+    def invertXSpeed(self):
+        self.velocidad = (-self.velocidad[0], self.velocidad[1])
+        if self.movimiento == RIGHT:
+            self.movimiento = LEFT
+        elif self.movimiento == LEFT:
+            self.movimiento = RIGHT
+
     def update(self, grupoPlataformas, tiempo, scroll):
+        # TODO cuando el jugador salta, todos los enemigos saltan también, solo que tienen jumpSpeed=0 y no se aprecia
+        # (vx, vy) = self.velocidad
         (vx, vy) = self.velocidad
         self.printMovimiento()
 

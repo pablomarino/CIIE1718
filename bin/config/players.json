@@ -1,20 +1,23 @@
 {
-  "player_speed":0.2,
-  "player_jump_speed":0.3,
-  "player_animation_delay":5,
-  "roster":
-    {
-      "player": {
-        "file": "../bin/assets/sprites/main_characters/beatrice.png",
-        "file_coords": "../bin/assets/sprites/main_characters/player_beatrice_coords.txt"
-      },
-      "dante": {
-        "file": "../bin/assets/player_dante.png",
-        "file_coords": ""
-      },
-      "asmodeo": {
-        "file": "../bin/assets/sprites/enemies/enemy1.png",
-        "file_coords": "../bin/assets/sprites/enemies/enemy1_coords.txt"
-      }
+  "player_animation_delay": 5,
+  "roster": {
+    "player": {
+      "speed": 0.2,
+      "jump_speed": 0.3,
+      "file": "../bin/assets/sprites/main_characters/beatrice.png",
+      "file_coords": "../bin/assets/sprites/main_characters/player_beatrice_coords.txt"
+    },
+    "dante": {
+      "speed": 0.1,
+      "jump_speed": 0.3,
+      "file": "../bin/assets/player_dante.png",
+      "file_coords": ""
+    },
+    "asmodeo": {
+      "speed": 0.1,
+      "jump_speed": 0.3,
+      "file": "../bin/assets/sprites/enemies/enemy1.png",
+      "file_coords": "../bin/assets/sprites/enemies/enemy1_coords.txt"
     }
+  }
 }

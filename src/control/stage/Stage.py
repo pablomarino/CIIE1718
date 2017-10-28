@@ -1,6 +1,7 @@
 # -*- encoding: utf-8 -*-
 
 import sys
+
 from control.HUD import HUD
 from control.stage.Background import *
 from control.stage.Platform import Platform
@@ -128,8 +129,8 @@ class Stage(Scene):
         self.enemyGroup.draw(self.manager.getScreen())
         self.HUD.draw()
 
-    def events(self, *args):
-        raise NotImplemented("Tiene que implementar el metodo eventos.")
+    def events(self):
+        self.player.move(pygame.key.get_pressed())
 
     def getDoUpdateScroll(self):
         # TODO Implementar
