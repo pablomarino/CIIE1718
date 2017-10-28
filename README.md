@@ -12,7 +12,7 @@
 * Mover enemigos
 
 ## Pablo
-* character corregir salto
+* ~~character corregir salto~~
 * ~~character corregir scroll enemigo~~
 * items
 
