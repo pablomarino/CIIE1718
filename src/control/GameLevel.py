@@ -45,8 +45,8 @@ class GameLevel:
         self.stage.update(clock)
         # self.player.update(self.platformGroup, clock)
 
-    def events(self):
-        self.stage.events()
+    def events(self, events_list):
+        self.stage.events(events_list)
 
     def draw(self):
         self.stage.draw()

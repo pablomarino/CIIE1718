@@ -1,7 +1,9 @@
-import pygame, sys
-from utils.AssetLoader import AssetLoader
+# -*- coding: utf-8 -*-
+import sys
 
-from src.control.GameLevel import GameLevel
+import pygame
+
+from utils.AssetLoader import AssetLoader
 
 
 class GameManager:
@@ -25,6 +27,9 @@ class GameManager:
         # Accedo a los metodos del singleton para obtener las configuraciones
         self.fps = self.data.getFps()
 
+        # Prueba para corregir la función events del juego
+        self.events_list = []
+
     def add(self, level):
         self.stack.append(level)
 
@@ -44,18 +49,22 @@ class GameManager:
     def run(self):
         while not self.finished:
             time = self.clock.tick(self.fps)
-            for e in pygame.event.get():
+            self.events_list = pygame.event.get()
+            for e in self.events_list:
                 # Se sale al pulsar Esc
                 if e.type == pygame.KEYDOWN and e.key == int(self.data.getKeyQuit()):
                     self.endGame()
-                # Call 'events' function in the current level
-                if e.type == pygame.KEYDOWN and e.key == int(self.data.getKeyReturn()):
-                    self.changeScene()
-                    self.add(GameLevel(self, self.data,"level_2"))
-                if len(self.stack) > 0:
-                    self.stack[len(self.stack) - 1].events()
 
-            # Aqui ocurre la magia (HardCoded)
+                # if e.type == pygame.KEYDOWN and e.key == int(self.data.getKeyReturn()):
+                #     self.changeScene()
+                #     self.add(GameLevel(self, self.data, "level_2"))
+                #     pass
+
+                # Call 'events' function in the current level
+                if len(self.stack) > 0:
+                    self.stack[len(self.stack) - 1].events(self.events_list)
+
+            # Update and draw the stack items
             if len(self.stack) > 0:
                 self.stack[len(self.stack) - 1].update(time)
                 self.stack[len(self.stack) - 1].draw()

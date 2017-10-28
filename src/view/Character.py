@@ -215,28 +215,6 @@ class Character(MySprite):
         #     print "SPRITE_ATTACKING"
 
     def printMovimiento(self):
-<<<<<<< HEAD
-        if self.movimiento == UP:
-            print "MOVE_UP"
-        elif self.movimiento == UPLEFT:
-            print "MOVE_UPLEFT"
-        elif self.movimiento == UPRIGHT:
-            print "MOVE_UPRIGHT"
-        # elif self.movimiento == STOPPED:
-        #     print "MOVE_STOPPED"
-        elif self.movimiento == LEFT:
-            print "MOVE_LEFT"
-        elif self.movimiento == RIGHT:
-            print "MOVE_RIGHT"
-        elif self.movimiento == DOWN:
-            print "MOVE_DOWN"
-        elif self.movimiento == ATTACK:
-            print "MOVE_ATTACK"
-        elif self.movimiento == DOWNLEFT:
-            print "MOVE_DOWNLEFT"
-        elif self.movimiento == DOWNRIGHT:
-            print "MOVE_DOWNRIGHT"
-=======
         pass
         # if self.movimiento == UP:
         #     print "MOVE_UP"
@@ -258,4 +236,3 @@ class Character(MySprite):
         #     print "MOVE_DOWNLEFT"
         # elif self.movimiento == DOWNRIGHT:
         #     print "MOVE_DOWNRIGHT"
->>>>>>> 733b4d9c2424b1f3fe2b2a9769507eeeb5476a14

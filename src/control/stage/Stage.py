@@ -129,7 +129,7 @@ class Stage(Scene):
         self.enemyGroup.draw(self.manager.getScreen())
         self.HUD.draw()
 
-    def events(self):
+    def events(self, events_list):
         self.player.move(pygame.key.get_pressed())
 
     def getDoUpdateScroll(self):

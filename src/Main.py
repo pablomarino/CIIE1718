@@ -3,25 +3,23 @@
 
 # Importar modulos
 from control.GameManager import *
-from control.GameLevel import *
+from control.stage.Menu2 import Menu
 from data.DataRetriever import DataRetriever
-from control.stage.Menu import Menu
-import pygame
 
 if __name__ == '__main__':
     # Instancio un Singleton para cargar configuraciones
     data = DataRetriever()
-    data.loadPreferences('../bin/config/preferences.json')      # Cargo preferencias de la aplicacion
-    data.loadLevels('../bin/config/levels.json')                # Cargo datos de niveles
-    data.loadPlayers('../bin/config/players.json')              # Cargo datos de los jugadores
+    data.loadPreferences('../bin/config/preferences.json')  # Cargo preferencias de la aplicacion
+    data.loadLevels('../bin/config/levels.json')  # Cargo datos de niveles
+    data.loadPlayers('../bin/config/players.json')  # Cargo datos de los jugadores
 
     # Inicializamos la libreria de pygame
     pygame.init()
     # Creamos el director
     manager = GameManager(data)
 
-    #Menu= Menu(manager)
-    #manager.add(Menu)
+    menu = Menu(manager)
+    manager.add(menu)
 
-    manager.add(GameLevel(manager, data, "level_1"))
+    # manager.add(GameLevel(manager, data, "level_1"))
     manager.run()
