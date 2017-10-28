@@ -24,7 +24,6 @@ class HUD:
         self.gameOver = False
 
     def update(self):
-        # TODO comprobar gameOver de otra manerea
         if (self.player.getHealth() == 0) & (self.player.getLives() == 0):
             self.gameOver = True
 
@@ -32,6 +31,7 @@ class HUD:
         pass
 
     def draw(self):
+        # TODO finish the HUD properly
         # Gameover alert
         if self.gameOver:
             self.centered_text_to_screen(
@@ -39,7 +39,6 @@ class HUD:
                 150
             )
         else:
-            # TODO cambiar las posiciones de cada uno de los elementos
             # Player x position
             self.text_to_screen(
                 self.text_pos_x.format(self.player.getGlobalPosition()[0]),
