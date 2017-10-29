@@ -17,7 +17,7 @@ class Enemy(Character):
 
         self.health = 100
         self.alive = True
-        # TODO cada enemigo se moverá hacia un lado aleatorio al principio
+        # TODO cada enemigo debería moverse hacia un lado diferente al crearse el nivel
         Character.move(self, LEFT)
 
     def update(self, platformGroup, clock, playerDisplacement):
@@ -26,8 +26,10 @@ class Enemy(Character):
             # Si el enemigo se sale de la pantalla, invertir velocidad X
             if self.posicion[0] == self.screen_width - self.getRect().width or self.posicion[0] == 0:
                 self.invertXSpeed()
+
             # si el jugador ya no va a estar en contacto con una plataforma, invertir el eje X
-            if pygame.sprite.spritecollideany(self, platformGroup) is None:
+            elif pygame.sprite.spritecollideany(self, platformGroup) is None:
+                # TODO comprobar mejor si la parte derecha del enemigo y de la plataforma coinciden, y viceversa
                 self.invertXSpeed()
 
             Character.update(self, platformGroup, clock, playerDisplacement)

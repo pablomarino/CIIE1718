@@ -74,6 +74,7 @@ class Stage(Scene):
         with open(self.mapFile, "r") as f:
             for line in f:
                 for letter in line:
+                    # TODO decidir que letras y números usar para crear cada tipo de enemigo, plataforma, e ítem
                     # Create platform
                     if letter == "1":
                         platform = Platform(
@@ -84,7 +85,7 @@ class Stage(Scene):
                         self.platformGroup.add(platform)
 
                     # Create enemies
-                    if letter == "e":
+                    if letter == "a":
                         tmp = str_to_class(self.data["enemies"][0])(self.manager, self.manager.getDataRetriever())
                         tmp.setPosition((column_number * MAP_UNIT_WIDTH, row_number * MAP_UNIT_HEIGHT))
                         self.enemyGroup.add(tmp)

@@ -163,6 +163,7 @@ class Menu(Scene):
 
     def events(self, events_list):
         for evento in events_list:
+
             # If mouse is pressed
             if evento.type == MOUSEBUTTONDOWN:
                 self.clicked_element = None
@@ -179,6 +180,12 @@ class Menu(Scene):
                         if elemento == self.clicked_element:
                             # print "Has de-pulsado en el mismo elemento"
                             elemento.action()
+
+            # If enter key is pressed
+            if evento.type == KEYDOWN and evento.key == int(self.data.getKeyReturn()):
+                self.manager.changeScene()
+                self.manager.add(GameLevel(self.manager, self.manager.getDataRetriever(), "level_1"))
+                pass
 
     def draw(self):
         # Dibujamos primero la imagen de fondo
