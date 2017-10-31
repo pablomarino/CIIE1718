@@ -1,14 +1,6 @@
 
 # Tareas a llevar a cabo
-* Corregir moonwalk
-* **Corregir enemigos saltando a la vez que personaje**
-* Corregir problema de sprites de jugador con la espada
-* Implementar ataque de enemigos cuando el jugador está cerca
-* Terminar level_1.txt
-* Crear level_2.txt y level_3.txt
-
-
-
+* .
 
 
 ## Jose
@@ -19,19 +11,25 @@
 * ~~Creación de enemigos desde fichero txt~~
 * ~~Impedir que jugador se salga de la pantalla en el eje x~~
 * ~~Mover enemigos~~
+* Implementar ataque de enemigos
+* Corregir problema colisión jugador con plataformas
 * Impedir que los enemigos se queden medio colgando del borde de las plataformas
-* Decidir que letras y números usar para crear cada tipo de enemigo, plataforma, e ítem
 
 ## Pablo
 * ~~character corregir salto~~
 * ~~character corregir scroll enemigo~~
 * items
 * Corregir problema salto diagonal personaje
+* Salto enemigos cuando jugador salta
+* Corregir enemigos andando hacia atrás
 
 ## Matías
 * ~~director cargar menu~~
 * ~~empezar el juego con el menu, y cargar los niveles desde ahí~~
+* Terminar level_1.txt
+* Crear level_2.txt y level_3.txt
 * Crear un objeto (puerta) que al tocarlo, permita transición entre fases
+* Decidir que letras y números usar para crear cada tipo de enemigo, plataforma, e ítem
 
 ## Uxía
 * memoria
@@ -39,7 +37,6 @@
 
 ## Óscar
 * ~~Audio~~
-* Implementar ataque del jugador
 
 
 <br><br><br><br><br><br><br>
