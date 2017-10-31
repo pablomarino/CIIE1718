@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from view.Character import *
+from random import randint
 
 
 class Enemy(Character):
@@ -18,7 +19,11 @@ class Enemy(Character):
         self.health = 100
         self.alive = True
         # TODO cada enemigo debería moverse hacia un lado diferente al crearse el nivel
-        Character.move(self, LEFT)
+
+        if randint(0,1)==0 :
+            Character.move(self, LEFT)
+        else:
+            Character.move(self, RIGHT)
 
     def update(self, platformGroup, clock, playerDisplacement):
         # TODO implementar en cada tipo de enemigo si es necesario, al menos la parte de las plataformas
@@ -26,7 +31,6 @@ class Enemy(Character):
             # Si el enemigo se sale de la pantalla, invertir velocidad X
             if self.posicion[0] == self.screen_width - self.getRect().width or self.posicion[0] == 0:
                 self.invertXSpeed()
-
             # si el jugador ya no va a estar en contacto con una plataforma, invertir el eje X
             elif pygame.sprite.spritecollideany(self, platformGroup) is None:
                 # TODO comprobar mejor si la parte derecha del enemigo y de la plataforma coinciden, y viceversa
