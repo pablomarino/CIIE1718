@@ -25,6 +25,7 @@ class Stage(Scene):
         self.itemStack = self.enemyStack = []
         self.platformGroup = platformGroup
         self.enemyGroup = enemyGroup
+
         self.setup()
 
     def setup(self):
@@ -130,6 +131,25 @@ class Stage(Scene):
         self.spriteGroup.draw(self.manager.getScreen())
         self.enemyGroup.draw(self.manager.getScreen())
         self.HUD.draw()
+        self.draw_rects()
+
+    def draw_rects(self):
+        # Platform rects
+        # for item in self.platformGroup:
+        #     self.draw_transparent_rect(item.getRect(), (255, 255, 255, 100))
+
+        # Enemy rects
+        for enemy in self.enemyGroup:
+            self.draw_transparent_rect(enemy.getRect(), (255, 10, 10, 100))
+
+        # Player rects
+        self.draw_transparent_rect(self.player.getRect(), (23, 100, 255, 100))
+        self.draw_transparent_rect(self.player.getCollisionRect(), (10, 255, 255, 100))
+
+    def draw_transparent_rect(self, rect, colour):
+        tmp = pygame.Surface((rect.width, rect.height), pygame.SRCALPHA, 32)
+        tmp.fill(colour)
+        self.manager.getScreen().blit(tmp, (rect.left, rect.top))
 
     def events(self, events_list):
         self.player.move(pygame.key.get_pressed())

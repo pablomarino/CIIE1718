@@ -2,7 +2,8 @@
 
 from view.MySprite import *
 
-STOPPED = 0  # estados
+# Estados
+STOPPED = 0
 LEFT = 1
 RIGHT = 2
 UP = 3
@@ -12,13 +13,14 @@ UPRIGHT = 6
 DOWNLEFT = 7
 DOWNRIGHT = 8
 ATTACK = 9
-SPRITE_STOPPED = 0  # animaciones
+# Animaciones
+SPRITE_STOPPED = 0
 SPRITE_WALKING = 1
 SPRITE_JUMPING = 2
 SPRITE_ATTACKING = 3
 SPRITE_DYING = 4
 SPRITE_FALLING = 5
-SPRITE_ATTACKING = 3
+# Variables movimiento
 GRAVITY = 0.0007  # Píxeles / ms2
 
 
@@ -45,16 +47,21 @@ class Character(MySprite):
         datos = manager.getLibrary().loadCoordsFile(archivoCoordenadas)  # Leemos las coordenadas de un archivo de texto
         datos = datos.split()
 
-        cont = 0;
+        cont = 0
         for linea in range(0, self.numberOfPostures):
             self.coordenadasHoja.append([])
             tmp = self.coordenadasHoja[linea]
-            for postura in range(1, numImagenes[linea] + 1):
+            for postura in range(0, numImagenes[linea]):
                 tmp.append(
                     pygame.Rect((int(datos[cont]), int(datos[cont + 1])), (int(datos[cont + 2]), int(datos[cont + 3]))))
                 cont += 4
-        self.rect = pygame.Rect(100, 100, self.coordenadasHoja[self.numPostura][self.numImagenPostura][2],
-                                self.coordenadasHoja[self.numPostura][self.numImagenPostura][3])
+
+        # Creamos el rect del jugador
+        self.rect = pygame.Rect(self.getGlobalPosition()[0], self.getGlobalPosition()[0],
+                                self.coordenadasHoja[self.numPostura][self.numImagenPostura].width,
+                                self.coordenadasHoja[self.numPostura][self.numImagenPostura].height)
+
+        # Actualizamos postura del jugador
         self.actualizarPostura()
 
     def move(self, movimiento):
@@ -75,11 +82,23 @@ class Character(MySprite):
             self.retardoMovimiento = self.retardoAnimacion
             # Si ha pasado, actualizamos la postura
             self.numImagenPostura += 1
+
             if self.numImagenPostura >= len(self.coordenadasHoja[self.numPostura]):
-                self.numImagenPostura = 0;
+                self.numImagenPostura = 0
+
             if self.numImagenPostura < 0:
                 self.numImagenPostura = len(self.coordenadasHoja[self.numPostura]) - 1
+
             self.image = self.hoja.subsurface(self.coordenadasHoja[self.numPostura][self.numImagenPostura])
+
+            # Actualizamos la variable rect para que se adapte al sprite
+            self.rect = pygame.Rect(self.getGlobalPosition()[0], self.getGlobalPosition()[0],
+                                    self.coordenadasHoja[self.numPostura][self.numImagenPostura].width,
+                                    self.coordenadasHoja[self.numPostura][self.numImagenPostura].height)
+
+            # Actualizamos el rect de colisión con plataformas
+
+
             # Si esta mirando a la izquiera, cogemos la porcion de la hoja
             if (self.mirando == LEFT or self.mirando == UPLEFT or self.mirando == DOWNLEFT):
                 self.image = self.hoja.subsurface(self.coordenadasHoja[self.numPostura][self.numImagenPostura])
@@ -145,8 +164,13 @@ class Character(MySprite):
                 # La postura actual sera estar caminando
                 self.numPostura = SPRITE_WALKING
                 # Ademas, si no estamos encima de ninguna plataforma, caeremos
-                if pygame.sprite.spritecollideany(self, grupoPlataformas) == None:
+                platform_collided = pygame.sprite.spritecollideany(self, grupoPlataformas)
+                if platform_collided is not None:
+                    if not self.getCollisionRect().colliderect(platform_collided.getRect()):
+                        self.numPostura = SPRITE_JUMPING
+                else:
                     self.numPostura = SPRITE_JUMPING
+
             '''
             # Si queremos saltar
             
@@ -172,15 +196,18 @@ class Character(MySprite):
             #  Ademas, esa colision solo nos interesa cuando estamos cayendo
             #  y solo es efectiva cuando caemos encima, no de lado, es decir,
             #  cuando nuestra posicion inferior esta por encima de la parte de abajo de la plataforma
-            if (plataforma != None) and (vy > 0) and (plataforma.rect.bottom > self.rect.bottom):
-                # Lo situamos con la parte de abajo un pixel colisionando con la plataforma
-                #  para poder detectar cuando se cae de ella
-                # print self.posicion[0], plataforma.posicion[1],plataforma.rect.height, plataforma.posicion[1]-plataforma.rect.height+1
-                self.setPosition((self.posicion[0], plataforma.posicion[1] - plataforma.rect.height + 2))
-                # Lo ponemos como quieto
-                self.numPostura = SPRITE_STOPPED
-                # Y estará quieto en el eje y
-                vy = 0
+            if (plataforma is not None) and (vy > 0) and (plataforma.rect.bottom > self.rect.bottom):
+                if not self.getCollisionRect().colliderect(plataforma.getRect()):
+                    vy += GRAVITY * tiempo
+                    if vy > 0.25: vy = 0.25
+                else:
+                    # Lo situamos con la parte de abajo un pixel colisionando con la plataforma
+                    #  para poder detectar cuando se cae de ella
+                    self.setPosition((self.posicion[0], plataforma.posicion[1] - plataforma.rect.height + 1))
+                    # Lo ponemos como quieto
+                    self.numPostura = SPRITE_STOPPED
+                    # Y estará quieto en el eje y
+                    vy = 0
             # Si no caemos en una plataforma, aplicamos el efecto de la gravedad
             else:
                 vy += GRAVITY * tiempo

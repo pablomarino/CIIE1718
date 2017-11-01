@@ -22,6 +22,7 @@ class Player(Character):
                            data.getPlayerAnimationDelay())
 
         self.data = data
+        self.collision_rect = None
 
         # Variables propias del jugador
         self.lives = 3
@@ -30,17 +31,26 @@ class Player(Character):
         self.attack = 50
         self.alive = True
 
+    def getCollisionRect(self):
+        return self.collision_rect
+
+    def updateCollisionRect(self):
+        # pygame.Rect(left, top, width, height)
+        self.collision_rect = pygame.Rect(self.getRect().left + self.getRect().width / 2 - 3,
+                                          self.getRect().bottom - 5,
+                                          6, 5)
+
     def getLives(self):
         return self.lives
 
-    def increaseLives(self, value):
+    def increaseLives(self):
         self.lives = self.lives + 1
 
     def decreaseLives(self):
         self.lives = self.lives - 1
         if self.lives <= 0:
             self.lives = 0
-            # TODO GameOver
+            # TODO GameOver menu
             print "Game Over!"
             self.alive = False
         else:
@@ -112,4 +122,9 @@ class Player(Character):
                     # TODO decidir si emitir sonido aquí, o dentro de la propia función decreaseLives()
                     pygame.mixer.Sound('../bin/assets/sounds/player/enemy_hit_1.wav').play()
                     self.tiempo_colision = time() + 1
-        Character.update(self, platformGroup, clock, playerDisplacement)
+
+            # Call update in the super class
+            Character.update(self, platformGroup, clock, playerDisplacement)
+
+            # Update collision rect
+            self.updateCollisionRect()

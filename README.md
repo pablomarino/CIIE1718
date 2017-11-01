@@ -11,9 +11,10 @@
 * ~~Creación de enemigos desde fichero txt~~
 * ~~Impedir que jugador se salga de la pantalla en el eje x~~
 * ~~Mover enemigos~~
+* ~~Impedir que los enemigos se queden medio colgando del borde de las plataformas~~
 * Implementar ataque de enemigos
-* Corregir problema colisión jugador con plataformas
-* Impedir que los enemigos se queden medio colgando del borde de las plataformas
+* Corregir problema de sprite dejugador demasiado grande colisionando con plataformas
+
 
 ## Pablo
 * ~~character corregir salto~~

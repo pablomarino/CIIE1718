@@ -27,6 +27,10 @@ class Enemy(Character):
         self.health = 100
         self.alive = True
 
+    def getCollisionRect(self):
+        # TODO implementar esta función para los enemigos
+        return self.getRect()
+
     def update(self, platformGroup, clock, playerDisplacement):
         # TODO implementar en cada tipo de enemigo si es necesario, al menos la parte de las plataformas
         if self.alive:
