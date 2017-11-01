@@ -62,9 +62,7 @@ class Stage(Scene):
         row_number = 0
         # Asignación de letras a objetos
         platform_letter = "1"
-        platform_end_letter = " "
         enemy_letter = "a"
-        platform_letter = "1"
 
         # Abrimos mapa en formato txt y lo leemos letra a letra
         with open(self.mapFile, "r") as f:
@@ -77,8 +75,14 @@ class Stage(Scene):
                     if letter == platform_letter:
                         platform_size = platform_size + 1
 
-                    # Si hay un espacio y antes había un 1, creamos la plataforma
-                    if letter == platform_end_letter and prev_letter == platform_letter:
+                    # Create enemies
+                    if letter == enemy_letter:
+                        tmp = str_to_class(self.data["enemies"][0])(self.manager, self.manager.getDataRetriever())
+                        tmp.setPosition((column_number * MAP_UNIT_WIDTH, row_number * MAP_UNIT_HEIGHT))
+                        self.enemyGroup.add(tmp)
+
+                    # Creamos plataformas
+                    if letter != platform_letter and prev_letter == platform_letter:
                         platform = Platform(
                             self.manager,
                             (column_number * MAP_UNIT_WIDTH, row_number * MAP_UNIT_HEIGHT),
@@ -88,17 +92,21 @@ class Stage(Scene):
                         self.platformGroup.add(platform)
                         platform_size = 0
 
-                    # Create enemies
-                    if letter == enemy_letter:
-                        tmp = str_to_class(self.data["enemies"][0])(self.manager, self.manager.getDataRetriever())
-                        tmp.setPosition((column_number * MAP_UNIT_WIDTH, row_number * MAP_UNIT_HEIGHT))
-                        self.enemyGroup.add(tmp)
-
                     # Incrementar el contador de columnas
                     column_number = column_number + 1
 
                     # Asignar el valor de la letra actual a la variable prev_letter
                     prev_letter = letter
+
+                # Create last platform
+                if prev_letter == platform_letter:
+                    platform = Platform(
+                        self.manager,
+                        (column_number * MAP_UNIT_WIDTH, row_number * MAP_UNIT_HEIGHT),
+                        self.platformfiles[0],
+                        self.platforms_z,
+                        platform_size)
+                    self.platformGroup.add(platform)
 
                 # Incrementar el contador de filas
                 row_number = row_number + 1
