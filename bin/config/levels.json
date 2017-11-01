@@ -34,7 +34,7 @@
         "repeat_y": "True"
       }
     ],
-    "platforms_z": "5",
+    "platforms_z": "1",
     "map_file": "../bin/config/levels/level1.txt",
     "platform_files": [
       "../bin/assets/backgrounds/bg_l1_platform_2.png",

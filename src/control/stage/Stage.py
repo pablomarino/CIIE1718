@@ -52,55 +52,56 @@ class Stage(Scene):
         # Creamos el HUD
         self.HUD = HUD(self.manager.getDataRetriever(), self.manager.getScreen(), self.player)
 
-        '''
-        # Items
-        for i in self.data["items"]:
-            item =Item(self.manager,i,self.levelWidth,self.levelHeight,self.player)
-            self.itemStack.append(item)
-        '''
-        '''
-        # Enemies
-        for e in self.data["enemies"]:
-            enemy = Enemy(self.manager, e, self.levelWidth, self.levelHeight, self.player)
-            self.enemyStack.append(enemy)
-        '''
-
     def create_level(self):
+        # Tamaño que representa cada letra del mapa.txt
         MAP_UNIT_WIDTH = 55
         MAP_UNIT_HEIGHT = 55
+        # Variables
         column_number = 0
         row_number = 0
+        # Asignación de letras a objetos
+        platform_letter = "1"
+        platform_end_letter = " "
+        enemy_letter = "a"
+        platform_letter = "1"
 
+        # Abrimos mapa en formato txt y lo leemos letra a letra
         with open(self.mapFile, "r") as f:
             for line in f:
+                platform_size = 0
+                prev_letter = " "
+
                 for letter in line:
-                    # TODO decidir que letras y números usar para crear cada tipo de enemigo, plataforma, e ítem
-                    # Create platform
-                    if letter == "1":
+                    # Si hay la letra asignada a plataformas, aumentamos el tamaño de la plataforma a crear una posición
+                    if letter == platform_letter:
+                        platform_size = platform_size + 1
+
+                    # Si hay un espacio y antes había un 1, creamos la plataforma
+                    if letter == platform_end_letter and prev_letter == platform_letter:
                         platform = Platform(
                             self.manager,
                             (column_number * MAP_UNIT_WIDTH, row_number * MAP_UNIT_HEIGHT),
                             self.platformfiles[0],
-                            self.platforms_z)
+                            self.platforms_z,
+                            platform_size)
                         self.platformGroup.add(platform)
+                        platform_size = 0
 
                     # Create enemies
-                    if letter == "a":
+                    if letter == enemy_letter:
                         tmp = str_to_class(self.data["enemies"][0])(self.manager, self.manager.getDataRetriever())
                         tmp.setPosition((column_number * MAP_UNIT_WIDTH, row_number * MAP_UNIT_HEIGHT))
                         self.enemyGroup.add(tmp)
 
-                    # Create items
-                    if letter == "h":
-                        # TODO create items
-                        # tmp = Heart(self.manager, self.manager.getDataRetriever())
-                        # tmp.setPosition((numerocolumna * MAP_UNIT_WIDTH, numerofila * MAP_UNIT_HEIGHT))
-                        # self.enemyGroup.add(tmp)
-                        pass
-
+                    # Incrementar el contador de columnas
                     column_number = column_number + 1
-                column_number = 0
+
+                    # Asignar el valor de la letra actual a la variable prev_letter
+                    prev_letter = letter
+
+                # Incrementar el contador de filas
                 row_number = row_number + 1
+                column_number = 0
 
     def update(self, clock):
         self.manager.getScreen().fill(int(self.data["bgColor"], 16))  # en windows es necesario =\ en mac no
