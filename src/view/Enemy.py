@@ -1,9 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from random import randint
-
 from view.Character import *
-
 
 class Enemy(Character):
     def __init__(self, manager, data, id):
@@ -32,6 +30,7 @@ class Enemy(Character):
         return self.getRect()
 
     def update(self, platformGroup, clock, playerDisplacement):
+        self.printMovimiento()
         # TODO implementar en cada tipo de enemigo si es necesario, al menos la parte de las plataformas
         if self.alive:
 
@@ -62,17 +61,18 @@ class Enemy(Character):
     def getDoUpdateScroll(self):
         return True
 
-
 class Asmodeo(Enemy):
+
     def __init__(self, manager, data):
         Enemy.__init__(self, manager, data, "asmodeo")
-
+        self.setInvertedSpriteSheet(True)
 
 class Belcebu(Enemy):
     def __init__(self, manager, data):
         Enemy.__init__(self, manager, data, "asmodeo")
-
+        self.setInvertedSpriteSheet(True)
 
 class Mammon(Enemy):
     def __init__(self, manager, data):
         Enemy.__init__(self, manager, data, "mammon")
+        self.setInvertedSpriteSheet(True)

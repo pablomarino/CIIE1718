@@ -13,6 +13,7 @@ UPRIGHT = 6
 DOWNLEFT = 7
 DOWNRIGHT = 8
 ATTACK = 9
+
 # Animaciones
 SPRITE_STOPPED = 0
 SPRITE_WALKING = 1
@@ -20,6 +21,7 @@ SPRITE_JUMPING = 2
 SPRITE_ATTACKING = 3
 SPRITE_DYING = 4
 SPRITE_FALLING = 5
+
 # Variables movimiento
 GRAVITY = 0.0007  # Píxeles / ms2
 
@@ -43,6 +45,7 @@ class Character(MySprite):
         self.velocidadSalto = velocidadSalto
         self.retardoAnimacion = retardoAnimacion  # El retardo en la animacion del personaje
         self.tiempo_colision = 0
+        self.invertedSpriteSheet = False
 
         datos = manager.getLibrary().loadCoordsFile(archivoCoordenadas)  # Leemos las coordenadas de un archivo de texto
         datos = datos.split()
@@ -98,14 +101,20 @@ class Character(MySprite):
 
             # Actualizamos el rect de colisión con plataformas
 
-
             # Si esta mirando a la izquiera, cogemos la porcion de la hoja
             if (self.mirando == LEFT or self.mirando == UPLEFT or self.mirando == DOWNLEFT):
-                self.image = self.hoja.subsurface(self.coordenadasHoja[self.numPostura][self.numImagenPostura])
+                if self.invertedSpriteSheet == False:
+                    self.image = self.hoja.subsurface(self.coordenadasHoja[self.numPostura][self.numImagenPostura])
+                else:
+                    self.image = pygame.transform.flip(
+                        self.hoja.subsurface(self.coordenadasHoja[self.numPostura][self.numImagenPostura]), 1, 0)
             # Si no, si mira a la derecha, invertimos esa imagen
             elif (self.mirando == RIGHT or self.mirando == UPRIGHT or self.mirando == DOWNRIGHT):
-                self.image = pygame.transform.flip(
-                    self.hoja.subsurface(self.coordenadasHoja[self.numPostura][self.numImagenPostura]), 1, 0)
+                if self.invertedSpriteSheet == False:
+                    self.image = pygame.transform.flip(
+                        self.hoja.subsurface(self.coordenadasHoja[self.numPostura][self.numImagenPostura]), 1, 0)
+                else:
+                    self.image = self.hoja.subsurface(self.coordenadasHoja[self.numPostura][self.numImagenPostura])
 
     def getVelocidad(self):
         return self.velocidad
@@ -125,7 +134,6 @@ class Character(MySprite):
         # TODO cuando el jugador salta, todos los enemigos saltan también, solo que tienen jumpSpeed=0 y no se aprecia
         # (vx, vy) = self.velocidad
         (vx, vy) = self.velocidad
-        self.printMovimiento()
 
         if self.movimiento == ATTACK:
             self.numPostura = SPRITE_ATTACKING
@@ -227,39 +235,40 @@ class Character(MySprite):
             self.establecerPosicionPantalla((scroll[0], -scroll[1]))
 
     def printPostura(self):
-        pass
-        # if self.numPostura == SPRITE_STOPPED:
-        #     print "SPRITE_STOPPED"
-        # elif self.numPostura == SPRITE_WALKING:
-        #     print "SPRITE_WALKING"
-        # elif self.numPostura == SPRITE_JUMPING:
-        #     print "SPRITE_JUMPING"
-        # elif self.numPostura == SPRITE_DYING:
-        #     print "SPRITE_DYING"
-        # elif self.numPostura == SPRITE_FALLING:
-        #     print "SPRITE_FALLING"
-        # elif self.numPostura == SPRITE_ATTACKING:
-        #     print "SPRITE_ATTACKING"
+        if self.numPostura == SPRITE_STOPPED:
+            print "SPRITE_STOPPED"
+        elif self.numPostura == SPRITE_WALKING:
+            print "SPRITE_WALKING"
+        elif self.numPostura == SPRITE_JUMPING:
+            print "SPRITE_JUMPING"
+        elif self.numPostura == SPRITE_DYING:
+            print "SPRITE_DYING"
+        elif self.numPostura == SPRITE_FALLING:
+            print "SPRITE_FALLING"
+        elif self.numPostura == SPRITE_ATTACKING:
+            print "SPRITE_ATTACKING"
 
     def printMovimiento(self):
-        pass
-        # if self.movimiento == UP:
-        #     print "MOVE_UP"
-        # elif self.movimiento == UPLEFT:
-        #     print "MOVE_UPLEFT"
-        # elif self.movimiento == UPRIGHT:
-        #     print "MOVE_UPRIGHT"
-        # elif self.movimiento == STOPPED:
-        #     print "MOVE_STOPPED"
-        # elif self.movimiento == LEFT:
-        #     print "MOVE_LEFT"
-        # elif self.movimiento == RIGHT:
-        #     print "MOVE_RIGHT"
-        # elif self.movimiento == DOWN:
-        #     print "MOVE_DOWN"
-        # elif self.movimiento == ATTACK:
-        #     print "MOVE_ATTACK"
-        # elif self.movimiento == DOWNLEFT:
-        #     print "MOVE_DOWNLEFT"
-        # elif self.movimiento == DOWNRIGHT:
-        #     print "MOVE_DOWNRIGHT"
+        if self.movimiento == UP:
+            print "MOVE_UP"
+        elif self.movimiento == UPLEFT:
+            print "MOVE_UPLEFT"
+        elif self.movimiento == UPRIGHT:
+            print "MOVE_UPRIGHT"
+        elif self.movimiento == STOPPED:
+            print "MOVE_STOPPED"
+        elif self.movimiento == LEFT:
+            print "MOVE_LEFT"
+        elif self.movimiento == RIGHT:
+            print "MOVE_RIGHT"
+        elif self.movimiento == DOWN:
+            print "MOVE_DOWN"
+        elif self.movimiento == ATTACK:
+            print "MOVE_ATTACK"
+        elif self.movimiento == DOWNLEFT:
+            print "MOVE_DOWNLEFT"
+        elif self.movimiento == DOWNRIGHT:
+            print "MOVE_DOWNRIGHT"
+
+    def setInvertedSpriteSheet(self,b):
+        self.invertedSpriteSheet = b;

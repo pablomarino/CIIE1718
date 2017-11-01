@@ -23,6 +23,7 @@
 * Corregir problema salto diagonal personaje
 * Salto enemigos cuando jugador salta
 * Corregir enemigos andando hacia atrás
+* Z
 
 ## Matías
 * ~~director cargar menu~~
