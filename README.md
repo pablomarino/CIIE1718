@@ -24,7 +24,7 @@
 * Corregir problema salto diagonal personaje
 * ~~Salto enemigos cuando jugador salta~~
 * ~~Corregir enemigos andando hacia atrás~~
-* Resetear Scroll cuando el jugador muere
+* ~~Resetear Scroll cuando el jugador muere~~
 * Z
 
 ## Matías

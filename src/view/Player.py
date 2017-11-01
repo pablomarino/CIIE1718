@@ -23,7 +23,7 @@ class Player(Character):
 
         self.data = data
         self.collision_rect = None
-
+        self.manager = manager
         # Variables propias del jugador
         self.lives = 3
         self.health = 100
@@ -54,12 +54,14 @@ class Player(Character):
             print "Game Over!"
             self.alive = False
         else:
-            # TODO Actualizar el scroll cuando se reinicia la posición del jugador
+            self.stage.resetScroll()
             self.setPosition(self.data.getPlayerPositionAt("level_1"))
             self.setHealth(100)
 
     def getHealth(self):
         return self.health
+
+    def setStage(self,s): self.stage = s
 
     def setHealth(self, value):
         self.health = value

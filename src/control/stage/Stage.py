@@ -162,6 +162,9 @@ class Stage(Scene):
     def events(self, events_list):
         self.player.move(pygame.key.get_pressed())
 
+    def resetScroll(self):
+        self.playerDisplacement = (0,0)
+
     def getDoUpdateScroll(self):
         # TODO Implementar
         '''
