@@ -15,6 +15,7 @@
 * ~~Corregir problema de sprite dejugador demasiado grande colisionando con plataformas~~
 * Implementar ataque de enemigos
 * Implementar ataque del jugador
+* Hacer que los enemigos persigan al jugador si éste pisa la plataforma en la que se encuentra el enemigo
 
 ## Pablo
 * ~~character corregir salto~~
