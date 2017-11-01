@@ -131,20 +131,17 @@ class Character(MySprite):
             self.movimiento = RIGHT
 
     def update(self, grupoPlataformas, tiempo, scroll):
-        # TODO cuando el jugador salta, todos los enemigos saltan también, solo que tienen jumpSpeed=0 y no se aprecia
-        # (vx, vy) = self.velocidad
         (vx, vy) = self.velocidad
 
+        # Ataque
         if self.movimiento == ATTACK:
             self.numPostura = SPRITE_ATTACKING
 
+        # Saltos
         if self.movimiento == UP:
-            # La postura actual sera estar saltando
             self.numPostura = SPRITE_JUMPING
-            # Le imprimimos una velocidad en el eje y
             vy = -self.velocidadSalto
             self.movimiento = STOPPED
-
         elif self.movimiento == UPRIGHT or self.movimiento == UPLEFT:
             self.numPostura = SPRITE_JUMPING
             vy = -self.velocidadSalto
@@ -156,6 +153,7 @@ class Character(MySprite):
                 self.mirando = RIGHT
             self.movimiento = STOPPED
 
+        # Desplazamiento lateral
         if (self.movimiento == LEFT) or (self.movimiento == RIGHT):
             # Esta mirando hacia ese lado
             self.mirando = self.movimiento
@@ -166,7 +164,6 @@ class Character(MySprite):
             # Si vamos a la derecha, le ponemos velocidad en esa dirección
             else:
                 vx = self.velocidadCarrera
-
             # Si no estamos en el aire
             if self.numPostura != SPRITE_JUMPING:
                 # La postura actual sera estar caminando
@@ -178,18 +175,6 @@ class Character(MySprite):
                         self.numPostura = SPRITE_JUMPING
                 else:
                     self.numPostura = SPRITE_JUMPING
-
-            '''
-            # Si queremos saltar
-            
-            elif self.movimiento == UP:
-                # La postura actual sera estar saltando
-                self.numPostura = SPRITE_JUMPING
-                # Le imprimimos una velocidad en el eje y
-                vy = -self.velocidadSalto
-                self.movimiento = STOPPED
-            '''
-        # Si no se ha pulsado ninguna tecla
         elif self.movimiento == STOPPED:
             # Si no estamos saltando, la postura actual será estar quieto
             if not self.numPostura == SPRITE_JUMPING:
@@ -209,10 +194,8 @@ class Character(MySprite):
                     vy += GRAVITY * tiempo
                     if vy > 0.25: vy = 0.25
                 else:
-                    # Lo situamos con la parte de abajo un pixel colisionando con la plataforma
-                    #  para poder detectar cuando se cae de ella
-                    self.setPosition((self.posicion[0], plataforma.posicion[1] - plataforma.rect.height + 1))
-                    # Lo ponemos como quieto
+                    # Lo situamos con la parte de abajo colisionando con la plataforma para detectar cuando se cae
+                    self.setPosition((self.posicion[0], plataforma.posicion[1] - plataforma.rect.height + 10))
                     self.numPostura = SPRITE_STOPPED
                     # Y estará quieto en el eje y
                     vy = 0
@@ -221,18 +204,17 @@ class Character(MySprite):
                 vy += GRAVITY * tiempo
                 if vy > 0.25: vy = 0.25
 
-        # Actualizamos la imagen a mostrar
         self.actualizarPostura()
 
-        # Aplicamos la velocidad en cada eje
         self.velocidad = (vx, vy)
-
-        # Y llamamos al método de la superclase para que, según la velocidad y el tiempo
-        #  calcule la nueva posición del Sprite
+        # Superclase calcula la nueva posición del Sprite con la velocidad
         MySprite.update(self, tiempo)
 
-        if self.getDoUpdateScroll():
-            self.establecerPosicionPantalla((scroll[0], -scroll[1]))
+        if self.getDoUpdateScroll(): self.establecerPosicionPantalla((scroll[0], -scroll[1]))
+
+        #if type(self).__name__ == "Asmodeo": print self.printMovimiento(), self.printPostura(), self.velocidad
+
+
 
     def printPostura(self):
         if self.numPostura == SPRITE_STOPPED:

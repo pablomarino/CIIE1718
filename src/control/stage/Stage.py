@@ -116,8 +116,8 @@ class Stage(Scene):
         self.manager.getScreen().fill(int(self.data["bgColor"], 16))  # en windows es necesario =\ en mac no
         # Calculo la distancia entre la posicion inicial del jugador y la actual
         # Este valor se le pasa a Background y Platform para que realice el scroll
-        if (
-                    self.player.getDoUpdateScroll() & self.getDoUpdateScroll()):  # solo actualizo el scroll si esta saltando o cayendo
+        # solo actualizo el scroll si el jugador esta saltando o cayendo
+        if (self.player.getDoUpdateScroll() & self.getDoUpdateScroll()):
             self.playerDisplacement = (
                 0,  # int(math.ceil(self.playerStartPosition[0]-self.player.getPosition()[0])),
                 int(math.ceil(self.playerStartPosition[1] - self.player.getGlobalPosition()[1]))

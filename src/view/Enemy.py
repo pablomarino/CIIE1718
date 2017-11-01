@@ -30,10 +30,9 @@ class Enemy(Character):
         return self.getRect()
 
     def update(self, platformGroup, clock, playerDisplacement):
-        self.printMovimiento()
+
         # TODO implementar en cada tipo de enemigo si es necesario, al menos la parte de las plataformas
         if self.alive:
-
             # Comprobamos si está en colisión con una plataformas
             platform = pygame.sprite.spritecollideany(self, platformGroup)
 
@@ -55,7 +54,6 @@ class Enemy(Character):
                     self.invertXSpeed()
                     new_pos = (platform.getRect().right - self.getRect().width, self.getGlobalPosition()[1])
                     self.setPosition(new_pos)
-
         Character.update(self, platformGroup, clock, playerDisplacement)
 
     def getDoUpdateScroll(self):
