@@ -22,7 +22,8 @@ class Player(Character):
                            data.getPlayerAnimationDelay())
 
         self.data = data
-
+        self.collision_rect = None
+        self.manager = manager
         # Variables propias del jugador
         self.lives = 3
         self.health = 100
@@ -30,26 +31,37 @@ class Player(Character):
         self.attack = 50
         self.alive = True
 
+    def getCollisionRect(self):
+        return self.collision_rect
+
+    def updateCollisionRect(self):
+        # pygame.Rect(left, top, width, height)
+        self.collision_rect = pygame.Rect(self.getRect().left + self.getRect().width / 2 - 3,
+                                          self.getRect().bottom - 5,
+                                          6, 5)
+
     def getLives(self):
         return self.lives
 
-    def increaseLives(self, value):
+    def increaseLives(self):
         self.lives = self.lives + 1
 
     def decreaseLives(self):
         self.lives = self.lives - 1
         if self.lives <= 0:
             self.lives = 0
-            # TODO GameOver
+            # TODO GameOver menu
             print "Game Over!"
             self.alive = False
         else:
-            # TODO Actualizar el scroll cuando se reinicia la posición del jugador
+            self.stage.resetScroll()
             self.setPosition(self.data.getPlayerPositionAt("level_1"))
             self.setHealth(100)
 
     def getHealth(self):
         return self.health
+
+    def setStage(self,s): self.stage = s
 
     def setHealth(self, value):
         self.health = value
@@ -112,4 +124,9 @@ class Player(Character):
                     # TODO decidir si emitir sonido aquí, o dentro de la propia función decreaseLives()
                     pygame.mixer.Sound('../bin/assets/sounds/player/enemy_hit_1.wav').play()
                     self.tiempo_colision = time() + 1
-        Character.update(self, platformGroup, clock, playerDisplacement)
+
+            # Call update in the super class
+            Character.update(self, platformGroup, clock, playerDisplacement)
+
+            # Update collision rect
+            self.updateCollisionRect()

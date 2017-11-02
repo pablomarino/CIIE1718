@@ -1,30 +1,29 @@
+# -*- coding: utf-8 -*-
 from view.MySprite import *
 
 
 class Platform(MySprite):
-    def __init__(self, manager, position, imageFile, origin_z):
+    def __init__(self, manager, position, imageFile, origin_z, size):
         # Super
         MySprite.__init__(self, manager)
         # Dimensiones de la pantalla
         self.stageDimensions = manager.getScreen().get_size()
-        # Posicion de la plataforma
-        # self.position = (int(data["origin_x"]), int(data["origin_y"]))
         self.z = origin_z
+
+        # TODO cambiar el sprite de las plataformas para que no queden deformadas con el reescalamiento
         # Obtengo la imagen
-        # self.image = manager.getLibrary().load(data["image"], data["color_key"])
         self.image = manager.getLibrary().load(imageFile, -1)
         # Guardo sus dimensiones
         self.imageW, self.imageH = self.image.get_size()
-        # El rectangulo del Sprite
-        self.rect = pygame.Rect(position[0], position[1], self.imageW, self.imageH)
-        self.setPosition(position)
+        # Alargamos la plataforma hasta el tamaño adecuado
+        self.image = pygame.transform.scale(self.image, (self.imageW * size, self.imageH))
 
-        # TODO eliminar
-        self.z = 1
+        # Calculamos la posición inicial de la plataforma
+        new_position = (position[0] - size * self.imageW, position[1])
+        # Creamos el rect de la plataforma
+        self.rect = self.image.get_rect()
+        # Asignamos la posición inicial como la posición de la plataforma
+        self.setPosition(new_position)
 
     def update(self, clock, scroll):
-        # print scroll
-        # targetX = self.position[0]+scroll[0]* -self.z
-        # targetY = self.position[1]+scroll[1]* -self.z
-        # self.setPosition((targetX,targetY))
         self.establecerPosicionPantalla((-scroll[0] * self.z, -scroll[1] * self.z))

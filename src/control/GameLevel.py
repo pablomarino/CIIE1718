@@ -1,10 +1,9 @@
 # -*- encoding: utf-8 -*-
 
 from stage.Stage import *
-
 from view.Enemy import *
 from view.Player import Player
-
+import pygame
 
 class GameLevel:
     def __init__(self, manager, data, id):
@@ -13,8 +12,6 @@ class GameLevel:
         self.data = data
         self.level = data.getLevel(id)
 
-        # Add music to the game
-        import pygame
         pygame.mixer.music.load(self.data.getMusicFile())
         # pygame.mixer.music.play()
 
@@ -38,6 +35,7 @@ class GameLevel:
 
             self.stage = Stage(self.manager, self.level, self.player, self.platformGroup, self.spriteGroup,
                                self.enemyGroup)
+            self.player.setStage(self.stage)
         else:
             print "Error no existe nivel con id ", id
 

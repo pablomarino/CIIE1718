@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
-from view.Character import *
 
+from random import randint
+from view.Character import *
 
 class Enemy(Character):
     def __init__(self, manager, data, id):
@@ -15,55 +16,61 @@ class Enemy(Character):
                            0,
                            data.getPlayerAnimationDelay())
 
+        # Crear posición aleatoria para cada personaje
+        if randint(0, 1) == 0:
+            Character.move(self, LEFT)
+        else:
+            Character.move(self, RIGHT)
+        # Variables del enemigo
         self.health = 100
         self.alive = True
-        # TODO cada enemigo debería moverse hacia un lado diferente al crearse el nivel
-        Character.move(self, LEFT)
+
+    def getCollisionRect(self):
+        # TODO implementar esta función para los enemigos
+        return self.getRect()
 
     def update(self, platformGroup, clock, playerDisplacement):
+
         # TODO implementar en cada tipo de enemigo si es necesario, al menos la parte de las plataformas
         if self.alive:
+            # Comprobamos si está en colisión con una plataformas
+            platform = pygame.sprite.spritecollideany(self, platformGroup)
+
             # Si el enemigo se sale de la pantalla, invertir velocidad X
             if self.posicion[0] == self.screen_width - self.getRect().width or self.posicion[0] == 0:
                 self.invertXSpeed()
 
-            # si el jugador ya no va a estar en contacto con una plataforma, invertir el eje X
-            elif pygame.sprite.spritecollideany(self, platformGroup) is None:
-                # TODO comprobar mejor si la parte derecha del enemigo y de la plataforma coinciden, y viceversa
-                self.invertXSpeed()
+            # Comprobamos que el enemigo no se salga de su plataforma
+            elif platform is not None:
 
-            Character.update(self, platformGroup, clock, playerDisplacement)
+                if self.getRect().left < platform.getRect().left:
+                    # Si se sale de la plataforma, invertir su velocidadX y situarlo en el borde de la plataforma
+                    self.invertXSpeed()
+                    new_pos = (platform.getRect().left, self.getGlobalPosition()[1])
+                    self.setPosition(new_pos)
+
+                elif self.getRect().right > platform.getRect().right:
+                    # Si se sale de la plataforma, invertir su velocidadX y situarlo en el borde de la plataforma
+                    self.invertXSpeed()
+                    new_pos = (platform.getRect().right - self.getRect().width, self.getGlobalPosition()[1])
+                    self.setPosition(new_pos)
+        Character.update(self, platformGroup, clock, playerDisplacement)
 
     def getDoUpdateScroll(self):
         return True
 
-
 class Asmodeo(Enemy):
+
     def __init__(self, manager, data):
         Enemy.__init__(self, manager, data, "asmodeo")
-
-        # def move_cpu(self, data, player):
-        #     pass
-        '''if self.rect.bottom > 0 and self.rect.right < data.getWidht() and self.rect.bottom > 0 and self.rect.top < data.getHeight():
-            if player.position[0] < self.position[0]:
-                Character.move(self, LEFT)
-            else:
-                Character.move(self, RIGHT)
-        else:
-            Character.move(self, STOPPED)'''
-
+        self.setInvertedSpriteSheet(True)
 
 class Belcebu(Enemy):
     def __init__(self, manager, data):
         Enemy.__init__(self, manager, data, "asmodeo")
-
-        # def move_cpu(self, data, player):
-        #     pass
-
+        self.setInvertedSpriteSheet(True)
 
 class Mammon(Enemy):
     def __init__(self, manager, data):
         Enemy.__init__(self, manager, data, "mammon")
-
-        # def move_cpu(self, data, player):
-        #     pass
+        self.setInvertedSpriteSheet(True)

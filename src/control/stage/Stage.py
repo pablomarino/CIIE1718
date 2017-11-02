@@ -25,6 +25,7 @@ class Stage(Scene):
         self.itemStack = self.enemyStack = []
         self.platformGroup = platformGroup
         self.enemyGroup = enemyGroup
+
         self.setup()
 
     def setup(self):
@@ -52,62 +53,71 @@ class Stage(Scene):
         # Creamos el HUD
         self.HUD = HUD(self.manager.getDataRetriever(), self.manager.getScreen(), self.player)
 
-        '''
-        # Items
-        for i in self.data["items"]:
-            item =Item(self.manager,i,self.levelWidth,self.levelHeight,self.player)
-            self.itemStack.append(item)
-        '''
-        '''
-        # Enemies
-        for e in self.data["enemies"]:
-            enemy = Enemy(self.manager, e, self.levelWidth, self.levelHeight, self.player)
-            self.enemyStack.append(enemy)
-        '''
-
     def create_level(self):
+        # Tamaño que representa cada letra del mapa.txt
         MAP_UNIT_WIDTH = 55
         MAP_UNIT_HEIGHT = 55
+        # Variables
         column_number = 0
         row_number = 0
+        # Asignación de letras a objetos
+        platform_letter = "1"
+        enemy_letter = "a"
 
+        # Abrimos mapa en formato txt y lo leemos letra a letra
         with open(self.mapFile, "r") as f:
             for line in f:
+                platform_size = 0
+                prev_letter = " "
+
                 for letter in line:
-                    # TODO decidir que letras y números usar para crear cada tipo de enemigo, plataforma, e ítem
-                    # Create platform
-                    if letter == "1":
-                        platform = Platform(
-                            self.manager,
-                            (column_number * MAP_UNIT_WIDTH, row_number * MAP_UNIT_HEIGHT),
-                            self.platformfiles[0],
-                            self.platforms_z)
-                        self.platformGroup.add(platform)
+                    # Si hay la letra asignada a plataformas, aumentamos el tamaño de la plataforma a crear una posición
+                    if letter == platform_letter:
+                        platform_size = platform_size + 1
 
                     # Create enemies
-                    if letter == "a":
+                    if letter == enemy_letter:
                         tmp = str_to_class(self.data["enemies"][0])(self.manager, self.manager.getDataRetriever())
                         tmp.setPosition((column_number * MAP_UNIT_WIDTH, row_number * MAP_UNIT_HEIGHT))
                         self.enemyGroup.add(tmp)
 
-                    # Create items
-                    if letter == "h":
-                        # TODO create items
-                        # tmp = Heart(self.manager, self.manager.getDataRetriever())
-                        # tmp.setPosition((numerocolumna * MAP_UNIT_WIDTH, numerofila * MAP_UNIT_HEIGHT))
-                        # self.enemyGroup.add(tmp)
-                        pass
+                    # Creamos plataformas
+                    if letter != platform_letter and prev_letter == platform_letter:
+                        platform = Platform(
+                            self.manager,
+                            (column_number * MAP_UNIT_WIDTH, row_number * MAP_UNIT_HEIGHT),
+                            self.platformfiles[0],
+                            self.platforms_z,
+                            platform_size)
+                        self.platformGroup.add(platform)
+                        platform_size = 0
 
+                    # Incrementar el contador de columnas
                     column_number = column_number + 1
-                column_number = 0
+
+                    # Asignar el valor de la letra actual a la variable prev_letter
+                    prev_letter = letter
+
+                # Create last platform
+                if prev_letter == platform_letter:
+                    platform = Platform(
+                        self.manager,
+                        (column_number * MAP_UNIT_WIDTH, row_number * MAP_UNIT_HEIGHT),
+                        self.platformfiles[0],
+                        self.platforms_z,
+                        platform_size)
+                    self.platformGroup.add(platform)
+
+                # Incrementar el contador de filas
                 row_number = row_number + 1
+                column_number = 0
 
     def update(self, clock):
         self.manager.getScreen().fill(int(self.data["bgColor"], 16))  # en windows es necesario =\ en mac no
         # Calculo la distancia entre la posicion inicial del jugador y la actual
         # Este valor se le pasa a Background y Platform para que realice el scroll
-        if (
-                    self.player.getDoUpdateScroll() & self.getDoUpdateScroll()):  # solo actualizo el scroll si esta saltando o cayendo
+        # solo actualizo el scroll si el jugador esta saltando o cayendo
+        if (self.player.getDoUpdateScroll() & self.getDoUpdateScroll()):
             self.playerDisplacement = (
                 0,  # int(math.ceil(self.playerStartPosition[0]-self.player.getPosition()[0])),
                 int(math.ceil(self.playerStartPosition[1] - self.player.getGlobalPosition()[1]))
@@ -129,9 +139,31 @@ class Stage(Scene):
         self.spriteGroup.draw(self.manager.getScreen())
         self.enemyGroup.draw(self.manager.getScreen())
         self.HUD.draw()
+        self.draw_rects()
+
+    def draw_rects(self):
+        # Platform rects
+        # for item in self.platformGroup:
+        #     self.draw_transparent_rect(item.getRect(), (255, 255, 255, 100))
+
+        # Enemy rects
+        for enemy in self.enemyGroup:
+            self.draw_transparent_rect(enemy.getRect(), (255, 10, 10, 100))
+
+        # Player rects
+        self.draw_transparent_rect(self.player.getRect(), (23, 100, 255, 100))
+        self.draw_transparent_rect(self.player.getCollisionRect(), (10, 255, 255, 100))
+
+    def draw_transparent_rect(self, rect, colour):
+        tmp = pygame.Surface((rect.width, rect.height), pygame.SRCALPHA, 32)
+        tmp.fill(colour)
+        self.manager.getScreen().blit(tmp, (rect.left, rect.top))
 
     def events(self, events_list):
         self.player.move(pygame.key.get_pressed())
+
+    def resetScroll(self):
+        self.playerDisplacement = (0,0)
 
     def getDoUpdateScroll(self):
         # TODO Implementar
