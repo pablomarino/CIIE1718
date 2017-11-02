@@ -1,0 +1,9 @@
+{
+  "animation_delay": 5,
+  "items": {
+    "fire": {
+      "file": "../bin/assets/sprites/items/items1.png",
+      "file_coords": "../bin/assets/sprites/items/fire_coords.txt"
+    }
+  }
+}

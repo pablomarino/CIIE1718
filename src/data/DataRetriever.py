@@ -20,6 +20,7 @@ class DataRetriever:
             self.preferences = None
             self.levels = None
             self.players = None
+            self.items= None
             # Keys are now added here for different locales support
             self.KEY_LEFT = K_LEFT
             self.KEY_UP = K_UP
@@ -161,6 +162,12 @@ class DataRetriever:
 
     def getPlayerSheetCoords(self, id):
         return self.instance.players["roster"][id]['file_coords']
+
+    def getItemSheet(self, id):
+        return self.instance.items["items"][id]['file']
+
+    def getItemSheetCoords(self, id):
+        return self.instance.items["items"][id]['file_coords']
 
     def getPlayerAnchor(self, id):
         return self.instance.players["roster"][id]['anchor']

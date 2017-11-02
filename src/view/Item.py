@@ -2,17 +2,12 @@
 from view.Character import *
 
 
-class Item(Character):
+class Item():
     def __init__(self, manager, data, id):
-        Character.__init__(self,
-                           manager,
-                           data,
-                           data.getPlayerSheet(id),
-                           data.getPlayerSheetCoords(id),
-                           [3, 4, 5],
-                           data.getPlayerSpeed(),
-                           data.getPlayerJumpSpeed(),
-                           data.getPlayerAnimationDelay());
+        self.manager=manager
+        self.data=data
+        data.getPlayerSheet(id),
+        data.getPlayerSheetCoords(id),
 
     def move_cpu(self, data, player):
         return
@@ -23,3 +18,7 @@ class Item(Character):
 class Heart(Item):
     def __init__(self, manager, data):
         Item.__init__(self, manager, data, "heart")
+
+class fire(Item):
+    def __init__(self, manager, data):
+        Item.__init__(self,manager,data,"fire")
