@@ -184,9 +184,9 @@ class Character(MySprite):
             else:
                 # si estoy saltando y no pulso derecha izda reduzco la velocidad lateral con easing exp
                 if (vx > 0):
-                    vx = vx + (-vx * 0.05)
+                    vx = vx + (-vx * 0.025)
                 elif (vx < 0):
-                    vx = vx + (-vx * 0.05)
+                    vx = vx + (-vx * 0.025)
 
         # Además, si estamos en el aire
         if self.numPostura == SPRITE_JUMPING:

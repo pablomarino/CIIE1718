@@ -116,14 +116,20 @@ class Player(Character):
             # Crear animación de jugador muerto
             Character.move(self, STOPPED)
 
-    def update(self, platformGroup, clock, playerDisplacement, enemygroup):
+    def update(self,  clock, playerDisplacement, platformGroup,enemyGroup, itemGroup):
         if self.alive:
-            if pygame.sprite.spritecollideany(self, enemygroup) is not None:
+            if pygame.sprite.spritecollideany(self, enemyGroup) is not None:
+                # todo este comportamiento deberia estar en la clase del enemigo o item
                 if self.tiempo_colision < time():
                     self.decreaseHealth()
                     # TODO decidir si emitir sonido aquí, o dentro de la propia función decreaseLives()
                     pygame.mixer.Sound('../bin/assets/sounds/player/enemy_hit_1.wav').play()
                     self.tiempo_colision = time() + 1
+
+            itemCol = pygame.sprite.spritecollideany(self, itemGroup)
+            if  itemCol is not None:
+                itemCol.interaction()
+
 
             # Call update in the super class
             Character.update(self, platformGroup, clock, playerDisplacement)

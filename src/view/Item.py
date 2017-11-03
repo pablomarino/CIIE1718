@@ -25,11 +25,21 @@ class Item(Character):
     def getDoUpdateScroll(self):
         return True
 
+    def interaction(self):
+        pass
+
 
 class heart(Item):
     def __init__(self, manager, data):
         Item.__init__(self, manager, data, "heart")
+    def interaction(self):
+        # eliminar
+        # sonido
+        print "vida+"
 
 class fire(Item):
     def __init__(self, manager, data):
         Item.__init__(self,manager,data,"fire")
+
+    def interaction(self):
+        print "vida-"
