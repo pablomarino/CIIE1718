@@ -21,7 +21,7 @@
 * ~~character corregir salto~~
 * ~~character corregir scroll enemigo~~
 * items
-* Corregir problema salto diagonal personaje
+* ~~Corregir problema salto diagonal personaje~~
 * ~~Salto enemigos cuando jugador salta~~
 * ~~Corregir enemigos andando hacia atrás~~
 * ~~Resetear Scroll cuando el jugador muere~~
