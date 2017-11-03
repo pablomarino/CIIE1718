@@ -180,7 +180,6 @@ class Character(MySprite):
                 self.numPostura = SPRITE_STOPPED
                 vx = 0
             else:
-                print vx
                 # si estoy saltando y no pulso derecha izda reduzco la velocidad lateral con easing exp
                 if (vx > 0):
                     vx = vx + (-vx * 0.05)
