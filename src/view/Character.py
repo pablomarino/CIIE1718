@@ -61,15 +61,13 @@ class Character(MySprite):
         # Creamos el rect
         self.rect = pygame.Rect(self.getGlobalPosition()[0],
                                 self.getGlobalPosition()[1],
-                                # self.coordenadasHoja[self.numPostura][self.numImagenPostura].width,
-                                # self.coordenadasHoja[self.numPostura][self.numImagenPostura].height)
-                                self.coordenadasHoja[0][self.numImagenPostura].width,
-                                self.coordenadasHoja[0][self.numImagenPostura].height)
+                                self.coordenadasHoja[self.numPostura][self.numImagenPostura].width,
+                                self.coordenadasHoja[self.numPostura][self.numImagenPostura].height)
         # Actualizamos postura
         self.actualizarPostura()
 
     def move(self, movimiento):
-        # todo mover a player
+        # todo mover a player??
         # actualizo el movimiento a menos que este en el aire y quiera actualizar a salto
         if (movimiento == UP or movimiento == UPRIGHT or movimiento == UPLEFT):
             if self.numPostura != SPRITE_JUMPING:
@@ -79,6 +77,7 @@ class Character(MySprite):
             self.movimiento = movimiento
 
     def attack(self, movimiento):
+        # todo mover a player??
         self.movimiento = movimiento
 
     def actualizarPostura(self):
@@ -133,7 +132,7 @@ class Character(MySprite):
             self.movimiento = RIGHT
 
     def update(self, grupoPlataformas, tiempo, scroll):
-        # todo mover a player
+        # todo mover a player??
         (vx, vy) = self.velocidad
 
         # Ataque
@@ -217,12 +216,10 @@ class Character(MySprite):
         self.velocidad = (vx, vy)
         # Superclase calcula la nueva posición del Sprite con la velocidad
         MySprite.update(self, tiempo)
-
+        if type(self).__name__ == "fire": print self.getDoUpdateScroll()
         if self.getDoUpdateScroll(): self.establecerPosicionPantalla((scroll[0], -scroll[1]))
 
         #if type(self).__name__ == "Asmodeo": print self.printMovimiento(), self.printPostura(), self.velocidad
-
-
 
     def printPostura(self):
         if self.numPostura == SPRITE_STOPPED:

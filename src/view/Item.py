@@ -20,11 +20,11 @@ class Item(Character):
         return self.getRect()
 
     def update(self, platformGroup, clock, playerDisplacement):
-        # Comprobamos si está en colisión con una plataformas
         Character.update(self, platformGroup, clock, playerDisplacement)
 
     def getDoUpdateScroll(self):
-        return False
+        return True
+
 
 class heart(Item):
     def __init__(self, manager, data):

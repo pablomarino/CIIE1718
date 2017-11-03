@@ -140,6 +140,9 @@ class Stage(Scene):
         for p in self.platformGroup:
             p.update(clock, self.playerDisplacement)
 
+        for i in self.itemGroup:
+            i.update(self.platformGroup, clock, self.playerDisplacement)
+
         self.player.update(self.platformGroup, clock, self.playerDisplacement, self.enemyGroup)
         self.enemyGroup.update(self.platformGroup, clock, self.playerDisplacement)
         # self.player.enemy_coll(self.enemyGroup, self.player)
