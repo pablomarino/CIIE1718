@@ -36,11 +36,10 @@ class Character(MySprite):
         self.data = data
         self.movimiento = STOPPED  # El movimiento que esta realizando
         self.mirando = RIGHT  # Lado hacia el que esta mirando
-        self.numPostura = 1
         self.numImagenPostura = 0
         self.coordenadasHoja = []
         self.retardoMovimiento = 0
-        self.numPostura = SPRITE_JUMPING  # En que postura esta inicialmente
+        self.numPostura = 0
         self.velocidadCarrera = velocidadCarrera
         self.velocidadSalto = velocidadSalto
         self.retardoAnimacion = retardoAnimacion  # El retardo en la animacion del personaje
@@ -49,25 +48,28 @@ class Character(MySprite):
 
         datos = manager.getLibrary().loadCoordsFile(archivoCoordenadas)  # Leemos las coordenadas de un archivo de texto
         datos = datos.split()
-
         cont = 0
+
         for linea in range(0, self.numberOfPostures):
             self.coordenadasHoja.append([])
             tmp = self.coordenadasHoja[linea]
+
             for postura in range(0, numImagenes[linea]):
                 tmp.append(
                     pygame.Rect((int(datos[cont]), int(datos[cont + 1])), (int(datos[cont + 2]), int(datos[cont + 3]))))
                 cont += 4
-
-        # Creamos el rect del jugador
-        self.rect = pygame.Rect(self.getGlobalPosition()[0], self.getGlobalPosition()[0],
-                                self.coordenadasHoja[self.numPostura][self.numImagenPostura].width,
-                                self.coordenadasHoja[self.numPostura][self.numImagenPostura].height)
-
-        # Actualizamos postura del jugador
+        # Creamos el rect
+        self.rect = pygame.Rect(self.getGlobalPosition()[0],
+                                self.getGlobalPosition()[1],
+                                # self.coordenadasHoja[self.numPostura][self.numImagenPostura].width,
+                                # self.coordenadasHoja[self.numPostura][self.numImagenPostura].height)
+                                self.coordenadasHoja[0][self.numImagenPostura].width,
+                                self.coordenadasHoja[0][self.numImagenPostura].height)
+        # Actualizamos postura
         self.actualizarPostura()
 
     def move(self, movimiento):
+        # todo mover a player
         # actualizo el movimiento a menos que este en el aire y quiera actualizar a salto
         if (movimiento == UP or movimiento == UPRIGHT or movimiento == UPLEFT):
             if self.numPostura != SPRITE_JUMPING:
@@ -131,6 +133,7 @@ class Character(MySprite):
             self.movimiento = RIGHT
 
     def update(self, grupoPlataformas, tiempo, scroll):
+        # todo mover a player
         (vx, vy) = self.velocidad
 
         # Ataque

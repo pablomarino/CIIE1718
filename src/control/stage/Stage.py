@@ -7,6 +7,7 @@ from control.stage.Background import *
 from control.stage.Platform import Platform
 from control.stage.Scene import Scene
 from view.Enemy import *
+from view.Item import *
 
 
 def str_to_class(str):
@@ -14,7 +15,7 @@ def str_to_class(str):
 
 
 class Stage(Scene):
-    def __init__(self, manager, data, player, platformGroup, spriteGroup, enemyGroup):
+    def __init__(self, manager, data, player, platformGroup, spriteGroup, enemyGroup,itemGroup):
         Scene.__init__(self, manager)
         self.manager = manager
         self.data = data
@@ -22,10 +23,9 @@ class Stage(Scene):
         self.playerStartPosition = self.player.getGlobalPosition()
         self.playerDisplacement = list((0, 0))
         self.spriteGroup = spriteGroup
-        self.itemStack = self.enemyStack = []
         self.platformGroup = platformGroup
         self.enemyGroup = enemyGroup
-
+        self.itemGroup = itemGroup
         self.setup()
 
     def setup(self):
@@ -41,11 +41,6 @@ class Stage(Scene):
         self.mapFile = self.data["map_file"]
         # TODO los 3 tipos de plataforma tienen el miso sprite
         self.platformfiles = self.data["platform_files"]
-
-        # Genero las Plataformas
-        # for p in self.data["platforms"]:
-        #     platform = Platform(self.manager, p, self.platforms_z)
-        #     self.platformGroup.add(platform)
 
         # Creamos el nivel a partir de fichero de texto
         self.create_level()
@@ -64,6 +59,7 @@ class Stage(Scene):
         platform_letter = "1"
         enemy_letter = "a"
         fire_letter = "f"
+        heart_letter = "h"
 
         # Abrimos mapa en formato txt y lo leemos letra a letra
         with open(self.mapFile, "r") as f:
@@ -82,10 +78,17 @@ class Stage(Scene):
                         tmp.setPosition((column_number * MAP_UNIT_WIDTH, row_number * MAP_UNIT_HEIGHT))
                         self.enemyGroup.add(tmp)
 
+                    # Create Items
                     if letter == fire_letter:
-                        tmp= str_to_class("fire")(self.manager, self.manager.getDataRetriever())
+                        tmp = str_to_class("fire")(self.manager, self.manager.getDataRetriever())
                         tmp.setPosition((column_number * MAP_UNIT_WIDTH, row_number * MAP_UNIT_HEIGHT))
-                        self.itemStack.add(tmp)
+                        self.itemGroup.add(tmp)
+
+                    if letter == heart_letter:
+                        tmp= str_to_class("heart")(self.manager, self.manager.getDataRetriever())
+                        tmp.setPosition((column_number * MAP_UNIT_WIDTH, row_number * MAP_UNIT_HEIGHT))
+                        self.itemGroup.add(tmp)
+
 
                     # Creamos plataformas
                     if letter != platform_letter and prev_letter == platform_letter:
@@ -152,8 +155,8 @@ class Stage(Scene):
 
     def draw_rects(self):
         # Platform rects
-        # for item in self.platformGroup:
-        #     self.draw_transparent_rect(item.getRect(), (255, 255, 255, 100))
+        for item in self.itemGroup:
+             self.draw_transparent_rect(item.getRect(), (255, 255, 255, 100))
 
         # Enemy rects
         for enemy in self.enemyGroup:

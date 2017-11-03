@@ -12,6 +12,7 @@ if __name__ == '__main__':
     data.loadPreferences('../bin/config/preferences.json')  # Cargo preferencias de la aplicacion
     data.loadLevels('../bin/config/levels.json')  # Cargo datos de niveles
     data.loadPlayers('../bin/config/players.json')  # Cargo datos de los jugadores
+    data.loadItems('../bin/config/items.json')  # Cargo datos de los items
 
     # Inicializamos la libreria de pygame
     pygame.init()

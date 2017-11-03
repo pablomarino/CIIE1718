@@ -26,15 +26,8 @@ class GameLevel:
             self.player.setPosition(data.getPlayerPositionAt(id))
             self.spriteGroup.add(self.player)
 
-            # for e in self.level["enemies"]:
-            #     tmp = str_to_class(e["kind"])(manager, data)
-            #     tmp.setPosition((int(e["x"]), int(e["y"])))
-            #     self.enemyGroup.add(tmp)
-            # self.enemy1 = Asmodeo(manager, data)
-            # self.enemy1.setPosition(data.getPlayerPositionAt(id))
-
             self.stage = Stage(self.manager, self.level, self.player, self.platformGroup, self.spriteGroup,
-                               self.enemyGroup)
+                               self.enemyGroup,self.itemGroup)
             self.player.setStage(self.stage)
         else:
             print "Error no existe nivel con id ", id

@@ -20,7 +20,7 @@ class Player(Character):
                            data.getCharacterSpeed("player"),
                            data.getCharacterJumpSpeed("player"),
                            data.getPlayerAnimationDelay())
-
+        self.numPostura = SPRITE_JUMPING  # En que postura esta inicialmente
         self.data = data
         self.collision_rect = None
         self.manager = manager

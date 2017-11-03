@@ -20,7 +20,7 @@ class DataRetriever:
             self.preferences = None
             self.levels = None
             self.players = None
-            self.items= None
+            self.items = None
             # Keys are now added here for different locales support
             self.KEY_LEFT = K_LEFT
             self.KEY_UP = K_UP
@@ -42,6 +42,9 @@ class DataRetriever:
 
     def loadPlayers(self, file):
         self.instance.players = self.__loadConfig(file)
+
+    def loadItems(self, file):
+        self.instance.items = self.__loadConfig(file)
 
     # GETTERS
 
