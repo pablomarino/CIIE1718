@@ -63,6 +63,7 @@ class Stage(Scene):
         # Asignación de letras a objetos
         platform_letter = "1"
         enemy_letter = "a"
+        fire_letter = "f"
 
         # Abrimos mapa en formato txt y lo leemos letra a letra
         with open(self.mapFile, "r") as f:
@@ -81,6 +82,11 @@ class Stage(Scene):
                         tmp.setPosition((column_number * MAP_UNIT_WIDTH, row_number * MAP_UNIT_HEIGHT))
                         self.enemyGroup.add(tmp)
 
+                    if letter == fire_letter:
+                        tmp= str_to_class("fire")(self.manager, self.manager.getDataRetriever())
+                        tmp.setPosition((column_number * MAP_UNIT_WIDTH, row_number * MAP_UNIT_HEIGHT))
+                        self.itemStack.add(tmp)
+
                     # Creamos plataformas
                     if letter != platform_letter and prev_letter == platform_letter:
                         platform = Platform(
@@ -91,6 +97,9 @@ class Stage(Scene):
                             platform_size)
                         self.platformGroup.add(platform)
                         platform_size = 0
+
+
+
 
                     # Incrementar el contador de columnas
                     column_number = column_number + 1
