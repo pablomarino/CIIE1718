@@ -29,6 +29,7 @@
 * ~~Mover la logica de colision con enemigos a la clase del enemigo~~
 * ~~Mover la logica de colision con item a la clase del item~~
 * ~~Cambiar las plataformas para que se repitan en lugar dfe escalarse~~
+* ~~Varios tipos de plataforma por nivel~~
 * Z
 
 ## Matías
