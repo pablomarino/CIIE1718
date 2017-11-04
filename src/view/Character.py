@@ -218,7 +218,7 @@ class Character(MySprite):
         MySprite.update(self, tiempo)
 
         if self.getDoUpdateScroll(): self.establecerPosicionPantalla((scroll[0], -scroll[1]))
-        #if type(self).__name__ == "Asmodeo": print self.printMovimiento(), self.printPostura(), self.velocidad
+        # if type(self).__name__ == "Asmodeo": print self.printMovimiento(), self.printPostura(), self.velocidad
 
     def printPostura(self):
         if self.numPostura == SPRITE_STOPPED:
@@ -256,5 +256,5 @@ class Character(MySprite):
         elif self.movimiento == DOWNRIGHT:
             print "MOVE_DOWNRIGHT"
 
-    def setInvertedSpriteSheet(self,b):
+    def setInvertedSpriteSheet(self, b):
         self.invertedSpriteSheet = b;

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import json
-import pygame
+
 from pygame.locals import *
 
 
@@ -27,7 +27,7 @@ class DataRetriever:
             self.KEY_DOWN = K_DOWN
             self.KEY_RIGHT = K_RIGHT
             self.SPACE = K_SPACE
-            self.RETURN= K_RETURN
+            self.RETURN = K_RETURN
 
     def __loadConfig(self, file):
         with open(file) as preferences_file:
@@ -180,6 +180,9 @@ class DataRetriever:
 
     def getCharacterSpeed(self, id):
         return self.instance.players["roster"][id]['speed']
+
+    def getCharacterChasingSpeed(self, id):
+        return self.instance.players["roster"][id]['chasing_speed']
 
     def getCharacterJumpSpeed(self, id):
         return self.instance.players["roster"][id]['jump_speed']
