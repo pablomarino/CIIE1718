@@ -52,4 +52,6 @@ class door(Item):
         Item.__init__(self,manager,data,"door")
 
     def behave(self,player,itemGroup):
+        for i in itemGroup:
+            if i == self: itemGroup.remove(i)
         player.nextLevel()

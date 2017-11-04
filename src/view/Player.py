@@ -2,6 +2,7 @@
 from time import time
 
 from view.Character import *
+from control.GameLevel import *
 
 
 class Player(Character):
@@ -96,7 +97,9 @@ class Player(Character):
             Character.attack(self, ATTACK)
 
     def nextLevel(self):
-        print "load next LEvel"
+        print "Player.py load next Level"
+        #self.manager.changeScene()
+        #self.manager.add(Gamelevel.GameLevel(self.manager, self.manager.data, "level_2"))
 
     def move(self, pressedKeys):
         # TODO Cuando el jugador está cayendo en diagonal, mantiene dirección a pesar de que no haya teclas pulsadas

@@ -6,39 +6,30 @@
     ],
     "bgColor": "0x1e0203",
     "bglayers": [
-      {
-        "image": "../bin/assets/backgrounds/bg_l1_2.png",
-        "color_key": "0x312111",
-        "origin_x": "0",
-        "origin_y": "0",
-        "origin_z": "5",
-        "repeat_x": "False",
-        "repeat_y": "True"
-      },
-      {
-        "image": "../bin/assets/backgrounds/bg_l1_1.png",
-        "color_key": "-1",
-        "origin_x": "0",
-        "origin_y": "0",
-        "origin_z": "2",
-        "repeat_x": "True",
-        "repeat_y": "True"
-      },
-      {
+       {
         "image": "../bin/assets/backgrounds/bg_l1_0.png",
         "color_key": "0",
         "origin_x": "0",
         "origin_y": "0",
         "origin_z": "1",
-        "repeat_x": "False",
+        "repeat_x": "True",
+        "repeat_y": "True"
+      },
+      {
+        "image": "../bin/assets/backgrounds/bg_l1_2.png",
+        "color_key": "0",
+        "origin_x": "0",
+        "origin_y": "0",
+        "origin_z": "2",
+        "repeat_x": "True",
         "repeat_y": "True"
       }
     ],
     "platforms_z": "1",
     "map_file": "../bin/config/levels/level1.txt",
     "platform_files": [
-      "../bin/assets/backgrounds/bg_l1_platform_2.png",
-      "../bin/assets/backgrounds/bg_l1_platform_2.png",
+      "../bin/assets/backgrounds/bg_l1_platform_0.png",
+      "../bin/assets/backgrounds/bg_l1_platform_1.png",
       "../bin/assets/backgrounds/bg_l1_platform_2.png"
     ],
     "enemies": [

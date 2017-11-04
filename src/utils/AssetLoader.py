@@ -38,7 +38,7 @@ class AssetLoader:
             except pygame.error, message:
                 print 'Cannot load image:', file
                 raise SystemExit, message
-            imagen = imagen.convert()
+            imagen = imagen.convert_alpha()#.convert()
             if colorkey is not 0:
                 if colorkey is -1:
                     colorkey = imagen.get_at((0, 0))

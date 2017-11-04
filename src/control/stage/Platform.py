@@ -28,14 +28,6 @@ class Platform(MySprite):
         self.image = pygame.transform.scale(self.image, (self.imageW * size, self.imageH))
         for i in range(0,size):
             self.image.blit(comp,(self.imageW*i,0))
-            #MySprite.draw()
-            #comp.scroll(self.imageW*i, 0)
-            #tmp = self.image.subsurface(0,0,self.imageW,self.imageH)
-            #tmp.blit(self.image, (self.imageW*size, 0))
-            #tmp.scroll(self.imageW * size, 0)
-            #self.manager.getScreen().blit(comp,(self.rect.left * self.z + self.imageW * i,self.rect.top))
-        #self.image = self.manager.getScreen().blit(self.image, (self.rect.left * self.z + self.imageW * i, self.rect.bottom * self.z + self.imageH))
-        #self.image = pygame.transform.scale(self.image, (self.imageW * size, self.imageH))
 
     def draw(self):
         pass

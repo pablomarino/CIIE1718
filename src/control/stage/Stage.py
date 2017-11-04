@@ -56,7 +56,7 @@ class Stage(Scene):
         column_number = 0
         row_number = 0
         # Asignación de letras a objetos
-        platform_letter = "1"
+        platform_letter = ["0","1","2"]
         enemy_letter = "a"
         fire_letter = "f"
         heart_letter = "h"
@@ -70,7 +70,7 @@ class Stage(Scene):
 
                 for letter in line:
                     # Si hay la letra asignada a plataformas, aumentamos el tamaño de la plataforma a crear una posición
-                    if letter == platform_letter:
+                    if letter in platform_letter:
                         platform_size = platform_size + 1
 
                     # Create enemies
@@ -97,11 +97,11 @@ class Stage(Scene):
 
 
                     # Creamos plataformas
-                    if letter != platform_letter and prev_letter == platform_letter:
+                    if (not letter in platform_letter and prev_letter in platform_letter):
                         platform = Platform(
                             self.manager,
                             (column_number * MAP_UNIT_WIDTH, row_number * MAP_UNIT_HEIGHT),
-                            self.platformfiles[0],
+                            self.platformfiles[int(prev_letter)],
                             self.platforms_z,
                             platform_size)
                         self.platformGroup.add(platform)
@@ -117,11 +117,11 @@ class Stage(Scene):
                     prev_letter = letter
 
                 # Create last platform
-                if prev_letter == platform_letter:
+                if prev_letter in platform_letter:
                     platform = Platform(
                         self.manager,
                         (column_number * MAP_UNIT_WIDTH, row_number * MAP_UNIT_HEIGHT),
-                        self.platformfiles[0],
+                        self.platformfiles[int(prev_letter)],
                         self.platforms_z,
                         platform_size)
                     self.platformGroup.add(platform)
