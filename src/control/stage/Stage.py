@@ -60,6 +60,7 @@ class Stage(Scene):
         enemy_letter = "a"
         fire_letter = "f"
         heart_letter = "h"
+        door_letter = "d"
 
         # Abrimos mapa en formato txt y lo leemos letra a letra
         with open(self.mapFile, "r") as f:
@@ -86,6 +87,11 @@ class Stage(Scene):
 
                     if letter == heart_letter:
                         tmp= str_to_class("heart")(self.manager, self.manager.getDataRetriever())
+                        tmp.setPosition((column_number * MAP_UNIT_WIDTH, row_number * MAP_UNIT_HEIGHT))
+                        self.itemGroup.add(tmp)
+
+                    if letter == door_letter:
+                        tmp= str_to_class("door")(self.manager, self.manager.getDataRetriever())
                         tmp.setPosition((column_number * MAP_UNIT_WIDTH, row_number * MAP_UNIT_HEIGHT))
                         self.itemGroup.add(tmp)
 
@@ -151,9 +157,9 @@ class Stage(Scene):
     def draw(self):
         self.background.draw()
         self.platformGroup.draw(self.manager.getScreen())
+        self.itemGroup.draw(self.manager.getScreen())
         self.spriteGroup.draw(self.manager.getScreen())
         self.enemyGroup.draw(self.manager.getScreen())
-        self.itemGroup.draw(self.manager.getScreen())
         self.HUD.draw()
         self.draw_rects()
 

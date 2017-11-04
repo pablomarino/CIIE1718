@@ -52,4 +52,4 @@ class door(Item):
         Item.__init__(self,manager,data,"door")
 
     def behave(self,player,itemGroup):
-        player.decreaseHealth()
+        player.nextLevel()

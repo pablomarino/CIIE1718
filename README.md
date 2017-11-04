@@ -20,11 +20,15 @@
 ## Pablo
 * ~~character corregir salto~~
 * ~~character corregir scroll enemigo~~
-* items
+* ~~items~~
 * ~~Corregir problema salto diagonal personaje~~
 * ~~Salto enemigos cuando jugador salta~~
 * ~~Corregir enemigos andando hacia atrás~~
 * ~~Resetear Scroll cuando el jugador muere~~
+* ~~Crear un objeto (puerta) que al tocarlo, permita transición entre fases~~
+* ~~Mover la logica de colision con enemigos a la clase del enemigo~~
+* ~~Mover la logica de colision con item a la clase del item~~
+* ~~Cambiar las plataformas para que se repitan en lugar dfe escalarse~~
 * Z
 
 ## Matías
@@ -32,7 +36,6 @@
 * ~~empezar el juego con el menu, y cargar los niveles desde ahí~~
 * Terminar level_1.txt
 * Crear level_2.txt y level_3.txt
-* Crear un objeto (puerta) que al tocarlo, permita transición entre fases
 * Decidir que letras y números usar para crear cada tipo de enemigo, plataforma, e ítem
 
 ## Uxía

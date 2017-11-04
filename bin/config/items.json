@@ -8,6 +8,10 @@
     "heart": {
       "file": "../bin/assets/sprites/items/items1.png",
       "file_coords": "../bin/assets/sprites/items/heart_coords.txt"
+    },
+    "door": {
+      "file": "../bin/assets/sprites/items/door.png",
+      "file_coords": "../bin/assets/sprites/items/door_coords.txt"
     }
   }
 }
