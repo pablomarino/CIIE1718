@@ -27,24 +27,29 @@ class Item(Character):
     def getDoUpdateScroll(self):
         return True
 
-    def interaction(self):
+    def behave(self,player,itemGroup):
         pass
 
 
 class heart(Item):
     def __init__(self, manager, data):
         Item.__init__(self, manager, data, "heart")
-    def interaction(self):
+    def behave(self,player,itemGroup):
         # eliminar
-
-        # sonido
-
-        # accion
-        pass
+        for i in itemGroup:
+            if i == self: itemGroup.remove(i)
+        player.increaseHealth()
 
 class fire(Item):
     def __init__(self, manager, data):
         Item.__init__(self,manager,data,"fire")
 
-    def interaction(self):
-        pass
+    def behave(self,player,itemGroup):
+        player.decreaseHealth()
+
+class door(Item):
+    def __init__(self, manager, data):
+        Item.__init__(self,manager,data,"door")
+
+    def behave(self,player,itemGroup):
+        player.decreaseHealth()

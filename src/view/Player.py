@@ -72,11 +72,17 @@ class Player(Character):
         if self.health >= self.maxHealth:
             self.health = self.maxHealth
 
+    def increaseHealth(self):
+        self.health = self.health + 5
+
     def decreaseHealth(self):
-        self.health = self.health - 10
-        # TODO mover jugador hacia un lado, pegar un salto, o algo similar
-        if self.health <= 0:
-            self.decreaseLives()
+        if self.tiempo_colision < time():
+            self.health = self.health - 10
+            # TODO mover jugador hacia un lado, pegar un salto, o algo similar
+            if self.health <= 0:
+                self.decreaseLives()
+            pygame.mixer.Sound('../bin/assets/sounds/player/enemy_hit_1.wav').play()
+            self.tiempo_colision = time() + 1
 
     def getMaxHealth(self):
         return self.maxHealth
@@ -118,17 +124,14 @@ class Player(Character):
 
     def update(self,  clock, playerDisplacement, platformGroup,enemyGroup, itemGroup):
         if self.alive:
-            if pygame.sprite.spritecollideany(self, enemyGroup) is not None:
-                # todo este comportamiento deberia estar en la clase del enemigo o item
-                if self.tiempo_colision < time():
-                    self.decreaseHealth()
-                    # TODO decidir si emitir sonido aquí, o dentro de la propia función decreaseLives()
-                    pygame.mixer.Sound('../bin/assets/sounds/player/enemy_hit_1.wav').play()
-                    self.tiempo_colision = time() + 1
-
+            enemyCol = pygame.sprite.spritecollideany(self, enemyGroup)
             itemCol = pygame.sprite.spritecollideany(self, itemGroup)
+
+            if enemyCol is not None:
+                enemyCol.behave(self, itemGroup)  # cada item realiza una accion propia
+
             if  itemCol is not None:
-                itemCol.interaction()
+                itemCol.behave(self,itemGroup) # cada item realiza una accion propia
 
 
             # Call update in the super class

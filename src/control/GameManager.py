@@ -81,3 +81,6 @@ class GameManager:
 
     def getDataRetriever(self):
         return self.data
+
+    def getStack(self):
+        return self.stack

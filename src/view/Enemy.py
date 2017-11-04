@@ -25,6 +25,9 @@ class Enemy(Character):
         self.health = 100
         self.alive = True
 
+    def behave(self,player,enemyGroup):
+        pass
+
     def getCollisionRect(self):
         # TODO implementar esta función para los enemigos
         return self.getRect()
@@ -65,12 +68,19 @@ class Asmodeo(Enemy):
         Enemy.__init__(self, manager, data, "asmodeo")
         self.setInvertedSpriteSheet(True)
 
+    def behave(self,player,enemyGroup):
+        player.decreaseHealth()
+
 class Belcebu(Enemy):
     def __init__(self, manager, data):
         Enemy.__init__(self, manager, data, "asmodeo")
         self.setInvertedSpriteSheet(True)
+    def behave(self,player,enemyGroup):
+        player.decreaseHealth()
 
 class Mammon(Enemy):
     def __init__(self, manager, data):
         Enemy.__init__(self, manager, data, "mammon")
         self.setInvertedSpriteSheet(True)
+    def behave(self,player,enemyGroup):
+        player.decreaseHealth()
