@@ -216,9 +216,8 @@ class Character(MySprite):
         self.velocidad = (vx, vy)
         # Superclase calcula la nueva posición del Sprite con la velocidad
         MySprite.update(self, tiempo)
-        if type(self).__name__ == "fire": print self.getDoUpdateScroll()
-        if self.getDoUpdateScroll(): self.establecerPosicionPantalla((scroll[0], -scroll[1]))
 
+        if self.getDoUpdateScroll(): self.establecerPosicionPantalla((scroll[0], -scroll[1]))
         #if type(self).__name__ == "Asmodeo": print self.printMovimiento(), self.printPostura(), self.velocidad
 
     def printPostura(self):

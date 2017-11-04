@@ -153,13 +153,14 @@ class Stage(Scene):
         self.platformGroup.draw(self.manager.getScreen())
         self.spriteGroup.draw(self.manager.getScreen())
         self.enemyGroup.draw(self.manager.getScreen())
+        self.itemGroup.draw(self.manager.getScreen())
         self.HUD.draw()
         self.draw_rects()
 
     def draw_rects(self):
         # Platform rects
         for item in self.itemGroup:
-             self.draw_transparent_rect(item.getRect(), (255, 255, 255, 100))
+             self.draw_transparent_rect(item.getRect(), (255, 255, 255, 50))
 
         # Enemy rects
         for enemy in self.enemyGroup:

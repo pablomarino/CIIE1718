@@ -20,6 +20,8 @@ class Item(Character):
         return self.getRect()
 
     def update(self, platformGroup, clock, playerDisplacement):
+        self.numPostura = SPRITE_STOPPED
+        self.actualizarPostura()
         Character.update(self, platformGroup, clock, playerDisplacement)
 
     def getDoUpdateScroll(self):
@@ -34,12 +36,15 @@ class heart(Item):
         Item.__init__(self, manager, data, "heart")
     def interaction(self):
         # eliminar
+
         # sonido
-        print "vida+"
+
+        # accion
+        pass
 
 class fire(Item):
     def __init__(self, manager, data):
         Item.__init__(self,manager,data,"fire")
 
     def interaction(self):
-        print "vida-"
+        pass
