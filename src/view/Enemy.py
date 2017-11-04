@@ -26,10 +26,17 @@ class Enemy(Character):
         self.health = 100
         self.alive = True
         self.active = False
+
+        # Velocidades del enemigo
         self.speed_x = data.getCharacterSpeed(id)
         self.chasing_speed_x = data.getCharacterChasingSpeed(id)
-        # TODO rename this variable
+        self.collision_rect = None
+
+        # TODO rename this variables
+        # Márgenes de ataque del enemigo
         self.y_margin = 20
+        self.x_range = 100
+        self.activity_range_rect = None
 
     def chasePlayer(self, active):
         self.active = active
@@ -43,16 +50,32 @@ class Enemy(Character):
     def behave(self, player, enemyGroup):
         pass
 
+    def updateCollisionRect(self):
+        self.collision_rect = pygame.Rect(self.getRect().left + self.getRect().width / 2 - 3,
+                                          self.getRect().bottom - 5,
+                                          6, 5)
+
     def getCollisionRect(self):
-        # TODO implementar esta función para los enemigos
-        return self.getRect()
+        return self.collision_rect
 
     def update(self, platformGroup, clock, player, playerDisplacement):
         if self.alive:
 
+            # Actualizamos el rect de colisión
+            self.updateCollisionRect()
+
+            # TODO intentar no crear un nuevo rect cada vez que se llama a la función update
+            # Creamos el rect que servirá para comprobar si el jugador está en su rango de visión
+            width = self.getRect().width + (self.x_range * 2)
+            height = self.getRect().height + (self.y_margin * 2)
+            left = self.getRect().left - self.x_range
+            top = self.getRect().top - self.y_margin
+            self.activity_range_rect = pygame.Rect(left, top, width, height)
+
             # Si el enemigo se sale de la pantalla, invertir velocidad X
             if self.posicion[0] == self.screen_width - self.getRect().width or self.posicion[0] == 0:
                 self.invertXSpeed()
+
 
             if self.active:
                 myposition_x = self.getGlobalPosition()[0]
@@ -60,14 +83,14 @@ class Enemy(Character):
                 playerposition_x = player.getGlobalPosition()[0]
                 playerposition_y = player.getGlobalPosition()[1]
 
-                # TODO perseguir al jugador, incluso bajarse de las plataformas
                 if myposition_y < playerposition_y - self.y_margin:
                     # El enemigo baja el nivel hasta encontrar al jugador
                     pass
                 elif myposition_y > playerposition_y + self.y_margin:
+                    # Si el jugador está por encima del enemigo, no perseguirle
                     self.chasePlayer(False)
                 else:
-                    # TODO perseguir al jugador en el eje x
+                    # Perseguir al jugador en el eje x
                     if playerposition_x > myposition_x:
                         Character.move(self, RIGHT)
                     elif playerposition_x < myposition_x:
@@ -76,14 +99,14 @@ class Enemy(Character):
                         Character.move(self, STOPPED)
                     pass
             else:
-                # Comprobamos si está en colisión con una plataformas
-                platform = pygame.sprite.spritecollideany(self, platformGroup)
 
-                # Comprobamos si el jugador está a la misma altura que el enemigo
-                if self.getGlobalPosition()[1] - self.y_margin <= player.getGlobalPosition()[1] <= \
-                                self.getGlobalPosition()[1] + self.y_margin:
+                # Comprobamos si el jugador está dentro del rango de visión del jugador
+                if player.getRect().colliderect(self.activity_range_rect):
                     self.chasePlayer(True)
                     return
+
+                # Comprobamos si está en colisión con una plataformas
+                platform = pygame.sprite.spritecollideany(self, platformGroup)
 
                 # Comprobamos que el enemigo no se salga de su plataforma
                 if platform is not None:

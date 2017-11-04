@@ -102,9 +102,7 @@ class Player(Character):
         #self.manager.add(Gamelevel.GameLevel(self.manager, self.manager.data, "level_2"))
 
     def move(self, pressedKeys):
-        # TODO Cuando el jugador está cayendo en diagonal, mantiene dirección a pesar de que no haya teclas pulsadas
-
-        # Indicamos la acción a realizar segun la tecla pulsada para el jugador
+        # Indicamos la acción a realizar según la tecla pulsada para el jugador
         if self.alive:
             if pressedKeys[self.data.getKeyUp()] and pressedKeys[self.data.getKeyLeft()]:
                 Character.move(self, UPLEFT)
@@ -134,7 +132,7 @@ class Player(Character):
             itemCol = pygame.sprite.spritecollideany(self, itemGroup)
             if enemyCol is not None:
                 enemyCol.behave(self, itemGroup)  # cada item realiza una accion propia
-            if  itemCol is not None:
+            if itemCol is not None:
                 itemCol.behave(self,itemGroup) # cada item realiza una accion propia
             Character.update(self, platformGroup, clock, playerDisplacement)# Call update in the super class
             self.updateCollisionRect()  # Update collision rect

@@ -56,7 +56,7 @@ class Stage(Scene):
         column_number = 0
         row_number = 0
         # Asignación de letras a objetos
-        platform_letter = ["0","1","2"]
+        platform_letter = ["0", "1", "2"]
         enemy_letter = "a"
         fire_letter = "f"
         heart_letter = "h"
@@ -171,6 +171,8 @@ class Stage(Scene):
         # Enemy rects
         for enemy in self.enemyGroup:
             self.draw_transparent_rect(enemy.getRect(), (255, 10, 10, 100))
+            self.draw_transparent_rect(enemy.activity_range_rect, (10, 255, 255, 100))
+            self.draw_transparent_rect(enemy.getCollisionRect(), (0, 0, 0, 100))
 
         # Player rects
         self.draw_transparent_rect(self.player.getRect(), (23, 100, 255, 100))
