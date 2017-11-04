@@ -49,10 +49,13 @@ class fire(Item):
 
 class door(Item):
     def __init__(self, manager, data):
+        self.active = True
         Item.__init__(self,manager,data,"door")
 
     def behave(self,player,itemGroup):
-        player.nextLevel()
+        if self.active:
+            self.active = False
+            player.nextLevel()
 
 class dante(Item):
     def __init__(self, manager, data):
