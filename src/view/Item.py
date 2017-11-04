@@ -9,10 +9,10 @@ class Item(Character):
                             data,
                             data.getItemSheet(id),          #archivoImagen
                             data.getItemSheetCoords(id),    #archivoCoordenadas
-                            [3],                            # numImagenes
+                            [8],                            # numImagenes
                             0,#data.getCharacterSpeed(id),  #velocidadCarrera
                             0,                              #velocidadSalto
-                            5)#data.getItemAnimationDelay())#retardo animacion
+                            10)#data.getItemAnimationDelay())#retardo animacion
 
 
     def getCollisionRect(self):
@@ -38,7 +38,7 @@ class heart(Item):
         # eliminar
         for i in itemGroup:
             if i == self: itemGroup.remove(i)
-        player.increaseHealth()
+        player.increaseLives()
 
 class fire(Item):
     def __init__(self, manager, data):
@@ -52,6 +52,11 @@ class door(Item):
         Item.__init__(self,manager,data,"door")
 
     def behave(self,player,itemGroup):
-        for i in itemGroup:
-            if i == self: itemGroup.remove(i)
         player.nextLevel()
+
+class dante(Item):
+    def __init__(self, manager, data):
+        Item.__init__(self,manager,data,"dante")
+
+    def behave(self,player,itemGroup):
+        player.die()

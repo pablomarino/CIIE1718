@@ -2,16 +2,20 @@
   "animation_delay": 5,
   "items":{
     "fire": {
-      "file": "../bin/assets/sprites/items/items1.png",
+      "file": "../bin/assets/sprites/items/fire.png",
       "file_coords": "../bin/assets/sprites/items/fire_coords.txt"
     },
     "heart": {
-      "file": "../bin/assets/sprites/items/items1.png",
+      "file": "../bin/assets/sprites/items/heart.png",
       "file_coords": "../bin/assets/sprites/items/heart_coords.txt"
     },
     "door": {
       "file": "../bin/assets/sprites/items/door.png",
       "file_coords": "../bin/assets/sprites/items/door_coords.txt"
+    },
+	"dante": {
+      "file": "../bin/assets/sprites/items/dante.png",
+      "file_coords": "../bin/assets/sprites/items/dante_coords.txt"
     }
   }
 }
