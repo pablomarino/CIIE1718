@@ -3,7 +3,7 @@
     "bgColor": "0x1e0203",
     "bglayers": [
        {
-        "image": "../bin/assets/backgrounds/bg_l1_0.png",
+        "image": "../bin/assets/sprites/backgrounds/bg_l1_0.png",
         "color_key": "0",
         "origin_x": "0",
         "origin_y": "0",
@@ -11,7 +11,7 @@
         "repeat_y": "True"
       },
       {
-        "image": "../bin/assets/backgrounds/bg_l1_2.png",
+        "image": "../bin/assets/sprites/backgrounds/bg_l1_2.png",
         "color_key": "0",
         "origin_x": "0",
         "origin_y": "0",
@@ -85,9 +85,9 @@
       "1111111111111111111"
     ],
     "platform_files": [
-      "../bin/assets/backgrounds/bg_l1_platform_0.png",
-      "../bin/assets/backgrounds/bg_l1_platform_1.png",
-      "../bin/assets/backgrounds/bg_l1_platform_2.png"
+      "../bin/assets/sprites/platforms/bg_l1_platform_0.png",
+      "../bin/assets/sprites/platforms/bg_l1_platform_1.png",
+      "../bin/assets/sprites/platforms/bg_l1_platform_2.png"
     ]
   },
 
@@ -95,7 +95,7 @@
     "bgColor": "0x1e0203",
     "bglayers": [
       {
-        "image": "../bin/assets/backgrounds/bg_l1_0.png",
+        "image": "../bin/assets/sprites/backgrounds/bg_l1_0.png",
         "color_key": "0",
         "origin_x": "0",
         "origin_y": "0",
@@ -117,9 +117,9 @@
       "0000000000000000000"
     ],
     "platform_files": [
-      "../bin/assets/backgrounds/bg_l1_platform_2.png",
-      "../bin/assets/backgrounds/bg_l1_platform_2.png",
-      "../bin/assets/backgrounds/bg_l1_platform_2.png"
+      "../bin/assets/sprites/platforms/bg_l1_platform_0.png",
+      "../bin/assets/sprites/platforms/bg_l1_platform_1.png",
+      "../bin/assets/sprites/platforms/bg_l1_platform_2.png"
     ]
   }
 }
