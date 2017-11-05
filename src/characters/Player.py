@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 from time import time
 
+import pygame
+
 from characters.Character import *
-from control.GameLevel import *
 
 
 class Player(Character):
@@ -10,8 +11,6 @@ class Player(Character):
 
     def __init__(self, manager, data, id):
         # Invocamos al constructor de la clase padre con la configuracion de este personaje concreto
-        # TODO cambiar el constructor de Character por (self, data, id)
-        # Dentro del propio constructor elige el sprite y demás valores buscando en el dataRetriever
         Character.__init__(self,
                            manager,
                            data,
@@ -23,7 +22,9 @@ class Player(Character):
                            data.getPlayerAnimationDelay())
         self.numPostura = SPRITE_JUMPING  # En que postura esta inicialmente
         self.data = data
-        self.collision_rect = None
+        self.collision_rect = pygame.Rect(self.getRect().left + self.getRect().width / 2 - 3,
+                                          self.getRect().bottom - 5,
+                                          6, 5)
         self.manager = manager
         # Variables propias del jugador
         self.lives = 3
@@ -97,9 +98,13 @@ class Player(Character):
             Character.attack(self, ATTACK)
 
     def nextLevel(self):
-        print "Player.py load next Level"
-        #self.manager.changeScene()
-        #self.manager.add(Gamelevel.GameLevel(self.manager, self.manager.data, "level_2"))
+        # TODO mover esta función para el objeto puerta mejor
+        print "Player.py - Starting new level..."
+        self.manager.changeScene()
+        # TODO solucionar el problema de los imports
+        from control.GameLevel import GameLevel
+        # TODO cargar bien los niveles (de momento carga el nivel 2 indiferentemente del nivel en el que estés)
+        self.manager.add(GameLevel(self.manager, self.manager.getDataRetriever(), "level_2"))
 
     def move(self, pressedKeys):
         # Indicamos la acción a realizar según la tecla pulsada para el jugador
@@ -133,6 +138,6 @@ class Player(Character):
             if enemyCol is not None:
                 enemyCol.behave(self, itemGroup)  # cada item realiza una accion propia
             if itemCol is not None:
-                itemCol.behave(self,itemGroup) # cada item realiza una accion propia
+                itemCol.behave(self, itemGroup) # cada item realiza una accion propia
             Character.update(self, platformGroup, clock, playerDisplacement)# Call update in the super class
             self.updateCollisionRect()  # Update collision rect

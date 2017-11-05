@@ -34,9 +34,10 @@ class heart(Item):
         Item.__init__(self, manager, data, "heart")
 
     def behave(self, player, itemGroup):
-        # eliminar
+        # Eliminamos el item
         for i in itemGroup:
             if i == self: itemGroup.remove(i)
+        # TODO añadir sonido
         player.increaseLives()
 
 
@@ -45,6 +46,7 @@ class fire(Item):
         Item.__init__(self, manager, data, "fire")
 
     def behave(self, player, itemGroup):
+        # TODO añadir sonido
         player.decreaseHealth()
 
 
@@ -53,9 +55,12 @@ class door(Item):
         self.active = True
         Item.__init__(self, manager, data, "door")
 
+    # TODO modificar el rect para que el jugador tenga que tocar la parte inferior de la puerta, no los bordes
+
     def behave(self, player, itemGroup):
         if self.active:
             self.active = False
+            # TODO implementar aquí la función de cambio de nivel, en vez de en el propio jugador
             player.nextLevel()
 
 
