@@ -26,7 +26,8 @@ class Stage(Scene):
         self.fire_letter = "f"
         self.heart_letter = "h"
         self.door_letter = "d"
-        self.player_letter = "p"
+        self.wardrove_letter = "w"
+        self.chandelier_letter = "c"
         self.manager = manager
         self.data = data
         self.player = player
@@ -90,6 +91,18 @@ class Stage(Scene):
                     tmp= str_to_class("door")(self.manager, self.manager.getDataRetriever())
                     tmp.setPosition((column_number * self.MAP_UNIT_WIDTH, row_number * self.MAP_UNIT_HEIGHT))
                     self.itemGroup.add(tmp)
+
+
+                if letter == self.chandelier_letter:
+                    tmp= str_to_class("chandelier")(self.manager, self.manager.getDataRetriever())
+                    tmp.setPosition((column_number * self.MAP_UNIT_WIDTH, row_number * self.MAP_UNIT_HEIGHT))
+                    self.itemGroup.add(tmp)
+
+                if letter == self.wardrove_letter:
+                    tmp= str_to_class("wardrove")(self.manager, self.manager.getDataRetriever())
+                    tmp.setPosition((column_number * self.MAP_UNIT_WIDTH, row_number * self.MAP_UNIT_HEIGHT))
+                    self.itemGroup.add(tmp)
+
 
 
                 # Creamos plataformas

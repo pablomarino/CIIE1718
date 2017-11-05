@@ -59,6 +59,32 @@ class door(Item):
             player.nextLevel()
 
 
+class door(Item):
+    def __init__(self, manager, data):
+        self.active = True
+        Item.__init__(self, manager, data, "door")
+
+    def behave(self, player, itemGroup):
+        if self.active:
+            self.active = False
+            player.nextLevel()
+
+
+class chandelier(Item):
+    def __init__(self, manager, data):
+        Item.__init__(self, manager, data, "chandelier")
+
+    def behave(self, player, itemGroup):
+        pass
+
+class wardrove(Item):
+    def __init__(self, manager, data):
+        Item.__init__(self, manager, data, "wardrove")
+
+    def behave(self, player, itemGroup):
+        pass
+
+
 class dante(Item):
     def __init__(self, manager, data):
         Item.__init__(self, manager, data, "dante")

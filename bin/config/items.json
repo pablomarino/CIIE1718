@@ -16,6 +16,15 @@
 	"dante": {
       "file": "../bin/assets/sprites/items/dante.png",
       "file_coords": "../bin/assets/sprites/items/dante_coords.txt"
+    },
+    "chandelier": {
+      "file": "../bin/assets/sprites/items/candelabro.png",
+      "file_coords": "../bin/assets/sprites/items/candelabro_coords.txt"
+    },
+    "wardrove": {
+      "file": "../bin/assets/sprites/items/libreria.png",
+      "file_coords": "../bin/assets/sprites/items/libreria_coords.txt"
     }
+
   }
 }
