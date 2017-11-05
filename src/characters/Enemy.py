@@ -2,7 +2,7 @@
 
 from random import randint
 
-from view.Character import *
+from characters.Character import *
 
 
 class Enemy(Character):

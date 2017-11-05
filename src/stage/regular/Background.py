@@ -1,6 +1,6 @@
 import math
 
-from view.MySprite import *
+from characters.MySprite import *
 
 
 class BackGround():

@@ -2,12 +2,12 @@
 
 import sys
 
-from control.HUD import HUD
-from control.stage.Background import *
-from control.stage.Platform import Platform
-from control.stage.Scene import Scene
-from view.Enemy import *
-from view.Item import *
+from stage.regular.HUD import HUD
+from stage.regular.Background import *
+from stage.regular.Platform import Platform
+from stage.regular.Scene import Scene
+from characters.Enemy import *
+from characters.Item import *
 
 
 def str_to_class(str):

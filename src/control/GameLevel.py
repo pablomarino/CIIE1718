@@ -1,9 +1,11 @@
 # -*- encoding: utf-8 -*-
 
-from stage.Stage import *
-from view.Enemy import *
-from view.Player import Player
 import pygame
+from characters.Enemy import *
+from characters.Player import Player
+
+from src.stage.regular.Stage import *
+
 
 class GameLevel:
     def __init__(self, manager, data, id):

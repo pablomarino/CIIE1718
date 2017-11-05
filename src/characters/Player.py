@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from time import time
 
-from view.Character import *
+from characters.Character import *
 from control.GameLevel import *
 
 

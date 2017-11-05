@@ -3,7 +3,7 @@ import pygame
 from pygame.locals import *
 
 from control.GameLevel import GameLevel
-from control.stage.Scene import Scene
+from stage.regular.Scene import Scene
 
 
 class ElementoGUI:

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from view.Character import *
+from characters.Character import *
 
 
 class Item(Character):

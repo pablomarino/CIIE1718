@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from view.MySprite import *
+from characters.MySprite import *
 
 
 class Platform(MySprite):
