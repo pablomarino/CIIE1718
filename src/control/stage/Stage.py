@@ -17,6 +17,16 @@ def str_to_class(str):
 class Stage(Scene):
     def __init__(self, manager, data, player, platformGroup, spriteGroup, enemyGroup,itemGroup):
         Scene.__init__(self, manager)
+
+        self.MAP_UNIT_WIDTH = 55
+        self.MAP_UNIT_HEIGHT = 55
+        # Asignación de letras a objetos
+        self.platform_letter = ["0", "1", "2"]
+        self.enemy_letter = ["a","b","m"]
+        self.fire_letter = "f"
+        self.heart_letter = "h"
+        self.door_letter = "d"
+        self.player_letter = "p"
         self.manager = manager
         self.data = data
         self.player = player
@@ -29,106 +39,87 @@ class Stage(Scene):
         self.setup()
 
     def setup(self):
-        # Dimensiones de la pantalla
-        self.levelDimensions = ((int(self.data["dimensions"][0]), int(self.data["dimensions"][1])))
 
-        # Cordenada Z de la capa de plataformas
-        self.platforms_z = int(self.data["platforms_z"])
-
+        # cargo el mapa
+        self.map = self.data["map"]
+        self.levelDimensions = (1024, (len(self.map)+10)*self.MAP_UNIT_HEIGHT)  # ((int(self.data["dimensions"][0]), int(self.data["dimensions"][1])))
         # Genero la capa del Fondo
         self.background = BackGround(self.manager, self.data["bglayers"], self.player, self.levelDimensions)
-
-        self.mapFile = self.data["map_file"]
-        # TODO los 3 tipos de plataforma tienen el miso sprite
         self.platformfiles = self.data["platform_files"]
-
         # Creamos el nivel a partir de fichero de texto
         self.create_level()
-
         # Creamos el HUD
         self.HUD = HUD(self.manager.getDataRetriever(), self.manager.getScreen(), self.player)
 
     def create_level(self):
-        # Tamaño que representa cada letra del mapa.txt
-        MAP_UNIT_WIDTH = 55
-        MAP_UNIT_HEIGHT = 55
         # Variables
         column_number = 0
         row_number = 0
-        # Asignación de letras a objetos
-        platform_letter = ["0", "1", "2"]
-        enemy_letter = "a"
-        fire_letter = "f"
-        heart_letter = "h"
-        door_letter = "d"
 
-        # Abrimos mapa en formato txt y lo leemos letra a letra
-        with open(self.mapFile, "r") as f:
-            for line in f:
-                platform_size = 0
-                prev_letter = " "
+        for line in self.map:
+            platform_size = 0
+            prev_letter = " "
+            for letter in line:
+                # Si hay la letra asignada a plataformas, aumentamos el tamaño de la plataforma a crear una posición
+                if letter in self.platform_letter:
+                    platform_size = platform_size + 1
 
-                for letter in line:
-                    # Si hay la letra asignada a plataformas, aumentamos el tamaño de la plataforma a crear una posición
-                    if letter in platform_letter:
-                        platform_size = platform_size + 1
+                # Create enemies
+                if letter in self.enemy_letter:
+                    if letter == "a":
+                        tmp = str_to_class("Asmodeo")(self.manager, self.manager.getDataRetriever())
+                    elif letter == "b":
+                        tmp = str_to_class("Belcebu")(self.manager, self.manager.getDataRetriever())
+                    elif letter == "m":
+                        tmp = str_to_class("Mammon")(self.manager, self.manager.getDataRetriever())
+                    tmp.setPosition((column_number * self.MAP_UNIT_WIDTH, row_number * self.MAP_UNIT_HEIGHT))
+                    self.enemyGroup.add(tmp)
 
-                    # Create enemies
-                    if letter == enemy_letter:
-                        tmp = str_to_class(self.data["enemies"][0])(self.manager, self.manager.getDataRetriever())
-                        tmp.setPosition((column_number * MAP_UNIT_WIDTH, row_number * MAP_UNIT_HEIGHT))
-                        self.enemyGroup.add(tmp)
+                # Create Items
+                if letter == self.fire_letter:
+                    tmp = str_to_class("fire")(self.manager, self.manager.getDataRetriever())
+                    tmp.setPosition((column_number * self.MAP_UNIT_WIDTH, row_number * self.MAP_UNIT_HEIGHT))
+                    self.itemGroup.add(tmp)
 
-                    # Create Items
-                    if letter == fire_letter:
-                        tmp = str_to_class("fire")(self.manager, self.manager.getDataRetriever())
-                        tmp.setPosition((column_number * MAP_UNIT_WIDTH, row_number * MAP_UNIT_HEIGHT))
-                        self.itemGroup.add(tmp)
+                if letter == self.heart_letter:
+                    tmp= str_to_class("heart")(self.manager, self.manager.getDataRetriever())
+                    tmp.setPosition((column_number * self.MAP_UNIT_WIDTH, row_number * self.MAP_UNIT_HEIGHT))
+                    self.itemGroup.add(tmp)
 
-                    if letter == heart_letter:
-                        tmp= str_to_class("heart")(self.manager, self.manager.getDataRetriever())
-                        tmp.setPosition((column_number * MAP_UNIT_WIDTH, row_number * MAP_UNIT_HEIGHT))
-                        self.itemGroup.add(tmp)
-
-                    if letter == door_letter:
-                        tmp= str_to_class("door")(self.manager, self.manager.getDataRetriever())
-                        tmp.setPosition((column_number * MAP_UNIT_WIDTH, row_number * MAP_UNIT_HEIGHT))
-                        self.itemGroup.add(tmp)
+                if letter == self.door_letter:
+                    tmp= str_to_class("door")(self.manager, self.manager.getDataRetriever())
+                    tmp.setPosition((column_number * self.MAP_UNIT_WIDTH, row_number * self.MAP_UNIT_HEIGHT))
+                    self.itemGroup.add(tmp)
 
 
-                    # Creamos plataformas
-                    if (not letter in platform_letter and prev_letter in platform_letter):
-                        platform = Platform(
-                            self.manager,
-                            (column_number * MAP_UNIT_WIDTH, row_number * MAP_UNIT_HEIGHT),
-                            self.platformfiles[int(prev_letter)],
-                            self.platforms_z,
-                            platform_size)
-                        self.platformGroup.add(platform)
-                        platform_size = 0
-
-
-
-
-                    # Incrementar el contador de columnas
-                    column_number = column_number + 1
-
-                    # Asignar el valor de la letra actual a la variable prev_letter
-                    prev_letter = letter
-
-                # Create last platform
-                if prev_letter in platform_letter:
+                # Creamos plataformas
+                if (not letter in self.platform_letter and prev_letter in self.platform_letter):
                     platform = Platform(
                         self.manager,
-                        (column_number * MAP_UNIT_WIDTH, row_number * MAP_UNIT_HEIGHT),
+                        (column_number * self.MAP_UNIT_WIDTH, row_number * self.MAP_UNIT_HEIGHT),
                         self.platformfiles[int(prev_letter)],
-                        self.platforms_z,
                         platform_size)
                     self.platformGroup.add(platform)
+                    platform_size = 0
 
-                # Incrementar el contador de filas
-                row_number = row_number + 1
-                column_number = 0
+                # Incrementar el contador de columnas
+                column_number = column_number + 1
+
+                # Asignar el valor de la letra actual a la variable prev_letter
+                prev_letter = letter
+
+            # Create last platform
+            if prev_letter in self.platform_letter:
+                platform = Platform(
+                    self.manager,
+                    (column_number * self.MAP_UNIT_WIDTH, row_number *self.MAP_UNIT_HEIGHT),
+                    self.platformfiles[int(prev_letter)],
+                    platform_size)
+                self.platformGroup.add(platform)
+
+            # Incrementar el contador de filas
+            row_number = row_number + 1
+            column_number = 0
 
     def update(self, clock):
         self.manager.getScreen().fill(int(self.data["bgColor"], 16))  # en windows es necesario =\ en mac no
@@ -190,13 +181,4 @@ class Stage(Scene):
         self.playerDisplacement = (0,0)
 
     def getDoUpdateScroll(self):
-        # TODO Implementar
-        '''
-        retval = False
-
-        if self.player.getPosition()[1] > self.manager.getScreen().get_size()[1]/2:
-            retval = True
-            print self.playerDisplacement
-        '''
-        retval = True
-        return retval
+        return True

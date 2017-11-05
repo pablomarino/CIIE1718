@@ -49,14 +49,8 @@ class BgLayer(MySprite):
         self.levelDimensions = parent.levelDimensions
         # valor del scroll
         self.scroll = list((0, 0))
-        '''
-        # Limites del scroll
-        self.scrollLimits = ( self.levelDimensions[0] - self.stageDimensions[0],
-                             -self.levelDimensions[1] + self.stageDimensions[1])
-        '''
         # Posicion de la plataforma
         self.position = (int(self.data["origin_x"]), int(self.data["origin_y"]))
-        self.z = int(self.data["origin_z"])
         # Jugador
         self.player = parent.player
         # Posicion inicial del jugador
@@ -70,38 +64,24 @@ class BgLayer(MySprite):
 
         # Si se repite Horizontalmente
         if self.data["repeat_x"] == "True":  # Si se repite horizontalmente
-            self.timesX = int(math.ceil(float(self.z * self.levelDimensions[0]) / self.imageW))
+            self.timesX = int(math.ceil(float( self.levelDimensions[0]) / self.imageW))
         else:
             self.timesX = 1
 
         # Si se repite verticalmente
         if self.data["repeat_y"] == "True":
-            self.timesY = int(math.ceil(float(self.z * self.levelDimensions[1]) / self.imageH))
+            self.timesY = int(math.ceil(float( self.levelDimensions[1]) / self.imageH))
         else:
             self.timesY = 1
-        self.z = 1
 
     def update(self, clock, scroll):
         # Todo comprobar valores a partir de los que es necesario realizar el scroll
         # me aseguro de que no se salga la pantalla
-        '''
-        if self.scroll[0] < self.scrollLimits[0]:
-            self.scroll[0] = self.scrollLimits[0]
-        elif self.scroll[0] > 0 :
-            self.scroll[0] = 0
-
-        if self.scroll[1] > 0:
-            self.scroll[1] = 0
-        elif self.scroll[1] < self.scrollLimits[1]:
-            self.scroll[1] = self.scrollLimits[1]
-        '''
-        # self.targetX = self.position[0] + scroll[0] * self.z
-        # self.targetY = self.position[1] + scroll[1] * self.z
-        self.establecerPosicionPantalla((-scroll[0] * self.z, -scroll[1] * self.z))
+        self.establecerPosicionPantalla((-scroll[0] , -scroll[1] ))
 
     def draw(self):
         for i in range(0, self.timesX):
             for j in range(0, self.timesY):
                 # self.manager.getScreen().blit(self.image, (self.targetX + self.imageW * i,self.targetY + self.imageH * j))
                 self.manager.getScreen().blit(self.image, (
-                    self.rect.left * self.z + self.imageW * i, self.rect.bottom * self.z + self.imageH * j))
+                    self.rect.left  + self.imageW * i, self.rect.bottom  + self.imageH * j))

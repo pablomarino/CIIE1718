@@ -3,13 +3,12 @@ from view.MySprite import *
 
 
 class Platform(MySprite):
-    def __init__(self, manager, position, imageFile, origin_z, size):
+    def __init__(self, manager, position, imageFile,  size):
         # Super
         MySprite.__init__(self, manager)
 
         # Dimensiones de la pantalla
         self.stageDimensions = manager.getScreen().get_size()
-        self.z = origin_z
 
         # Obtengo la imagen
         self.image = manager.getLibrary().load(imageFile, -1)
@@ -33,4 +32,4 @@ class Platform(MySprite):
         pass
 
     def update(self, clock, scroll):
-        self.establecerPosicionPantalla((-scroll[0] * self.z, -scroll[1] * self.z))
+        self.establecerPosicionPantalla((-scroll[0] , -scroll[1] ))
