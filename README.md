@@ -32,15 +32,16 @@
 * ~~Varios tipos de plataforma por nivel~~
 * ~~Simplificar el prooceso de carga de ficheros~~
 * ~~Z~~
+* ~~Terminar level_1.txt~~
+* ~~Decidir que letras y números usar para crear cada tipo de enemigo, plataforma, e ítem~~
+* ~~Ordenar Codigo y Assets para crear el uml~~
 * Añadir capa de objetos de decorado
 * Enemigo Final
 
 ## Matías
 * ~~director cargar menu~~
 * ~~empezar el juego con el menu, y cargar los niveles desde ahí~~
-* Terminar level_1.txt
 * Crear level_2.txt y level_3.txt
-* Decidir que letras y números usar para crear cada tipo de enemigo, plataforma, e ítem
 
 ## Uxía
 * memoria
