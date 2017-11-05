@@ -4,7 +4,7 @@ import pygame
 from characters.Enemy import *
 from characters.Player import Player
 
-from src.stage.regular.Stage import *
+from stage.regular.Stage import *
 
 
 class GameLevel:
@@ -23,13 +23,13 @@ class GameLevel:
         self.enemyGroup = pygame.sprite.Group()
 
         if self.level:
-            # TODO tener en cuenta, valores de vida y demás se reinician al pasar de nivel,se crea un jugador nuevo
+            # TODO pasar los valores de vida del jugador para que no se pierdan de un nivel a otro
             self.player = Player(manager, data, 'player')
             self.player.setPosition(data.getPlayerPositionAt(id))
             self.spriteGroup.add(self.player)
 
             self.stage = Stage(self.manager, self.level, self.player, self.platformGroup, self.spriteGroup,
-                               self.enemyGroup,self.itemGroup)
+                               self.enemyGroup, self.itemGroup)
             self.player.setStage(self.stage)
         else:
             print "Error no existe nivel con id ", id

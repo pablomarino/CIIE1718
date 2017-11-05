@@ -30,13 +30,17 @@ class Enemy(Character):
         # Velocidades del enemigo
         self.speed_x = data.getCharacterSpeed(id)
         self.chasing_speed_x = data.getCharacterChasingSpeed(id)
-        self.collision_rect = None
+
+        # Custom rects
+        self.collision_rect = pygame.Rect(self.getRect().left + self.getRect().width / 2 - 3,
+                                          self.getRect().bottom - 5,
+                                          6, 5)
+        self.activity_range_rect = None
 
         # TODO rename this variables
         # Márgenes de ataque del enemigo
         self.y_margin = 20
         self.x_range = 100
-        self.activity_range_rect = None
 
     def chasePlayer(self, active):
         self.active = active
@@ -51,9 +55,22 @@ class Enemy(Character):
         pass
 
     def updateCollisionRect(self):
+        # TODO intentar no crear un nuevo rect cada vez que se llama a la función update
         self.collision_rect = pygame.Rect(self.getRect().left + self.getRect().width / 2 - 3,
                                           self.getRect().bottom - 5,
                                           6, 5)
+
+    def updateActivityRangeRect(self):
+        # TODO intentar no crear un nuevo rect cada vez que se llama a la función update
+        # Creamos el rect que servirá para comprobar si el jugador está en su rango de visión
+        # width = self.getRect().width + (self.x_range * 2)
+        # height = self.getRect().height + (self.y_margin * 2)
+        # left = self.getRect().left - self.x_range
+        # top = self.getRect().top - self.y_margin
+        self.activity_range_rect = pygame.Rect(self.getRect().left - self.x_range,
+                                               self.getRect().top - self.y_margin,
+                                               self.getRect().width + (self.x_range * 2),
+                                               self.getRect().height + (self.y_margin * 2))
 
     def getCollisionRect(self):
         return self.collision_rect
@@ -61,21 +78,13 @@ class Enemy(Character):
     def update(self, platformGroup, clock, player, playerDisplacement):
         if self.alive:
 
-            # Actualizamos el rect de colisión
+            # Actualizamos los rects del enemigo
             self.updateCollisionRect()
-
-            # TODO intentar no crear un nuevo rect cada vez que se llama a la función update
-            # Creamos el rect que servirá para comprobar si el jugador está en su rango de visión
-            width = self.getRect().width + (self.x_range * 2)
-            height = self.getRect().height + (self.y_margin * 2)
-            left = self.getRect().left - self.x_range
-            top = self.getRect().top - self.y_margin
-            self.activity_range_rect = pygame.Rect(left, top, width, height)
+            self.updateActivityRangeRect()
 
             # Si el enemigo se sale de la pantalla, invertir velocidad X
             if self.posicion[0] == self.screen_width - self.getRect().width or self.posicion[0] == 0:
                 self.invertXSpeed()
-
 
             if self.active:
                 myposition_x = self.getGlobalPosition()[0]
@@ -98,6 +107,7 @@ class Enemy(Character):
                     else:
                         Character.move(self, STOPPED)
                     pass
+                pass
             else:
 
                 # Comprobamos si el jugador está dentro del rango de visión del jugador

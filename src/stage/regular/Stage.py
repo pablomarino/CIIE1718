@@ -163,7 +163,7 @@ class Stage(Scene):
         for enemy in self.enemyGroup:
             self.draw_transparent_rect(enemy.getRect(), (255, 10, 10, 100))
             self.draw_transparent_rect(enemy.activity_range_rect, (10, 255, 255, 100))
-            self.draw_transparent_rect(enemy.getCollisionRect(), (0, 0, 0, 100))
+            # self.draw_transparent_rect(enemy.getCollisionRect(), (0, 0, 0, 100))
 
         # Player rects
         self.draw_transparent_rect(self.player.getRect(), (23, 100, 255, 100))

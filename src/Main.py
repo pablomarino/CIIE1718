@@ -4,7 +4,7 @@
 # Importar modulos
 from control.GameManager import *
 from data.DataRetriever import DataRetriever
-from src.stage.menu.Menu2 import Menu
+from stage.menu.Menu2 import Menu
 
 if __name__ == '__main__':
     # Instancio un Singleton para cargar configuraciones

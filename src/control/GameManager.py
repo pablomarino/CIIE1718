@@ -33,6 +33,8 @@ class GameManager:
     def add(self, level):
         self.stack.append(level)
 
+    # TODO Crear función para incrementar nivel
+
     def changeScene(self):
         self.finished_scene = True
         if len(self.stack) > 0:
