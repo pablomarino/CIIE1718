@@ -30,7 +30,10 @@
 * ~~Mover la logica de colision con item a la clase del item~~
 * ~~Cambiar las plataformas para que se repitan en lugar dfe escalarse~~
 * ~~Varios tipos de plataforma por nivel~~
-* Z
+* ~~Simplificar el prooceso de carga de ficheros~~
+* ~~Z~~
+* Añadir capa de objetos de decorado
+* Enemigo Final
 
 ## Matías
 * ~~director cargar menu~~
