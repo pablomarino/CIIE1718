@@ -1,7 +1,5 @@
 # -*- encoding: utf-8 -*-
 
-import pygame
-from characters.Enemy import *
 from characters.Player import Player
 
 from stage.regular.Stage import *
@@ -11,12 +9,11 @@ class GameLevel:
     def __init__(self, manager, data, id):
         self.manager = manager
 
+        # Guardamos variables
         self.data = data
         self.level = data.getLevel(id)
 
-        pygame.mixer.music.load(self.data.getMusicFile())
-        # pygame.mixer.music.play()
-
+        # Creación de grupos de sprites
         self.spriteGroup = pygame.sprite.Group()
         self.platformGroup = pygame.sprite.Group()
         self.itemGroup = pygame.sprite.Group()

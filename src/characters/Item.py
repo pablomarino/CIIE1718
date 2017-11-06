@@ -4,6 +4,9 @@ from characters.Character import *
 
 class Item(Character):
     def __init__(self, manager, data, id):
+        self.manager = manager
+
+        # LLamada a constructor de la super clase
         Character.__init__(self,
                            manager,
                            data,
@@ -32,13 +35,15 @@ class Item(Character):
 class heart(Item):
     def __init__(self, manager, data):
         Item.__init__(self, manager, data, "heart")
+        self.sound = data.getItemSound("heart")
 
     def behave(self, player, itemGroup):
         # Eliminamos el item
         for i in itemGroup:
             if i == self: itemGroup.remove(i)
-        # TODO añadir sonido
+        # Sonido
         player.increaseLives()
+        pygame.mixer.Sound(self.sound).play()
 
 
 class fire(Item):
@@ -60,19 +65,9 @@ class door(Item):
     def behave(self, player, itemGroup):
         if self.active:
             self.active = False
-            # TODO implementar aquí la función de cambio de nivel, en vez de en el propio jugador
-            player.nextLevel()
-
-
-class door(Item):
-    def __init__(self, manager, data):
-        self.active = True
-        Item.__init__(self, manager, data, "door")
-
-    def behave(self, player, itemGroup):
-        if self.active:
-            self.active = False
-            player.nextLevel()
+            print "Player health : " + str(player.getHealth())
+            self.manager.addNextLevel()
+            self.manager.changeScene()
 
 
 class chandelier(Item):
@@ -81,6 +76,7 @@ class chandelier(Item):
 
     def behave(self, player, itemGroup):
         pass
+
 
 class wardrove(Item):
     def __init__(self, manager, data):

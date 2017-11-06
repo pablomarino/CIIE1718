@@ -1,30 +1,35 @@
 {
   "animation_delay": 5,
-  "items":{
+  "items": {
     "fire": {
       "file": "../bin/assets/sprites/items/fire.png",
-      "file_coords": "../bin/assets/sprites/items/fire_coords.txt"
+      "file_coords": "../bin/assets/sprites/items/fire_coords.txt",
+      "sound": ""
     },
     "heart": {
       "file": "../bin/assets/sprites/items/heart.png",
-      "file_coords": "../bin/assets/sprites/items/heart_coords.txt"
+      "file_coords": "../bin/assets/sprites/items/heart_coords.txt",
+      "sound": "../bin/assets/sounds/items/heart.wav"
     },
     "door": {
       "file": "../bin/assets/sprites/items/door.png",
-      "file_coords": "../bin/assets/sprites/items/door_coords.txt"
+      "file_coords": "../bin/assets/sprites/items/door_coords.txt",
+      "sound": ""
     },
-	"dante": {
+    "dante": {
       "file": "../bin/assets/sprites/items/dante.png",
-      "file_coords": "../bin/assets/sprites/items/dante_coords.txt"
+      "file_coords": "../bin/assets/sprites/items/dante_coords.txt",
+      "sound": ""
     },
     "chandelier": {
       "file": "../bin/assets/sprites/items/candelabro.png",
-      "file_coords": "../bin/assets/sprites/items/candelabro_coords.txt"
+      "file_coords": "../bin/assets/sprites/items/candelabro_coords.txt",
+      "sound": ""
     },
     "wardrove": {
       "file": "../bin/assets/sprites/items/libreria.png",
-      "file_coords": "../bin/assets/sprites/items/libreria_coords.txt"
+      "file_coords": "../bin/assets/sprites/items/libreria_coords.txt",
+      "sound": ""
     }
-
   }
 }

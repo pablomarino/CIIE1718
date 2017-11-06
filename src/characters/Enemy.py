@@ -31,25 +31,26 @@ class Enemy(Character):
         self.speed_x = data.getCharacterSpeed(id)
         self.chasing_speed_x = data.getCharacterChasingSpeed(id)
 
+        # TODO rename this variables
+        # Márgenes de ataque del enemigo
+        self.y_margin = 20
+        self.x_range = 150
+
         # Custom rects
         self.collision_rect = pygame.Rect(self.getRect().left + self.getRect().width / 2 - 3,
                                           self.getRect().bottom - 5,
                                           6, 5)
-        self.activity_range_rect = None
+        self.activity_range_rect = pygame.Rect(self.getRect().left - self.x_range,
+                                               self.getRect().top - self.y_margin,
+                                               self.getRect().width + (self.x_range * 2),
+                                               self.getRect().height + (self.y_margin * 2))
 
-        # TODO rename this variables
-        # Márgenes de ataque del enemigo
-        self.y_margin = 20
-        self.x_range = 100
-
-    def chasePlayer(self, active):
-        self.active = active
-        if active:
-            # self.changeXSpeed(self.chasing_speed_x)
+    def chasePlayer(self, chase):
+        self.active = chase
+        if chase:
             self.velocidadCarrera = self.chasing_speed_x
         else:
             self.velocidadCarrera = self.speed_x
-            # self.changeXSpeed(self.speed_x)
 
     def behave(self, player, enemyGroup):
         pass
@@ -63,14 +64,13 @@ class Enemy(Character):
     def updateActivityRangeRect(self):
         # TODO intentar no crear un nuevo rect cada vez que se llama a la función update
         # Creamos el rect que servirá para comprobar si el jugador está en su rango de visión
-        # width = self.getRect().width + (self.x_range * 2)
-        # height = self.getRect().height + (self.y_margin * 2)
-        # left = self.getRect().left - self.x_range
-        # top = self.getRect().top - self.y_margin
         self.activity_range_rect = pygame.Rect(self.getRect().left - self.x_range,
                                                self.getRect().top - self.y_margin,
                                                self.getRect().width + (self.x_range * 2),
                                                self.getRect().height + (self.y_margin * 2))
+        # x = self.rect.left - self.activity_range_rect.left - self.activity_range_rect.width / 2 + self.rect.width / 2
+        # y = self.rect.top - self.activity_range_rect.top
+        # self.activity_range_rect = self.activity_range_rect.move(x, y)
 
     def getCollisionRect(self):
         return self.collision_rect
@@ -92,7 +92,14 @@ class Enemy(Character):
                 playerposition_x = player.getGlobalPosition()[0]
                 playerposition_y = player.getGlobalPosition()[1]
 
-                if myposition_y < playerposition_y - self.y_margin:
+                # Primero, comprobar si el enemigo tiene que atacar
+                if self.getRect().colliderect(player.getRect()):
+                    # TODO enemigo pasa a movimiento ATTACK
+                    # TODO poner velocidad a cero
+                    pass
+
+                # Comprobar si el jugador está por debajo del enemigo
+                elif myposition_y < playerposition_y - self.y_margin:
                     # El enemigo baja el nivel hasta encontrar al jugador
                     pass
                 elif myposition_y > playerposition_y + self.y_margin:
@@ -109,7 +116,6 @@ class Enemy(Character):
                     pass
                 pass
             else:
-
                 # Comprobamos si el jugador está dentro del rango de visión del jugador
                 if player.getRect().colliderect(self.activity_range_rect):
                     self.chasePlayer(True)
@@ -131,6 +137,8 @@ class Enemy(Character):
                         self.invertXSpeed()
                         new_pos = (platform.getRect().right - self.getRect().width, self.getGlobalPosition()[1])
                         self.setPosition(new_pos)
+
+        # Llamada al update de la super clase
         Character.update(self, platformGroup, clock, playerDisplacement)
 
     def getDoUpdateScroll(self):

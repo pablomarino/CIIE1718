@@ -97,14 +97,14 @@ class Player(Character):
             print "test"
             Character.attack(self, ATTACK)
 
-    def nextLevel(self):
-        # TODO mover esta función para el objeto puerta mejor
-        print "Player.py - Starting new level..."
-        self.manager.changeScene()
-        # TODO solucionar el problema de los imports
-        from control.GameLevel import GameLevel
-        # TODO cargar bien los niveles (de momento carga el nivel 2 indiferentemente del nivel en el que estés)
-        self.manager.add(GameLevel(self.manager, self.manager.getDataRetriever(), "level_2"))
+    # def nextLevel(self):
+    #     # TODO mover esta función para el objeto puerta mejor
+    #     print "Player.py - Starting new level..."
+    #     self.manager.changeScene()
+    #     # TODO solucionar el problema de los imports
+    #     from control.GameLevel import GameLevel
+    #     # TODO cargar bien los niveles (de momento carga el nivel 2 indiferentemente del nivel en el que estés)
+    #     self.manager.add(GameLevel(self.manager, self.manager.getDataRetriever(), "level_2"))
 
     def move(self, pressedKeys):
         # Indicamos la acción a realizar según la tecla pulsada para el jugador

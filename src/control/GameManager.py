@@ -9,13 +9,18 @@ from utils.AssetLoader import AssetLoader
 class GameManager:
     def __init__(self, data):
         self.data = data
-        self.stack = []
+        self.stack = list()
         self.screenFlags = pygame.DOUBLEBUF | pygame.HWSURFACE
         self.finished_scene = False
         self.clock = None
         self.fps = None
+
         # Instancio el cargador de medios
         self.library = AssetLoader()
+
+        # Música de fondo
+        pygame.mixer.music.load(self.data.getMusicFile())
+        # pygame.mixer.music.play()
 
         # Inicializamos la pantalla y el modo grafico
         pygame.display.set_caption(self.data.getWindowTitle())
@@ -33,20 +38,24 @@ class GameManager:
     def add(self, level):
         self.stack.append(level)
 
-    # TODO Crear función para incrementar nivel
+    def addNextLevel(self):
+        # TODO corregir problema de imports
+        # TODO implementar esta función
+        from control.GameLevel import GameLevel
+        self.add(GameLevel(self, self.getDataRetriever(), "level_2"))
 
     def changeScene(self):
         self.finished_scene = True
         if len(self.stack) > 0:
-            self.stack.pop()
+            self.stack.pop(0)
 
     def endGame(self):
-        self.stack = []
+        self.stack = list()
         self.finished = True
 
-    def addScene(self, scene):
-        self.finished_scene = True
-        self.stack.append(scene)
+    # def addScene(self, scene):
+    #     self.finished_scene = True
+    #     self.stack.append(scene)
 
     def run(self):
         while not self.finished:
@@ -64,12 +73,15 @@ class GameManager:
 
                 # Call 'events' function in the current level
                 if len(self.stack) > 0:
-                    self.stack[len(self.stack) - 1].events(self.events_list)
+                    # self.stack[len(self.stack) - 1].events(self.events_list)
+                    self.stack[0].events(self.events_list)
 
             # Update and draw the stack items
             if len(self.stack) > 0:
-                self.stack[len(self.stack) - 1].update(time)
-                self.stack[len(self.stack) - 1].draw()
+                # self.stack[len(self.stack) - 1].update(time)
+                # self.stack[len(self.stack) - 1].draw()
+                self.stack[0].update(time)
+                self.stack[0].draw()
 
             pygame.display.flip()
         pygame.quit()

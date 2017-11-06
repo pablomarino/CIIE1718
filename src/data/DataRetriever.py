@@ -172,6 +172,9 @@ class DataRetriever:
     def getItemSheetCoords(self, id):
         return self.instance.items["items"][id]['file_coords']
 
+    def getItemSound(self, id):
+        return self.instance.items["items"][id]['sound']
+
     def getPlayerAnchor(self, id):
         return self.instance.players["roster"][id]['anchor']
 
