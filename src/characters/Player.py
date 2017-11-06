@@ -55,10 +55,13 @@ class Player(Character):
         else:
             self.stage.resetScroll()
             self.setPosition(self.data.getPlayerPositionAt("level_1"))
-            self.setHealth(100)
+            self.setHealth(self.getMaxHealth())
 
     def getHealth(self):
         return self.health
+
+    def setHealth(self, value):
+        self.health = value
 
     def increaseHealth(self):
         self.health = self.health + 5
