@@ -1,8 +1,11 @@
 # -*- coding: utf-8 -*-
+
+import re
 import sys
 
 import pygame
 
+from stage.menu.Menu2 import Menu
 from utils.AssetLoader import AssetLoader
 
 
@@ -40,9 +43,20 @@ class GameManager:
 
     def addNextLevel(self):
         # TODO corregir problema de imports
-        # TODO implementar esta función
         from control.GameLevel import GameLevel
-        self.add(GameLevel(self, self.getDataRetriever(), "level_2"))
+
+        # Get numeric id of the new level
+        levelid = self.stack.__getitem__(0).getId()
+        result = re.sub('[^0-9]', '', levelid)
+        levelnumber = int(result) + 1
+
+        # Check if the new level exists
+        if levelnumber <= self.data.getNumberOfLevels():
+            self.add(GameLevel(self, self.getDataRetriever(), "level_" + str(levelnumber)))
+        else:
+            print "Victoria"
+            # TODO crear un menú de victoria
+            self.add(Menu(self))
 
     def changeScene(self):
         self.finished_scene = True

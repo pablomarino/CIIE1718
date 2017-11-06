@@ -133,6 +133,9 @@ class DataRetriever:
     def getmedia_suffixes(self):
         return self.instance.preferences['media_suffixes']
 
+    def getNumberOfLevels(self):
+        return len(self.instance.levels)
+
     def getLevels(self):
         return self.instance.levels
 

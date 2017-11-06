@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
 from time import time
 
-import pygame
-
 from characters.Character import *
 
 
@@ -37,7 +35,6 @@ class Player(Character):
         return self.collision_rect
 
     def updateCollisionRect(self):
-        # pygame.Rect(left, top, width, height)
         self.collision_rect = pygame.Rect(self.getRect().left + self.getRect().width / 2 - 3,
                                           self.getRect().bottom - 5,
                                           6, 5)
@@ -63,17 +60,6 @@ class Player(Character):
     def getHealth(self):
         return self.health
 
-    def setStage(self,s): self.stage = s
-
-    def setHealth(self, value):
-        self.health = value
-        # Check for overflow in players health
-        if self.health <= 0:
-            self.health = 0
-            # TODO matar al jugador
-        if self.health >= self.maxHealth:
-            self.health = self.maxHealth
-
     def increaseHealth(self):
         self.health = self.health + 5
 
@@ -83,6 +69,7 @@ class Player(Character):
             # TODO mover jugador hacia un lado, pegar un salto, o algo similar
             if self.health <= 0:
                 self.decreaseLives()
+            # TODO mover el sonido para la colisión con el enemigo, no aquí
             pygame.mixer.Sound('../bin/assets/sounds/player/enemy_hit_1.wav').play()
             self.tiempo_colision = time() + 1
 
@@ -92,19 +79,13 @@ class Player(Character):
     def setMaxHealth(self, value):
         self.maxHealth = value
 
+    def setStage(self, s):
+        self.stage = s
+
     def attack(self, pressedKeys):
         if pressedKeys[self.data.getSpace()]:
             print "test"
             Character.attack(self, ATTACK)
-
-    # def nextLevel(self):
-    #     # TODO mover esta función para el objeto puerta mejor
-    #     print "Player.py - Starting new level..."
-    #     self.manager.changeScene()
-    #     # TODO solucionar el problema de los imports
-    #     from control.GameLevel import GameLevel
-    #     # TODO cargar bien los niveles (de momento carga el nivel 2 indiferentemente del nivel en el que estés)
-    #     self.manager.add(GameLevel(self.manager, self.manager.getDataRetriever(), "level_2"))
 
     def move(self, pressedKeys):
         # Indicamos la acción a realizar según la tecla pulsada para el jugador
@@ -131,13 +112,13 @@ class Player(Character):
             # Crear animación de jugador muerto
             Character.move(self, STOPPED)
 
-    def update(self,  clock, playerDisplacement, platformGroup,enemyGroup, itemGroup):
+    def update(self, clock, playerDisplacement, platformGroup, enemyGroup, itemGroup):
         if self.alive:
             enemyCol = pygame.sprite.spritecollideany(self, enemyGroup)
             itemCol = pygame.sprite.spritecollideany(self, itemGroup)
             if enemyCol is not None:
                 enemyCol.behave(self, itemGroup)  # cada item realiza una accion propia
             if itemCol is not None:
-                itemCol.behave(self, itemGroup) # cada item realiza una accion propia
-            Character.update(self, platformGroup, clock, playerDisplacement)# Call update in the super class
+                itemCol.behave(self, itemGroup)  # cada item realiza una accion propia
+            Character.update(self, platformGroup, clock, playerDisplacement)  # Call update in the super class
             self.updateCollisionRect()  # Update collision rect

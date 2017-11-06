@@ -7,9 +7,9 @@ from stage.regular.Stage import *
 
 class GameLevel:
     def __init__(self, manager, data, id):
-        self.manager = manager
-
         # Guardamos variables
+        self.id = id
+        self.manager = manager
         self.data = data
         self.level = data.getLevel(id)
 
@@ -30,6 +30,9 @@ class GameLevel:
             self.player.setStage(self.stage)
         else:
             print "Error no existe nivel con id ", id
+
+    def getId(self):
+        return self.id
 
     def update(self, clock):
         self.stage.update(clock)
