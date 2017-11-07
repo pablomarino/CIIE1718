@@ -19,8 +19,12 @@
 * ~~Implementar ataque de enemigos~~
 * ~~Crear de cero función update y move de character~~
 * ~~Crear de cero función move de player~~
-* Implementar ataque del jugador
+* ~~empezar el juego con el menu, y cargar los niveles desde ahí~~
+* **Implementar ataque del jugador**
+* Terminar el HUD
 * Texto con nombre de nivel
+
+
 
 
 ## Pablo
@@ -48,7 +52,6 @@
 
 ## Matías
 * ~~director cargar menu~~
-* ~~empezar el juego con el menu, y cargar los niveles desde ahí~~
 
 ## Uxía
 * memoria
