@@ -56,7 +56,6 @@ class salud(Item):
             if i == self: itemGroup.remove(i)
         # Sonido
         player.increaseHealth()
-        pygame.mixer.Sound(self.sound).play()
 
 class moneda(Item):
     def __init__(self, manager, data):
@@ -69,7 +68,6 @@ class moneda(Item):
             if i == self: itemGroup.remove(i)
         # Sonido
         player.increasePoints()
-        pygame.mixer.Sound(self.sound).play()
 
 
 class fire(Item):
@@ -78,7 +76,7 @@ class fire(Item):
 
     def behave(self, player, itemGroup):
         # TODO añadir sonido
-        player.decreaseHealth()
+        player.decreaseHealth(self)
 
 
 class door(Item):

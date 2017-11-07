@@ -75,10 +75,10 @@ class Player(Character):
         if self.health<self.getMaxHealth():
             self.health = self.health + 10
 
-    def decreaseHealth(self):
+    def decreaseHealth(self,e):
         if self.tiempo_colision < time():
-            self.health = self.health - 20
-            self.backOff()
+            self.health = self.health - 10
+            self.backOff(e)
             # TODO mover jugador hacia un lado, pegar un salto, o algo similar
             if self.health <= 0:
                 self.decreaseLives()
@@ -123,12 +123,16 @@ class Player(Character):
             # TODO Crear animación de jugador muerto
             Character.move(self, STOPPED)
 
-    def backOff(self):
+    def backOff(self,enemy):
         (vx,vy) = self.getVelocidad()
-        vx = -.4
-        vy = -.25
+        if enemy.getCollisionRect().left>self.getCollisionRect().right:
+            vx = -.2
+        else:
+            vx = .2
+        vy = -.15
         self.numPostura = SPRITE_JUMPING
         self.setVelocidad((vx,vy))
+
 
     def update(self, clock, playerDisplacement, platformGroup, enemyGroup, itemGroup):
         if self.alive:
