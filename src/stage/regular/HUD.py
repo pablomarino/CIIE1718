@@ -16,7 +16,7 @@ class HUD:
         self.pos_y = data.getHudPosY();
 
         # Create text variables
-        self.text_pos_x = 'Player posX : {0}'
+        self.text_points = 'Points : {0}'
         self.text_lives = 'Lives {0}'
         self.text_health = 'Health {0}/{1}'
 
@@ -41,7 +41,7 @@ class HUD:
         else:
             # Player x position
             self.text_to_screen(
-                self.text_pos_x.format(self.player.getGlobalPosition()[0]),
+                self.text_points.format(self.player.getPoints()),
                 150,
                 self.pos_y,
                 self.font_size

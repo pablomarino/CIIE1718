@@ -45,9 +45,14 @@ class Player(Character):
     def increaseLives(self):
         self.lives = self.lives + 1
 
+    def getPoints(self):
+        return self.points
+
+    def increasePoints(self):
+        self.points = self.points + 5
+
     def decreaseLives(self):
         self.lives = self.lives - 1
-        print self.alive, self.lives
         if self.lives <= 0:
             self.lives = 0
             # TODO GameOver menu
@@ -66,7 +71,8 @@ class Player(Character):
         self.health = value
 
     def increaseHealth(self):
-        self.health = self.health + 10
+        if self.health<self.getMaxHealth():
+            self.health = self.health + 10
 
     def decreaseHealth(self):
         if self.tiempo_colision < time():
@@ -127,4 +133,3 @@ class Player(Character):
                 itemCol.behave(self, itemGroup)  # cada item realiza una accion propia
             Character.update(self, platformGroup, clock, playerDisplacement)  # Call update in the super class
             self.updateCollisionRect()  # Update collision rect
-

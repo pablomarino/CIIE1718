@@ -26,6 +26,16 @@
       "file_coords": "../bin/assets/sprites/items/candelabro_coords.txt",
       "sound": ""
     },
+	"moneda": {
+      "file": "../bin/assets/sprites/items/moneda.png",
+      "file_coords": "../bin/assets/sprites/items/moneda_coords.txt",
+      "sound": ""
+    },
+	"salud": {
+      "file": "../bin/assets/sprites/items/salud.png",
+      "file_coords": "../bin/assets/sprites/items/salud_coords.txt",
+      "sound": ""
+    },
     "wardrove": {
       "file": "../bin/assets/sprites/items/libreria.png",
       "file_coords": "../bin/assets/sprites/items/libreria_coords.txt",

@@ -45,6 +45,32 @@ class heart(Item):
         player.increaseLives()
         pygame.mixer.Sound(self.sound).play()
 
+class salud(Item):
+    def __init__(self, manager, data):
+        Item.__init__(self, manager, data, "salud")
+        self.sound = data.getItemSound("salud")
+
+    def behave(self, player, itemGroup):
+        # Eliminamos el item
+        for i in itemGroup:
+            if i == self: itemGroup.remove(i)
+        # Sonido
+        player.increaseHealth()
+        pygame.mixer.Sound(self.sound).play()
+
+class moneda(Item):
+    def __init__(self, manager, data):
+        Item.__init__(self, manager, data, "moneda")
+        self.sound = data.getItemSound("moneda")
+
+    def behave(self, player, itemGroup):
+        # Eliminamos el item
+        for i in itemGroup:
+            if i == self: itemGroup.remove(i)
+        # Sonido
+        player.increasePoints()
+        pygame.mixer.Sound(self.sound).play()
+
 
 class fire(Item):
     def __init__(self, manager, data):
@@ -84,6 +110,7 @@ class wardrove(Item):
 
     def behave(self, player, itemGroup):
         pass
+
 
 
 class dante(Item):

@@ -28,6 +28,8 @@ class Stage(Scene):
         self.door_letter = "d"
         self.wardrove_letter = "w"
         self.chandelier_letter = "c"
+        self.moneda_letter = "$"
+        self.salud_letter = "p"
         self.manager = manager
         self.data = data
         self.player = player
@@ -105,6 +107,16 @@ class Stage(Scene):
 
                 if letter == self.wardrove_letter:
                     tmp= str_to_class("wardrove")(self.manager, self.manager.getDataRetriever())
+                    tmp.setPosition((column_number * self.MAP_UNIT_WIDTH, row_number * self.MAP_UNIT_HEIGHT))
+                    self.itemGroup.add(tmp)
+
+                if letter == self.salud_letter:
+                    tmp= str_to_class("salud")(self.manager, self.manager.getDataRetriever())
+                    tmp.setPosition((column_number * self.MAP_UNIT_WIDTH, row_number * self.MAP_UNIT_HEIGHT))
+                    self.itemGroup.add(tmp)
+
+                if letter == self.moneda_letter:
+                    tmp= str_to_class("moneda")(self.manager, self.manager.getDataRetriever())
                     tmp.setPosition((column_number * self.MAP_UNIT_WIDTH, row_number * self.MAP_UNIT_HEIGHT))
                     self.itemGroup.add(tmp)
 
