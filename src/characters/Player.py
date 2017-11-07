@@ -68,12 +68,13 @@ class Player(Character):
 
     def decreaseHealth(self):
         if self.tiempo_colision < time():
+            # Reducir salud
             self.health = self.health - 10
+            # TODO self.invertXSpeed()
+            pygame.mixer.Sound('../bin/assets/sounds/player/enemy_hit_1.wav').play()
             # TODO mover jugador hacia un lado, pegar un salto, o algo similar
             if self.health <= 0:
                 self.decreaseLives()
-            # TODO mover el sonido para la colisión con el enemigo, no aquí
-            pygame.mixer.Sound('../bin/assets/sounds/player/enemy_hit_1.wav').play()
             self.tiempo_colision = time() + 1
 
     def getMaxHealth(self):
@@ -93,26 +94,25 @@ class Player(Character):
     def move(self, pressedKeys):
         # Indicamos la acción a realizar según la tecla pulsada para el jugador
         if self.alive:
-            if pressedKeys[self.data.getKeyUp()] and pressedKeys[self.data.getKeyLeft()]:
-                Character.move(self, UPLEFT)
-            elif pressedKeys[self.data.getKeyUp()] and pressedKeys[self.data.getKeyRight()]:
-                Character.move(self, UPRIGHT)
-            elif pressedKeys[self.data.getKeyUp()]:
-                Character.move(self, UP)
-            elif pressedKeys[self.data.getKeyDown()] and pressedKeys[self.data.getKeyLeft()]:
-                Character.move(self, DOWNLEFT)
-            elif pressedKeys[self.data.getKeyDown()] and pressedKeys[self.data.getKeyRight()]:
-                Character.move(self, DOWNRIGHT)
-            elif pressedKeys[self.data.getKeyDown()]:
-                Character.move(self, DOWN)
+            # Horizontal movement
+            if pressedKeys[self.data.getKeyRight()] and pressedKeys[self.data.getKeyLeft()]:
+                Character.move(self, STOPPED)
+            if pressedKeys[self.data.getKeyRight()]:
+                Character.move(self, RIGHT)
             elif pressedKeys[self.data.getKeyLeft()]:
                 Character.move(self, LEFT)
-            elif pressedKeys[self.data.getKeyRight()]:
-                Character.move(self, RIGHT)
             else:
                 Character.move(self, STOPPED)
+
+            # Vertical movement
+            if pressedKeys[self.data.getKeyUp()]:
+                Character.move(self, UP)
+
+            # Attack
+            if pressedKeys[self.data.getSpace()]:
+                Character.move(self, ATTACK)
         else:
-            # Crear animación de jugador muerto
+            # TODO Crear animación de jugador muerto
             Character.move(self, STOPPED)
 
     def update(self, clock, playerDisplacement, platformGroup, enemyGroup, itemGroup):

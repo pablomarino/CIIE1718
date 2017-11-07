@@ -53,6 +53,7 @@ class Enemy(Character):
             self.velocidadCarrera = self.chasing_speed_x
         else:
             self.velocidadCarrera = self.speed_x
+        self.move(self.mirando)
 
     def behave(self, player, enemyGroup):
         pass
@@ -184,6 +185,15 @@ class Belcebu(Enemy):
 
 
 class Mammon(Enemy):
+    def __init__(self, manager, data):
+        Enemy.__init__(self, manager, data, "mammon")
+        self.setInvertedSpriteSheet(True)
+
+    def behave(self, player, enemyGroup):
+        player.decreaseHealth()
+
+
+class EnemyTest(Enemy):
     def __init__(self, manager, data):
         Enemy.__init__(self, manager, data, "mammon")
         self.setInvertedSpriteSheet(True)
