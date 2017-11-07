@@ -30,6 +30,7 @@ class Player(Character):
         self.maxHealth = 100
         self.attack = 50
         self.alive = True
+        self.points = 0
 
     def getCollisionRect(self):
         return self.collision_rect
@@ -45,6 +46,12 @@ class Player(Character):
     def increaseLives(self):
         self.lives = self.lives + 1
 
+    def getPoints(self):
+        return self.points
+
+    def increasePoints(self):
+        self.points = self.points + 5
+
     def decreaseLives(self):
         self.lives = self.lives - 1
         if self.lives <= 0:
@@ -55,6 +62,7 @@ class Player(Character):
         else:
             self.stage.resetScroll()
             self.setPosition(self.data.getPlayerPositionAt("level_1"))
+            self.numPostura = SPRITE_JUMPING
             self.setHealth(self.getMaxHealth())
 
     def getHealth(self):
@@ -64,17 +72,18 @@ class Player(Character):
         self.health = value
 
     def increaseHealth(self):
-        self.health = self.health + 5
+        if self.health<self.getMaxHealth():
+            self.health = self.health + 10
 
     def decreaseHealth(self):
         if self.tiempo_colision < time():
-            # Reducir salud
-            self.health = self.health - 10
-            # TODO self.invertXSpeed()
-            pygame.mixer.Sound('../bin/assets/sounds/player/enemy_hit_1.wav').play()
+            self.health = self.health - 20
+            self.backOff()
             # TODO mover jugador hacia un lado, pegar un salto, o algo similar
             if self.health <= 0:
                 self.decreaseLives()
+            # TODO mover el sonido para la colisión con el enemigo, no aquí
+            pygame.mixer.Sound('../bin/assets/sounds/player/enemy_hit_1.wav').play()
             self.tiempo_colision = time() + 1
 
     def getMaxHealth(self):
@@ -88,7 +97,6 @@ class Player(Character):
 
     def attack(self, pressedKeys):
         if pressedKeys[self.data.getSpace()]:
-            print "test"
             Character.attack(self, ATTACK)
 
     def move(self, pressedKeys):
@@ -114,6 +122,13 @@ class Player(Character):
         else:
             # TODO Crear animación de jugador muerto
             Character.move(self, STOPPED)
+
+    def backOff(self):
+        (vx,vy) = self.getVelocidad()
+        vx = -.4
+        vy = -.25
+        self.numPostura = SPRITE_JUMPING
+        self.setVelocidad((vx,vy))
 
     def update(self, clock, playerDisplacement, platformGroup, enemyGroup, itemGroup):
         if self.alive:

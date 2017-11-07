@@ -28,6 +28,8 @@ class Stage(Scene):
         self.door_letter = "d"
         self.wardrove_letter = "w"
         self.chandelier_letter = "c"
+        self.moneda_letter = "$"
+        self.salud_letter = "p"
         self.manager = manager
         self.data = data
         self.player = player
@@ -108,6 +110,16 @@ class Stage(Scene):
                     tmp.setPosition((column_number * self.MAP_UNIT_WIDTH, row_number * self.MAP_UNIT_HEIGHT))
                     self.itemGroup.add(tmp)
 
+                if letter == self.salud_letter:
+                    tmp= str_to_class("salud")(self.manager, self.manager.getDataRetriever())
+                    tmp.setPosition((column_number * self.MAP_UNIT_WIDTH, row_number * self.MAP_UNIT_HEIGHT))
+                    self.itemGroup.add(tmp)
+
+                if letter == self.moneda_letter:
+                    tmp= str_to_class("moneda")(self.manager, self.manager.getDataRetriever())
+                    tmp.setPosition((column_number * self.MAP_UNIT_WIDTH, row_number * self.MAP_UNIT_HEIGHT))
+                    self.itemGroup.add(tmp)
+
 
 
                 # Creamos plataformas
@@ -170,7 +182,7 @@ class Stage(Scene):
         self.spriteGroup.draw(self.manager.getScreen())
         self.enemyGroup.draw(self.manager.getScreen())
         self.HUD.draw()
-        self.draw_rects()
+        # self.draw_rects()
 
     def draw_rects(self):
         # Platform rects
