@@ -22,7 +22,7 @@ class Stage(Scene):
         self.MAP_UNIT_HEIGHT = 55
         # Asignación de letras a objetos
         self.platform_letter = ["0", "1", "2"]
-        self.enemy_letter = ["a","b","m"]
+        self.enemy_letter = ["a","b","m","n","s"]
         self.fire_letter = "f"
         self.heart_letter = "h"
         self.door_letter = "d"
@@ -73,6 +73,11 @@ class Stage(Scene):
                         tmp = str_to_class("Belcebu")(self.manager, self.manager.getDataRetriever())
                     elif letter == "m":
                         tmp = str_to_class("Mammon")(self.manager, self.manager.getDataRetriever())
+                    elif letter == "n":
+                        tmp = str_to_class("Dante")(self.manager, self.manager.getDataRetriever())
+                    elif letter == "s":
+                        tmp = str_to_class("Satan")(self.manager, self.manager.getDataRetriever())
+
                     tmp.setPosition((column_number * self.MAP_UNIT_WIDTH, row_number * self.MAP_UNIT_HEIGHT))
                     self.enemyGroup.add(tmp)
 

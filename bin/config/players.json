@@ -4,23 +4,44 @@
     "player": {
       "speed": 0.2,
       "chasing_speed": 0.2,
-      "jump_speed": 0.3,
+      "jump_speed": 0.35,
       "file": "../bin/assets/sprites/main_characters/beatrice.png",
       "file_coords": "../bin/assets/sprites/main_characters/player_beatrice_coords.txt"
     },
     "dante": {
-      "speed": 0.1,
-      "chasing_speed": 0.3,
-      "jump_speed": 0.3,
-      "file": "../bin/assets/player_dante.png",
-      "file_coords": ""
+      "speed": 0.025,
+      "chasing_speed": 0.15,
+      "jump_speed": 0,
+      "file": "../bin/assets/sprites/main_characters/dante.png",
+      "file_coords": "../bin/assets/sprites/main_characters/dante_coords.txt"
+    },
+    "satan": {
+      "speed": 0.07,
+      "chasing_speed": 0.15,
+      "jump_speed": 0,
+      "file": "../bin/assets/sprites/main_characters/satanas.png",
+      "file_coords":  "../bin/assets/sprites/main_characters/satanas_coords.txt"
     },
     "asmodeo": {
       "speed": 0.05,
       "chasing_speed": 0.15,
-      "jump_speed": 0.3,
+      "jump_speed": 0,
       "file": "../bin/assets/sprites/enemies/enemy1.png",
       "file_coords": "../bin/assets/sprites/enemies/enemy1_coords.txt"
+    },
+    "mammon": {
+      "speed": 0.05,
+      "chasing_speed": 0.15,
+      "jump_speed": 0,
+      "file": "../bin/assets/sprites/enemies/enemy3.png",
+      "file_coords": "../bin/assets/sprites/enemies/enemy3_coords.txt"
+    },
+    "belcebu": {
+      "speed": 0.05,
+      "chasing_speed": 0.15,
+      "jump_speed": 0,
+      "file": "../bin/assets/sprites/enemies/enemy2.png",
+      "file_coords": "../bin/assets/sprites/enemies/enemy2_coords.txt"
     }
   }
 }

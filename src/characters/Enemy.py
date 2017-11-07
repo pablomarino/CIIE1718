@@ -154,9 +154,25 @@ class Asmodeo(Enemy):
         player.decreaseHealth()
 
 
+class Dante(Enemy):
+    def __init__(self, manager, data):
+        Enemy.__init__(self, manager, data, "dante")
+        self.setInvertedSpriteSheet(True)
+
+    def behave(self, player, enemyGroup):
+        player.decreaseHealth()
+
+class Satan(Enemy):
+    def __init__(self, manager, data):
+        Enemy.__init__(self, manager, data, "satan")
+        self.setInvertedSpriteSheet(True)
+
+    def behave(self, player, enemyGroup):
+        player.decreaseHealth()
+
 class Belcebu(Enemy):
     def __init__(self, manager, data):
-        Enemy.__init__(self, manager, data, "asmodeo")
+        Enemy.__init__(self, manager, data, "belcebu")
         self.setInvertedSpriteSheet(True)
 
     def behave(self, player, enemyGroup):
