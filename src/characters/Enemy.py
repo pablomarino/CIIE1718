@@ -221,3 +221,12 @@ class Satan(Enemy):
 
     def behave(self, player, enemyGroup):
         player.decreaseHealth(self)
+
+
+class EnemyTest(Enemy):
+    def __init__(self, manager, data):
+        Enemy.__init__(self, manager, data, "mammon")
+        self.setInvertedSpriteSheet(True)
+
+    def behave(self, player, enemyGroup):
+        player.decreaseHealth(self)
