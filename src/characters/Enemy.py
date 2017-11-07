@@ -31,19 +31,21 @@ class Enemy(Character):
         self.speed_x = data.getCharacterSpeed(id)
         self.chasing_speed_x = data.getCharacterChasingSpeed(id)
 
-        # TODO rename this variables
         # Márgenes de ataque del enemigo
-        self.y_margin = 20
-        self.x_range = 150
+        self.y_activityrange = 30
+        self.x_activityrange = 180
+
+        # Altura a la que el jugador deja de estar a la vista del enemigo
+        self.test_margin = 100  # TODO buscarle un nombre a esta variable
 
         # Custom rects
         self.collision_rect = pygame.Rect(self.getRect().left + self.getRect().width / 2 - 3,
                                           self.getRect().bottom - 5,
                                           6, 5)
-        self.activity_range_rect = pygame.Rect(self.getRect().left - self.x_range,
-                                               self.getRect().top - self.y_margin,
-                                               self.getRect().width + (self.x_range * 2),
-                                               self.getRect().height + (self.y_margin * 2))
+        self.activity_range_rect = pygame.Rect(self.getRect().left - self.x_activityrange,
+                                               self.getRect().top - self.y_activityrange,
+                                               self.getRect().width + (self.x_activityrange * 2),
+                                               self.getRect().height + (self.y_activityrange * 2))
 
     def chasePlayer(self, chase):
         self.active = chase
@@ -64,10 +66,10 @@ class Enemy(Character):
     def updateActivityRangeRect(self):
         # TODO intentar no crear un nuevo rect cada vez que se llama a la función update
         # Creamos el rect que servirá para comprobar si el jugador está en su rango de visión
-        self.activity_range_rect = pygame.Rect(self.getRect().left - self.x_range,
-                                               self.getRect().top - self.y_margin,
-                                               self.getRect().width + (self.x_range * 2),
-                                               self.getRect().height + (self.y_margin * 2))
+        self.activity_range_rect = pygame.Rect(self.getRect().left - self.x_activityrange,
+                                               self.getRect().top - self.y_activityrange,
+                                               self.getRect().width + (self.x_activityrange * 2),
+                                               self.getRect().height + (self.y_activityrange * 2))
         # x = self.rect.left - self.activity_range_rect.left - self.activity_range_rect.width / 2 + self.rect.width / 2
         # y = self.rect.top - self.activity_range_rect.top
         # self.activity_range_rect = self.activity_range_rect.move(x, y)
@@ -99,10 +101,10 @@ class Enemy(Character):
                     pass
 
                 # Comprobar si el jugador está por debajo del enemigo
-                elif myposition_y < playerposition_y - self.y_margin:
+                elif myposition_y < playerposition_y - self.y_activityrange:
                     # El enemigo baja el nivel hasta encontrar al jugador
                     pass
-                elif myposition_y > playerposition_y + self.y_margin:
+                elif myposition_y - self.test_margin >= playerposition_y:
                     # Si el jugador está por encima del enemigo, no perseguirle
                     self.chasePlayer(False)
                 else:
@@ -157,10 +159,11 @@ class Asmodeo(Enemy):
 class Dante(Enemy):
     def __init__(self, manager, data):
         Enemy.__init__(self, manager, data, "dante")
-        self.setInvertedSpriteSheet(True)
+        #self.setInvertedSpriteSheet(True)
 
     def behave(self, player, enemyGroup):
         player.decreaseHealth()
+
 
 class Satan(Enemy):
     def __init__(self, manager, data):
@@ -169,6 +172,7 @@ class Satan(Enemy):
 
     def behave(self, player, enemyGroup):
         player.decreaseHealth()
+
 
 class Belcebu(Enemy):
     def __init__(self, manager, data):

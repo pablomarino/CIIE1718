@@ -22,7 +22,7 @@ class Stage(Scene):
         self.MAP_UNIT_HEIGHT = 55
         # Asignación de letras a objetos
         self.platform_letter = ["0", "1", "2"]
-        self.enemy_letter = ["a","b","m","n","s"]
+        self.enemy_letter = ["a", "b", "m", "n", "s"]
         self.fire_letter = "f"
         self.heart_letter = "h"
         self.door_letter = "d"
