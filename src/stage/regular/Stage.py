@@ -182,7 +182,7 @@ class Stage(Scene):
         self.spriteGroup.draw(self.manager.getScreen())
         self.enemyGroup.draw(self.manager.getScreen())
         self.HUD.draw()
-        self.draw_rects()
+        # self.draw_rects()
 
     def draw_rects(self):
         # Platform rects

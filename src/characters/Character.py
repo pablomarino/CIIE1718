@@ -120,6 +120,9 @@ class Character(MySprite):
     def getVelocidad(self):
         return self.velocidad
 
+    def setVelocidad(self,v):
+        self.velocidad = v
+
     def getDoUpdateScroll(self):
         # Si se añade animacion de caida habra que añadirlo aqui
         return self.numPostura == SPRITE_JUMPING
