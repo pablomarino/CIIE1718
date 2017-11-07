@@ -153,7 +153,7 @@ class Asmodeo(Enemy):
         self.setInvertedSpriteSheet(True)
 
     def behave(self, player, enemyGroup):
-        player.decreaseHealth()
+        player.decreaseHealth(self)
 
 
 class Dante(Enemy):
@@ -162,16 +162,9 @@ class Dante(Enemy):
         #self.setInvertedSpriteSheet(True)
 
     def behave(self, player, enemyGroup):
-        player.decreaseHealth()
+        player.decreaseHealth(self)
 
 
-class Satan(Enemy):
-    def __init__(self, manager, data):
-        Enemy.__init__(self, manager, data, "satan")
-        self.setInvertedSpriteSheet(True)
-
-    def behave(self, player, enemyGroup):
-        player.decreaseHealth()
 
 
 class Belcebu(Enemy):
@@ -180,7 +173,7 @@ class Belcebu(Enemy):
         self.setInvertedSpriteSheet(True)
 
     def behave(self, player, enemyGroup):
-        player.decreaseHealth()
+        player.decreaseHealth(self)
 
 
 class Mammon(Enemy):
@@ -189,4 +182,42 @@ class Mammon(Enemy):
         self.setInvertedSpriteSheet(True)
 
     def behave(self, player, enemyGroup):
-        player.decreaseHealth()
+        player.decreaseHealth(self)
+
+
+class Satan(Enemy):
+    def __init__(self, manager, data):
+        Enemy.__init__(self, manager, data, "satan")
+        self.setInvertedSpriteSheet(True)
+
+    def update(self, platformGroup, clock, player, playerDisplacement):
+        if self.alive:
+
+            # Actualizamos los rects del enemigo
+            self.updateCollisionRect()
+            self.updateActivityRangeRect()
+
+            # Si el enemigo se sale de la pantalla, invertir velocidad X
+            if (self.posicion[0] >= (self.screen_width - self.getRect().width)) or self.posicion[0] <= self.screen_width/3:
+                self.invertXSpeed()
+
+            if self.active:
+                myposition_x = self.getGlobalPosition()[0]
+                myposition_y = self.getGlobalPosition()[1]
+                playerposition_x = player.getGlobalPosition()[0]
+                playerposition_y = player.getGlobalPosition()[1]
+
+                # Primero, comprobar si el enemigo tiene que atacar
+                if self.getRect().colliderect(player.getRect()):
+                    # TODO enemigo pasa a movimiento ATTACK
+                    # TODO poner velocidad a cero
+                    pass
+
+        # Llamada al update de la super clase
+        Character.update(self, platformGroup, clock, playerDisplacement)
+
+    def chasePlayer(self, chase):
+        pass
+
+    def behave(self, player, enemyGroup):
+        player.decreaseHealth(self)
