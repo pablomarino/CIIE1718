@@ -4,6 +4,7 @@
 # Importar modulos
 from control.GameManager import *
 from data.DataRetriever import DataRetriever
+from control.GameLevel import GameLevel
 from stage.menu.Menu2 import Menu
 
 if __name__ == '__main__':
@@ -19,8 +20,8 @@ if __name__ == '__main__':
     # Creamos el director
     manager = GameManager(data)
 
-    menu = Menu(manager)
-    manager.add(menu)
+    #menu = Menu(manager)
+    #manager.add(menu)
 
-    # manager.add(GameLevel(manager, data, "level_1"))
+    manager.add(GameLevel(manager, data, "level_1"))
     manager.run()
