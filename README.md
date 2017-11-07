@@ -2,6 +2,7 @@
 # Tareas a llevar a cabo
 * Assets de salud
 * Cambiar enemigo Dante por otro enemigo
+* Añadir sonidos a los ítems nuevos
 
 
 ## Jose
@@ -15,9 +16,10 @@
 * ~~Impedir que los enemigos se queden medio colgando del borde de las plataformas~~
 * ~~Corregir problema de sprite dejugador demasiado grande colisionando con plataformas~~
 * ~~Hacer que los enemigos persigan al jugador si éste pisa la plataforma en la que se encuentra el enemigo~~
-* Implementar ataque de enemigos
+* ~~Implementar ataque de enemigos~~
+* ~~Crear de cero función update y move de character~~
+* ~~Crear de cero función move de player~~
 * Implementar ataque del jugador
-* Pegar salto hacia atrás cuando jugador pierda vida
 * Texto con nombre de nivel
 
 
@@ -40,6 +42,7 @@
 * ~~Crear level_2.txt y level_3.txt~~
 * ~~Decidir que letras y números usar para crear cada tipo de enemigo, plataforma, e ítem~~
 * ~~Ordenar Codigo y Assets para crear el uml~~
+* ~~Pegar salto hacia atrás cuando jugador pierda vida~~
 * Añadir capa de objetos de decorado
 * Enemigo Final
 
