@@ -47,6 +47,7 @@ class Player(Character):
 
     def decreaseLives(self):
         self.lives = self.lives - 1
+        print self.alive, self.lives
         if self.lives <= 0:
             self.lives = 0
             # TODO GameOver menu
@@ -55,6 +56,7 @@ class Player(Character):
         else:
             self.stage.resetScroll()
             self.setPosition(self.data.getPlayerPositionAt("level_1"))
+            self.numPostura = SPRITE_JUMPING
             self.setHealth(self.getMaxHealth())
 
     def getHealth(self):
@@ -64,11 +66,11 @@ class Player(Character):
         self.health = value
 
     def increaseHealth(self):
-        self.health = self.health + 5
+        self.health = self.health + 10
 
     def decreaseHealth(self):
         if self.tiempo_colision < time():
-            self.health = self.health - 10
+            self.health = self.health - 20
             # TODO mover jugador hacia un lado, pegar un salto, o algo similar
             if self.health <= 0:
                 self.decreaseLives()
@@ -125,3 +127,4 @@ class Player(Character):
                 itemCol.behave(self, itemGroup)  # cada item realiza una accion propia
             Character.update(self, platformGroup, clock, playerDisplacement)  # Call update in the super class
             self.updateCollisionRect()  # Update collision rect
+
