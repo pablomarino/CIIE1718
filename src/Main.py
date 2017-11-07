@@ -23,5 +23,5 @@ if __name__ == '__main__':
     #menu = Menu(manager)
     #manager.add(menu)
 
-    manager.add(GameLevel(manager, data, "level_3"))
+    manager.add(GameLevel(manager, data, "level_1"))
     manager.run()

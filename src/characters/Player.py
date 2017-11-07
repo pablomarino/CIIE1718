@@ -124,15 +124,18 @@ class Player(Character):
             Character.move(self, STOPPED)
 
     def backOff(self,enemy):
+        pass
+
+    '''
         (vx,vy) = self.getVelocidad()
         if enemy.getCollisionRect().left>self.getCollisionRect().right:
-            vx = -.2
+            vx = -.15
         else:
-            vx = .2
-        vy = -.15
+            vx = .15
+        vy = -.25
         self.numPostura = SPRITE_JUMPING
         self.setVelocidad((vx,vy))
-
+    '''
 
     def update(self, clock, playerDisplacement, platformGroup, enemyGroup, itemGroup):
         if self.alive:
