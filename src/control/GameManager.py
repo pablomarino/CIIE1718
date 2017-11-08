@@ -5,7 +5,7 @@ import sys
 
 import pygame
 
-from stage.menu.Menu2 import Menu
+from stage.menu.Menu import Menu
 from utils.AssetLoader import AssetLoader
 
 

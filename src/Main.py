@@ -5,7 +5,7 @@
 from control.GameManager import *
 from data.DataRetriever import DataRetriever
 from control.GameLevel import GameLevel
-from stage.menu.Menu2 import Menu
+from stage.menu.Menu import Menu
 
 if __name__ == '__main__':
     # Instancio un Singleton para cargar configuraciones
@@ -15,14 +15,20 @@ if __name__ == '__main__':
     data.loadPlayers('../bin/config/players.json')  # Cargo datos de los jugadores
     data.loadItems('../bin/config/items.json')  # Cargo datos de los items
 
-    # Inicializamos la libreria de pygame
+    # Inicializamos la librería de pygame
     pygame.init()
     # Creamos el director
     manager = GameManager(data)
 
-    #menu = Menu(manager)
-    #manager.add(menu)
+    # menu = Menu(manager)
+    # manager.add(menu)
 
-    player_stats = (3, 100, 100, 0)
+    # Player stats (lives, maxHealth, health, score)
+    lives = 3
+    max_health = 100
+    health = 100
+    score = 0
+
+    player_stats = (lives, max_health, health, score)
     manager.add(GameLevel(manager, data, "level_1", player_stats))
     manager.run()
