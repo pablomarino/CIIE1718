@@ -205,7 +205,7 @@ class Satan(Enemy):
             self.updateActivityRangeRect()
 
 
-            if self.count>4500:
+            if self.count>10000:
                 self.count = 0
                 self.currentState = self.currentState + 1
                 if self.currentState > len(self.enemyState)-1:
@@ -214,15 +214,14 @@ class Satan(Enemy):
             print self.enemyState[self.currentState]
 
             if self.enemyState[self.currentState] == "wander":
-                # mueve el enemigo sin atacar
-                if (self.posicion[0] >= (self.screen_width - self.getRect().width)) or self.posicion[0] <= self.screen_width/3:
-                    self.invertXSpeed()
+                self.wander()
             elif self.enemyState[self.currentState] == "attack":
                 # realiza 3 ataques lanzando fuego  se coloca sobre la puerta
+                self.attack()
                 pass
             elif self.enemyState[self.currentState] == "berserk":
                 # Cae fuego del cielo se coloca en el centro de la pantalla
-                pass
+                self.berserk()
 
             if self.active:
                 myposition_x = self.getGlobalPosition()[0]
@@ -233,10 +232,29 @@ class Satan(Enemy):
         # Llamada al update de la super clase
         Character.update(self, platformGroup, clock, playerDisplacement)
 
+    def wander(self):
+        if self.getVelocidad()[0] == 0:
+            Character.move(self,LEFT)
+        if (self.posicion[0] <= (self.screen_width/3) or self.posicion[0]>=(self.screen_width-self.getRect().width)):
+            self.invertXSpeed()
+
+
+    def attack(self):
+        if (self.posicion[0] < ((self.screen_width-self.getRect().width)/2)-20):
+            Character.move(self, RIGHT)
+        elif(self.posicion[0] > ((self.screen_width+self.getRect().width)/2)+20):
+            Character.move(self, LEFT)
+        else:
+            Character.move(self,STOPPED)
+
+    def berserk(self):
+        if (self.posicion[0] < ((self.screen_width - self.getRect().width)) - 20):
+            Character.move(self, RIGHT)
+        else:
+            Character.move(self, STOPPED)
+
     def chasePlayer(self, chase):
         pass
-
-
 
     def onPlayerCollision(self, player, enemyGroup):
         player.decreaseHealth(self)
