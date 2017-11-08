@@ -204,8 +204,8 @@ class Satan(Enemy):
             self.updateCollisionRect()
             self.updateActivityRangeRect()
 
-
-            if self.count>10000:
+            # Cambio el comportamiento del enemigo
+            if self.count>8000:
                 self.count = 0
                 self.currentState = self.currentState + 1
                 if self.currentState > len(self.enemyState)-1:
@@ -246,6 +246,7 @@ class Satan(Enemy):
             Character.move(self, LEFT)
         else:
             Character.move(self,STOPPED)
+
 
     def berserk(self):
         if (self.posicion[0] < ((self.screen_width - self.getRect().width)) - 20):

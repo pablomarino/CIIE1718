@@ -70,53 +70,53 @@ class Stage(Scene):
                 # Create enemies
                 if letter in self.enemy_letter:
                     if letter == "a":
-                        tmp = str_to_class("Asmodeo")(self.manager, self.manager.getDataRetriever())
+                        tmp = Asmodeo(self.manager, self.manager.getDataRetriever())
                     elif letter == "b":
-                        tmp = str_to_class("Belcebu")(self.manager, self.manager.getDataRetriever())
+                        tmp = Belcebu(self.manager, self.manager.getDataRetriever())
                     elif letter == "m":
-                        tmp = str_to_class("Mammon")(self.manager, self.manager.getDataRetriever())
+                        tmp = Mammon(self.manager, self.manager.getDataRetriever())
                     elif letter == "n":
-                        tmp = str_to_class("Dante")(self.manager, self.manager.getDataRetriever())
+                        tmp = Dante(self.manager, self.manager.getDataRetriever())
                     elif letter == "s":
-                        tmp = str_to_class("Satan")(self.manager, self.manager.getDataRetriever())
+                        tmp = Satan(self.manager, self.manager.getDataRetriever())
 
                     tmp.setPosition((column_number * self.MAP_UNIT_WIDTH, row_number * self.MAP_UNIT_HEIGHT))
                     self.enemyGroup.add(tmp)
 
                 # Create Items
                 if letter == self.fire_letter:
-                    tmp = str_to_class("fire")(self.manager, self.manager.getDataRetriever())
+                    tmp = fire(self.manager, self.manager.getDataRetriever())
                     tmp.setPosition((column_number * self.MAP_UNIT_WIDTH, row_number * self.MAP_UNIT_HEIGHT))
                     self.itemGroup.add(tmp)
 
                 if letter == self.heart_letter:
-                    tmp= str_to_class("heart")(self.manager, self.manager.getDataRetriever())
+                    tmp= heart(self.manager, self.manager.getDataRetriever())
                     tmp.setPosition((column_number * self.MAP_UNIT_WIDTH, row_number * self.MAP_UNIT_HEIGHT))
                     self.itemGroup.add(tmp)
 
                 if letter == self.door_letter:
-                    tmp= str_to_class("door")(self.manager, self.manager.getDataRetriever())
+                    tmp= door(self.manager, self.manager.getDataRetriever())
                     tmp.setPosition((column_number * self.MAP_UNIT_WIDTH, row_number * self.MAP_UNIT_HEIGHT))
                     self.itemGroup.add(tmp)
 
 
                 if letter == self.chandelier_letter:
-                    tmp= str_to_class("chandelier")(self.manager, self.manager.getDataRetriever())
+                    tmp= chandelier(self.manager, self.manager.getDataRetriever())
                     tmp.setPosition((column_number * self.MAP_UNIT_WIDTH, row_number * self.MAP_UNIT_HEIGHT))
                     self.itemGroup.add(tmp)
 
                 if letter == self.wardrove_letter:
-                    tmp= str_to_class("wardrove")(self.manager, self.manager.getDataRetriever())
+                    tmp= wardrove(self.manager, self.manager.getDataRetriever())
                     tmp.setPosition((column_number * self.MAP_UNIT_WIDTH, row_number * self.MAP_UNIT_HEIGHT))
                     self.itemGroup.add(tmp)
 
                 if letter == self.salud_letter:
-                    tmp= str_to_class("salud")(self.manager, self.manager.getDataRetriever())
+                    tmp= salud(self.manager, self.manager.getDataRetriever())
                     tmp.setPosition((column_number * self.MAP_UNIT_WIDTH, row_number * self.MAP_UNIT_HEIGHT))
                     self.itemGroup.add(tmp)
 
                 if letter == self.moneda_letter:
-                    tmp= str_to_class("moneda")(self.manager, self.manager.getDataRetriever())
+                    tmp= moneda(self.manager, self.manager.getDataRetriever())
                     tmp.setPosition((column_number * self.MAP_UNIT_WIDTH, row_number * self.MAP_UNIT_HEIGHT))
                     self.itemGroup.add(tmp)
 
