@@ -168,7 +168,7 @@ class Player(Character):
             enemyCol = pygame.sprite.spritecollideany(self, enemyGroup)
             itemCol = pygame.sprite.spritecollideany(self, itemGroup)
             if enemyCol is not None:
-                enemyCol.onPlayerCollision(self, itemGroup)  # cada item realiza una accion propia
+                enemyCol.onPlayerCollision(self, enemyGroup)  # cada item realiza una accion propia
             if itemCol is not None:
                 itemCol.onPlayerCollision(self, itemGroup)  # cada item realiza una accion propia
             Character.update(self, platformGroup, clock, playerDisplacement)  # Call update in the super class

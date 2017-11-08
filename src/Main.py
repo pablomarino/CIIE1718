@@ -24,5 +24,5 @@ if __name__ == '__main__':
     #manager.add(menu)
 
     player_stats = (3, 100, 100, 0)
-    manager.add(GameLevel(manager, data, "level_1", player_stats))
+    manager.add(GameLevel(manager, data, "level_3", player_stats))
     manager.run()

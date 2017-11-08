@@ -1,12 +1,13 @@
 # -*- coding: utf-8 -*-
 
 from random import randint
-
+from characters.Item import *
 from characters.Character import *
 
 
 class Enemy(Character):
     def __init__(self, manager, data, id):
+
         Character.__init__(self,
                            manager,
                            data,
@@ -23,6 +24,7 @@ class Enemy(Character):
         else:
             Character.move(self, RIGHT)
         # Variables del enemigo
+        self.enemyGroup = None
         self.health = 100
         self.alive = True
         self.active = False
@@ -49,6 +51,7 @@ class Enemy(Character):
         self.count = 0
         self.enemyState = ["wander"]
         self.currentState = 0
+
 
     def chasePlayer(self, chase):
         self.active = chase
@@ -188,6 +191,14 @@ class Mammon(Enemy):
     def onPlayerCollision(self, player, enemyGroup):
         player.decreaseHealth(self)
 
+class FireProjectile(Enemy):
+    def __init__(self, manager, data):
+        Enemy.__init__(self, manager, data, "fireprojectile")
+
+    def onPlayerCollision(self, player, itemGroup):
+        # TODO añadir sonido
+        player.decreaseHealth(self)
+
 
 class Satan(Enemy):
     def __init__(self, manager, data):
@@ -195,10 +206,8 @@ class Satan(Enemy):
         self.setInvertedSpriteSheet(True)
         self.enemyState = ["wander", "attack", "wander", "berserk"]
 
-
     def update(self, platformGroup, clock, player, playerDisplacement):
         self.count = self.count + clock
-
         if self.alive:
             # Actualizamos los rects del enemigo
             self.updateCollisionRect()
@@ -206,10 +215,17 @@ class Satan(Enemy):
 
             # Cambio el comportamiento del enemigo
             if self.count>8000:
+
+
+
                 self.count = 0
                 self.currentState = self.currentState + 1
                 if self.currentState > len(self.enemyState)-1:
                     self.currentState = 0
+
+                tmp = FireProjectile(self.manager, self.manager.getDataRetriever())
+                tmp.setPosition((randint(55, (self.screen_width-55)), 100))
+                self.enemyGroup.add(tmp)
 
             print self.enemyState[self.currentState]
 

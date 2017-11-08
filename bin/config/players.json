@@ -8,6 +8,13 @@
       "file": "../bin/assets/sprites/main_characters/beatrice.png",
       "file_coords": "../bin/assets/sprites/main_characters/player_beatrice_coords.txt"
     },
+    "fireprojectile": {
+      "speed": 0.2,
+      "chasing_speed": 0.2,
+      "jump_speed": 0.2,
+      "file": "../bin/assets/sprites/items/fire.png",
+      "file_coords": "../bin/assets/sprites/items/fire_coords.txt"
+    },
     "dante": {
       "speed": 0.025,
       "chasing_speed": 0.15,

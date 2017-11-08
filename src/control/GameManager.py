@@ -42,7 +42,6 @@ class GameManager:
         self.stack.append(level)
 
     def addNextLevel(self):
-        # TODO corregir problema de imports
         from control.GameLevel import GameLevel
 
         # Get numeric id of the new level
