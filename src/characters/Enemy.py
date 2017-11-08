@@ -199,15 +199,21 @@ class FireProjectile(Enemy):
         # TODO añadir sonido
         player.decreaseHealth(self)
 
+    def update(self, platformGroup, clock, player, playerDisplacement):
+        pass
+
 
 class Satan(Enemy):
     def __init__(self, manager, data):
         Enemy.__init__(self, manager, data, "satan")
         self.setInvertedSpriteSheet(True)
         self.enemyState = ["wander", "attack", "wander", "berserk"]
+        self.playerDisplacement = None
 
     def update(self, platformGroup, clock, player, playerDisplacement):
         self.count = self.count + clock
+        if self.playerDisplacement == None:
+            self.playerDisplacement = playerDisplacement
         if self.alive:
             # Actualizamos los rects del enemigo
             self.updateCollisionRect()
@@ -215,17 +221,10 @@ class Satan(Enemy):
 
             # Cambio el comportamiento del enemigo
             if self.count>8000:
-
-
-
                 self.count = 0
                 self.currentState = self.currentState + 1
                 if self.currentState > len(self.enemyState)-1:
                     self.currentState = 0
-
-                tmp = FireProjectile(self.manager, self.manager.getDataRetriever())
-                tmp.setPosition((randint(55, (self.screen_width-55)), 100))
-                self.enemyGroup.add(tmp)
 
             print self.enemyState[self.currentState]
 
@@ -262,6 +261,7 @@ class Satan(Enemy):
             Character.move(self, LEFT)
         else:
             Character.move(self,STOPPED)
+            self.fireArrow(self)
 
 
     def berserk(self):
@@ -269,6 +269,7 @@ class Satan(Enemy):
             Character.move(self, RIGHT)
         else:
             Character.move(self, STOPPED)
+            self.piroclasto()
 
     def chasePlayer(self, chase):
         pass
@@ -276,6 +277,16 @@ class Satan(Enemy):
     def onPlayerCollision(self, player, enemyGroup):
         player.decreaseHealth(self)
 
+    def piroclasto(self):
+        tmp = FireProjectile(self.manager, self.manager.getDataRetriever())
+        tmp.setPosition((randint(55, (self.screen_width - 55)), 0))
+        self.enemyGroup.add(tmp)
+        #p.playerDisplacement[1]
+
+    def fireArrow(self, p):
+        tmp = FireProjectile(self.manager, self.manager.getDataRetriever())
+        tmp.setPosition((p.getRect().x, p.getRect().y))
+        self.enemyGroup.add(tmp)
 
 class EnemyTest(Enemy):
     def __init__(self, manager, data):
