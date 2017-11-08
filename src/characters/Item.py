@@ -28,7 +28,7 @@ class Item(Character):
     def getDoUpdateScroll(self):
         return True
 
-    def behave(self, player, itemGroup):
+    def onPlayerCollision(self, player, itemGroup):
         pass
 
 
@@ -37,7 +37,7 @@ class heart(Item):
         Item.__init__(self, manager, data, "heart")
         self.sound = data.getItemSound("heart")
 
-    def behave(self, player, itemGroup):
+    def onPlayerCollision(self, player, itemGroup):
         # Eliminamos el item
         for i in itemGroup:
             if i == self: itemGroup.remove(i)
@@ -50,7 +50,7 @@ class salud(Item):
         Item.__init__(self, manager, data, "salud")
         self.sound = data.getItemSound("salud")
 
-    def behave(self, player, itemGroup):
+    def onPlayerCollision(self, player, itemGroup):
         # Eliminamos el item
         for i in itemGroup:
             if i == self: itemGroup.remove(i)
@@ -62,7 +62,7 @@ class moneda(Item):
         Item.__init__(self, manager, data, "moneda")
         self.sound = data.getItemSound("moneda")
 
-    def behave(self, player, itemGroup):
+    def onPlayerCollision(self, player, itemGroup):
         # Eliminamos el item
         for i in itemGroup:
             if i == self: itemGroup.remove(i)
@@ -74,7 +74,7 @@ class fire(Item):
     def __init__(self, manager, data):
         Item.__init__(self, manager, data, "fire")
 
-    def behave(self, player, itemGroup):
+    def onPlayerCollision(self, player, itemGroup):
         # TODO añadir sonido
         player.decreaseHealth(self)
 
@@ -86,7 +86,7 @@ class door(Item):
 
     # TODO modificar el rect para que el jugador tenga que tocar la parte inferior de la puerta, no los bordes
 
-    def behave(self, player, itemGroup):
+    def onPlayerCollision(self, player, itemGroup):
         if self.active:
             self.active = False
             print "Player health : " + str(player.getHealth())
@@ -98,7 +98,7 @@ class chandelier(Item):
     def __init__(self, manager, data):
         Item.__init__(self, manager, data, "chandelier")
 
-    def behave(self, player, itemGroup):
+    def onPlayerCollision(self, player, itemGroup):
         pass
 
 
@@ -106,7 +106,7 @@ class wardrove(Item):
     def __init__(self, manager, data):
         Item.__init__(self, manager, data, "wardrove")
 
-    def behave(self, player, itemGroup):
+    def onPlayerCollision(self, player, itemGroup):
         pass
 
 
@@ -115,5 +115,5 @@ class dante(Item):
     def __init__(self, manager, data):
         Item.__init__(self, manager, data, "dante")
 
-    def behave(self, player, itemGroup):
+    def onPlayerCollision(self, player, itemGroup):
         player.die()

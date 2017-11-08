@@ -168,8 +168,8 @@ class Player(Character):
             enemyCol = pygame.sprite.spritecollideany(self, enemyGroup)
             itemCol = pygame.sprite.spritecollideany(self, itemGroup)
             if enemyCol is not None:
-                enemyCol.behave(self, itemGroup)  # cada item realiza una accion propia
+                enemyCol.onPlayerCollision(self, itemGroup)  # cada item realiza una accion propia
             if itemCol is not None:
-                itemCol.behave(self, itemGroup)  # cada item realiza una accion propia
+                itemCol.onPlayerCollision(self, itemGroup)  # cada item realiza una accion propia
             Character.update(self, platformGroup, clock, playerDisplacement)  # Call update in the super class
             self.updateCollisionRect()  # Update collision rect

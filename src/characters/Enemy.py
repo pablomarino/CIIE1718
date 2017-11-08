@@ -58,7 +58,7 @@ class Enemy(Character):
             self.velocidadCarrera = self.speed_x
             self.move(self.mirando)
 
-    def behave(self, player, enemyGroup):
+    def onPlayerCollision(self, player, enemyGroup):
         pass
 
     def updateCollisionRect(self):
@@ -156,7 +156,7 @@ class Asmodeo(Enemy):
         Enemy.__init__(self, manager, data, "asmodeo")
         self.setInvertedSpriteSheet(True)
 
-    def behave(self, player, enemyGroup):
+    def onPlayerCollision(self, player, enemyGroup):
         player.decreaseHealth(self)
 
 
@@ -165,7 +165,7 @@ class Dante(Enemy):
         Enemy.__init__(self, manager, data, "dante")
         #self.setInvertedSpriteSheet(True)
 
-    def behave(self, player, enemyGroup):
+    def onPlayerCollision(self, player, enemyGroup):
         player.decreaseHealth(self)
 
 
@@ -176,7 +176,7 @@ class Belcebu(Enemy):
         Enemy.__init__(self, manager, data, "belcebu")
         self.setInvertedSpriteSheet(True)
 
-    def behave(self, player, enemyGroup):
+    def onPlayerCollision(self, player, enemyGroup):
         player.decreaseHealth(self)
 
 
@@ -185,7 +185,7 @@ class Mammon(Enemy):
         Enemy.__init__(self, manager, data, "mammon")
         self.setInvertedSpriteSheet(True)
 
-    def behave(self, player, enemyGroup):
+    def onPlayerCollision(self, player, enemyGroup):
         player.decreaseHealth(self)
 
 
@@ -238,7 +238,7 @@ class Satan(Enemy):
 
 
 
-    def behave(self, player, enemyGroup):
+    def onPlayerCollision(self, player, enemyGroup):
         player.decreaseHealth(self)
 
 
@@ -247,5 +247,5 @@ class EnemyTest(Enemy):
         Enemy.__init__(self, manager, data, "mammon")
         self.setInvertedSpriteSheet(True)
 
-    def behave(self, player, enemyGroup):
+    def onPlayerCollision(self, player, enemyGroup):
         player.decreaseHealth(self)
