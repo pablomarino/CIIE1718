@@ -46,13 +46,15 @@ class GameManager:
         from control.GameLevel import GameLevel
 
         # Get numeric id of the new level
-        levelid = self.stack.__getitem__(0).getId()
+        actual_level = self.stack.__getitem__(0)
+        levelid = actual_level.getId()
         result = re.sub('[^0-9]', '', levelid)
         levelnumber = int(result) + 1
 
         # Check if the new level exists
         if levelnumber <= self.data.getNumberOfLevels():
-            self.add(GameLevel(self, self.getDataRetriever(), "level_" + str(levelnumber)))
+            self.add(
+                GameLevel(self, self.getDataRetriever(), "level_" + str(levelnumber), actual_level.getPlayerStats()))
         else:
             print "Victoria"
             # TODO crear un menú de victoria
@@ -67,10 +69,6 @@ class GameManager:
         self.stack = list()
         self.finished = True
 
-    # def addScene(self, scene):
-    #     self.finished_scene = True
-    #     self.stack.append(scene)
-
     def run(self):
         while not self.finished:
             time = self.clock.tick(self.fps)
@@ -80,20 +78,12 @@ class GameManager:
                 if e.type == pygame.KEYDOWN and e.key == int(self.data.getKeyQuit()):
                     self.endGame()
 
-                # if e.type == pygame.KEYDOWN and e.key == int(self.data.getKeyReturn()):
-                #     self.changeScene()
-                #     self.add(GameLevel(self, self.data, "level_2"))
-                #     pass
-
                 # Call 'events' function in the current level
                 if len(self.stack) > 0:
-                    # self.stack[len(self.stack) - 1].events(self.events_list)
                     self.stack[0].events(self.events_list)
 
             # Update and draw the stack items
             if len(self.stack) > 0:
-                # self.stack[len(self.stack) - 1].update(time)
-                # self.stack[len(self.stack) - 1].draw()
                 self.stack[0].update(time)
                 self.stack[0].draw()
 

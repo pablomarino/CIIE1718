@@ -6,7 +6,7 @@ from stage.regular.Stage import *
 
 
 class GameLevel:
-    def __init__(self, manager, data, id):
+    def __init__(self, manager, data, id, player_stats):
         # Guardamos variables
         self.id = id
         self.manager = manager
@@ -21,7 +21,7 @@ class GameLevel:
 
         if self.level:
             # TODO pasar los valores de vida del jugador para que no se pierdan de un nivel a otro
-            self.player = Player(manager, data, 'player')
+            self.player = Player(manager, data, 'player', player_stats)
             self.player.setPosition(data.getPlayerPositionAt(id))
             self.spriteGroup.add(self.player)
 
@@ -33,6 +33,9 @@ class GameLevel:
 
     def getId(self):
         return self.id
+
+    def getPlayerStats(self):
+        return self.player.getLives(), self.player.getMaxHealth(), self.player.getHealth(), self.player.getPoints()
 
     def update(self, clock):
         self.stage.update(clock)
