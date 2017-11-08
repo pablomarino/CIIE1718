@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 from time import time
-
 from characters.Character import *
 
 
@@ -31,6 +30,7 @@ class Player(Character):
         self.attack = 50
         self.alive = True
         self.points = 0
+
 
     def getCollisionRect(self):
         return self.collision_rect
@@ -125,17 +125,32 @@ class Player(Character):
 
     def backOff(self,enemy):
         pass
-
-    '''
+        '''
+        # Player se retira para no colisionar con enemigo
         (vx,vy) = self.getVelocidad()
-        if enemy.getCollisionRect().left>self.getCollisionRect().right:
+        (tx,ty) = self.getVelocidad()
+        tPostura = self.numPostura
+        if self.getCollisionRect().left < enemy.getCollisionRect().left:
             vx = -.15
         else:
-            vx = .15
-        vy = -.25
+            vx = +.15
+        if self.numPostura != SPRITE_JUMPING:
+            vy = -.25
+        #t = threading.Timer(0.35, self.endBackOff(self.numPostura,vx,vy))
+        #st.start()
         self.numPostura = SPRITE_JUMPING
-        self.setVelocidad((vx,vy))
-    '''
+        self.setVelocidad((vx, vy))
+        pygame.time.wait(1)
+        self.setVelocidad((tx, ty))
+        self.numPostura = tPostura
+
+        #t.cancel(10)
+
+
+    def endBackOff(self,p,x,y):
+        self.setVelocidad((x,y))
+        self.numPostura = p
+        '''
 
     def update(self, clock, playerDisplacement, platformGroup, enemyGroup, itemGroup):
         if self.alive:

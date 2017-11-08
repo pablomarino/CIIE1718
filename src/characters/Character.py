@@ -213,5 +213,7 @@ class Character(MySprite):
         elif self.mirando == LEFT:
             return "MIRANDO LEFT"
 
+
+
     def setInvertedSpriteSheet(self, b):
         self.invertedSpriteSheet = b

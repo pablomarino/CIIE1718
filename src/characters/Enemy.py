@@ -46,6 +46,9 @@ class Enemy(Character):
                                                self.getRect().top - self.y_activityrange,
                                                self.getRect().width + (self.x_activityrange * 2),
                                                self.getRect().height + (self.y_activityrange * 2))
+        self.count = 0
+        self.enemyState = ["wander"]
+        self.currentState = 0
 
     def chasePlayer(self, chase):
         self.active = chase
@@ -189,17 +192,36 @@ class Satan(Enemy):
     def __init__(self, manager, data):
         Enemy.__init__(self, manager, data, "satan")
         self.setInvertedSpriteSheet(True)
+        self.enemyState = ["wander", "attack", "wander", "berserk"]
+
 
     def update(self, platformGroup, clock, player, playerDisplacement):
-        if self.alive:
+        self.count = self.count + clock
 
+        if self.alive:
             # Actualizamos los rects del enemigo
             self.updateCollisionRect()
             self.updateActivityRangeRect()
 
-            # Si el enemigo se sale de la pantalla, invertir velocidad X
-            if (self.posicion[0] >= (self.screen_width - self.getRect().width)) or self.posicion[0] <= self.screen_width/3:
-                self.invertXSpeed()
+
+            if self.count>4500:
+                self.count = 0
+                self.currentState = self.currentState + 1
+                if self.currentState > len(self.enemyState)-1:
+                    self.currentState = 0
+
+            print self.enemyState[self.currentState]
+
+            if self.enemyState[self.currentState] == "wander":
+                # mueve el enemigo sin atacar
+                if (self.posicion[0] >= (self.screen_width - self.getRect().width)) or self.posicion[0] <= self.screen_width/3:
+                    self.invertXSpeed()
+            elif self.enemyState[self.currentState] == "attack":
+                # realiza 3 ataques lanzando fuego  se coloca sobre la puerta
+                pass
+            elif self.enemyState[self.currentState] == "berserk":
+                # Cae fuego del cielo se coloca en el centro de la pantalla
+                pass
 
             if self.active:
                 myposition_x = self.getGlobalPosition()[0]
@@ -207,17 +229,13 @@ class Satan(Enemy):
                 playerposition_x = player.getGlobalPosition()[0]
                 playerposition_y = player.getGlobalPosition()[1]
 
-                # Primero, comprobar si el enemigo tiene que atacar
-                if self.getRect().colliderect(player.getRect()):
-                    # TODO enemigo pasa a movimiento ATTACK
-                    # TODO poner velocidad a cero
-                    pass
-
         # Llamada al update de la super clase
         Character.update(self, platformGroup, clock, playerDisplacement)
 
     def chasePlayer(self, chase):
         pass
+
+
 
     def behave(self, player, enemyGroup):
         player.decreaseHealth(self)
