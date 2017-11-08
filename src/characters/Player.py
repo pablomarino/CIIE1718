@@ -6,7 +6,7 @@ from characters.Character import *
 class Player(Character):
     "Cualquier personaje del juego"
 
-    def __init__(self, manager, data, id):
+    def __init__(self, manager, data, id, player_stats):
         # Invocamos al constructor de la clase padre con la configuracion de este personaje concreto
         Character.__init__(self,
                            manager,
@@ -17,19 +17,25 @@ class Player(Character):
                            data.getCharacterSpeed("player"),
                            data.getCharacterJumpSpeed("player"),
                            data.getPlayerAnimationDelay())
-        self.numPostura = SPRITE_JUMPING  # En que postura esta inicialmente
+        # Variables generales
         self.data = data
+        self.manager = manager
+
+        # Variables de movimiento del jugador
+        self.numPostura = SPRITE_JUMPING
+        self.readyToJump = True
+        self.readyToAttack = True
         self.collision_rect = pygame.Rect(self.getRect().left + self.getRect().width / 2 - 3,
                                           self.getRect().bottom - 5,
                                           6, 5)
-        self.manager = manager
+
         # Variables propias del jugador
-        self.lives = 3
-        self.health = 100
-        self.maxHealth = 100
+        self.lives = player_stats[0]
+        self.points = player_stats[3]
+        self.maxHealth = player_stats[1]
+        self.health = player_stats[2]
         self.attack = 50
         self.alive = True
-        self.points = 0
 
 
     def getCollisionRect(self):
@@ -72,14 +78,13 @@ class Player(Character):
         self.health = value
 
     def increaseHealth(self):
-        if self.health<self.getMaxHealth():
+        if self.health < self.getMaxHealth():
             self.health = self.health + 10
 
-    def decreaseHealth(self,e):
+    def decreaseHealth(self, e):
         if self.tiempo_colision < time():
             self.health = self.health - 10
             self.backOff(e)
-            # TODO mover jugador hacia un lado, pegar un salto, o algo similar
             if self.health <= 0:
                 self.decreaseLives()
             # TODO mover el sonido para la colisión con el enemigo, no aquí
@@ -105,7 +110,7 @@ class Player(Character):
             # Horizontal movement
             if pressedKeys[self.data.getKeyRight()] and pressedKeys[self.data.getKeyLeft()]:
                 Character.move(self, STOPPED)
-            if pressedKeys[self.data.getKeyRight()]:
+            elif pressedKeys[self.data.getKeyRight()]:
                 Character.move(self, RIGHT)
             elif pressedKeys[self.data.getKeyLeft()]:
                 Character.move(self, LEFT)
@@ -113,17 +118,23 @@ class Player(Character):
                 Character.move(self, STOPPED)
 
             # Vertical movement
-            if pressedKeys[self.data.getKeyUp()]:
+            if pressedKeys[self.data.getKeyUp()] and self.readyToJump:
+                self.readyToJump = False
                 Character.move(self, UP)
+            elif not pressedKeys[self.data.getKeyUp()]:
+                self.readyToJump = True
 
             # Attack
-            if pressedKeys[self.data.getSpace()]:
+            if pressedKeys[self.data.getSpace()] and self.readyToAttack:
+                self.readyToAttack = False
                 Character.move(self, ATTACK)
+            elif not pressedKeys[self.data.getSpace()]:
+                self.readyToAttack = True
         else:
             # TODO Crear animación de jugador muerto
             Character.move(self, STOPPED)
 
-    def backOff(self,enemy):
+    def backOff(self, enemy):
         pass
         '''
         # Player se retira para no colisionar con enemigo

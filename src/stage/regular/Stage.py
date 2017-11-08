@@ -123,7 +123,7 @@ class Stage(Scene):
 
 
                 # Creamos plataformas
-                if (not letter in self.platform_letter and prev_letter in self.platform_letter):
+                if not letter in self.platform_letter and prev_letter in self.platform_letter:
                     platform = Platform(
                         self.manager,
                         (column_number * self.MAP_UNIT_WIDTH, row_number * self.MAP_UNIT_HEIGHT),

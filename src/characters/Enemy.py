@@ -56,6 +56,7 @@ class Enemy(Character):
             self.velocidadCarrera = self.chasing_speed_x
         else:
             self.velocidadCarrera = self.speed_x
+            self.move(self.mirando)
 
     def behave(self, player, enemyGroup):
         pass
