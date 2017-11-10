@@ -13,7 +13,7 @@ class Enemy(Character):
                            data,
                            data.getPlayerSheet(id),
                            data.getPlayerSheetCoords(id),
-                           [3, 4, 5],
+                           [3, 4, 5, 0, 1],
                            data.getCharacterSpeed(id),
                            0,
                            data.getPlayerAnimationDelay())
@@ -52,6 +52,13 @@ class Enemy(Character):
         self.enemyState = ["wander"]
         self.currentState = 0
 
+    def decreaseHealth(self, player_attack, enemyGroup):
+        self.health = self.health - player_attack
+        if self.health <= 0:
+            self.die()
+            # for i in enemyGroup:
+            #     if i == self:
+            #         enemyGroup.remove(i)
 
     def chasePlayer(self, chase):
         self.active = chase

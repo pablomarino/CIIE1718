@@ -90,33 +90,32 @@ class Stage(Scene):
                     self.itemGroup.add(tmp)
 
                 if letter == self.heart_letter:
-                    tmp= heart(self.manager, self.manager.getDataRetriever())
+                    tmp = heart(self.manager, self.manager.getDataRetriever())
                     tmp.setPosition((column_number * self.MAP_UNIT_WIDTH, row_number * self.MAP_UNIT_HEIGHT))
                     self.itemGroup.add(tmp)
 
                 if letter == self.door_letter:
-                    tmp= door(self.manager, self.manager.getDataRetriever())
+                    tmp = door(self.manager, self.manager.getDataRetriever())
                     tmp.setPosition((column_number * self.MAP_UNIT_WIDTH, row_number * self.MAP_UNIT_HEIGHT))
                     self.itemGroup.add(tmp)
 
-
                 if letter == self.chandelier_letter:
-                    tmp= chandelier(self.manager, self.manager.getDataRetriever())
+                    tmp = chandelier(self.manager, self.manager.getDataRetriever())
                     tmp.setPosition((column_number * self.MAP_UNIT_WIDTH, row_number * self.MAP_UNIT_HEIGHT))
                     self.itemGroup.add(tmp)
 
                 if letter == self.wardrove_letter:
-                    tmp= wardrove(self.manager, self.manager.getDataRetriever())
+                    tmp = wardrove(self.manager, self.manager.getDataRetriever())
                     tmp.setPosition((column_number * self.MAP_UNIT_WIDTH, row_number * self.MAP_UNIT_HEIGHT))
                     self.itemGroup.add(tmp)
 
                 if letter == self.salud_letter:
-                    tmp= salud(self.manager, self.manager.getDataRetriever())
+                    tmp = salud(self.manager, self.manager.getDataRetriever())
                     tmp.setPosition((column_number * self.MAP_UNIT_WIDTH, row_number * self.MAP_UNIT_HEIGHT))
                     self.itemGroup.add(tmp)
 
                 if letter == self.moneda_letter:
-                    tmp= moneda(self.manager, self.manager.getDataRetriever())
+                    tmp = moneda(self.manager, self.manager.getDataRetriever())
                     tmp.setPosition((column_number * self.MAP_UNIT_WIDTH, row_number * self.MAP_UNIT_HEIGHT))
                     self.itemGroup.add(tmp)
 
