@@ -101,7 +101,7 @@
         "color_key": "0",
         "origin_x": "0",
         "origin_y": "0",
-        "repeat_x": "False",
+        "repeat_x": "True",
         "repeat_y": "True"
       }
     ],
@@ -188,7 +188,7 @@
         "color_key": "0",
         "origin_x": "0",
         "origin_y": "0",
-        "repeat_x": "False",
+        "repeat_x": "True",
         "repeat_y": "True"
       }
     ],
