@@ -28,6 +28,7 @@ class Enemy(Character):
         self.health = 100
         self.alive = True
         self.active = False
+        self.attack_damage = data.getCharacterAttack(id)
 
         # Velocidades del enemigo
         self.speed_x = data.getCharacterSpeed(id)
@@ -166,7 +167,7 @@ class Asmodeo(Enemy):
         self.setInvertedSpriteSheet(True)
 
     def onPlayerCollision(self, player, enemyGroup):
-        player.decreaseHealth(self)
+        player.decreaseHealth(self.attack_damage, self)
 
 
 class Dante(Enemy):
@@ -175,7 +176,7 @@ class Dante(Enemy):
         #self.setInvertedSpriteSheet(True)
 
     def onPlayerCollision(self, player, enemyGroup):
-        player.decreaseHealth(self)
+        player.decreaseHealth(self.attack_damage, self)
 
 
 
@@ -186,7 +187,7 @@ class Belcebu(Enemy):
         self.setInvertedSpriteSheet(True)
 
     def onPlayerCollision(self, player, enemyGroup):
-        player.decreaseHealth(self)
+        player.decreaseHealth(self.attack_damage, self)
 
 
 class Mammon(Enemy):
@@ -195,7 +196,7 @@ class Mammon(Enemy):
         self.setInvertedSpriteSheet(True)
 
     def onPlayerCollision(self, player, enemyGroup):
-        player.decreaseHealth(self)
+        player.decreaseHealth(self.attack_damage, self)
 
 class FireProjectile(Enemy):
     def __init__(self, manager, data):
@@ -203,7 +204,7 @@ class FireProjectile(Enemy):
 
     def onPlayerCollision(self, player, itemGroup):
         # TODO añadir sonido
-        player.decreaseHealth(self)
+        player.decreaseHealth(10, self)
 
     def update(self, platformGroup, clock, player, playerDisplacement):
         pass
@@ -281,7 +282,7 @@ class Satan(Enemy):
         pass
 
     def onPlayerCollision(self, player, enemyGroup):
-        player.decreaseHealth(self)
+        player.decreaseHealth(self.attack_damage, self)
 
     def piroclasto(self):
         tmp = FireProjectile(self.manager, self.manager.getDataRetriever())
@@ -293,11 +294,3 @@ class Satan(Enemy):
         tmp = FireProjectile(self.manager, self.manager.getDataRetriever())
         tmp.setPosition((p.getRect().x, p.getRect().y))
         self.enemyGroup.add(tmp)
-
-class EnemyTest(Enemy):
-    def __init__(self, manager, data):
-        Enemy.__init__(self, manager, data, "mammon")
-        self.setInvertedSpriteSheet(True)
-
-    def onPlayerCollision(self, player, enemyGroup):
-        player.decreaseHealth(self)

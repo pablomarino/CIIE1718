@@ -5,6 +5,7 @@
       "speed": 0.2,
       "chasing_speed": 0.2,
       "jump_speed": 0.35,
+      "attack_damage": 50,
       "file": "../bin/assets/sprites/main_characters/beatrice.png",
       "file_coords": "../bin/assets/sprites/main_characters/player_beatrice_coords.txt"
     },
@@ -12,6 +13,7 @@
       "speed": 0.05,
       "chasing_speed": 0.05,
       "jump_speed": 0,
+      "attack_damage": 10,
       "file": "../bin/assets/sprites/items/fire.png",
       "file_coords": "../bin/assets/sprites/items/fire_coords.txt"
     },
@@ -19,6 +21,7 @@
       "speed": 0.025,
       "chasing_speed": 0.15,
       "jump_speed": 0,
+      "attack_damage": 12,
       "file": "../bin/assets/sprites/main_characters/dante.png",
       "file_coords": "../bin/assets/sprites/main_characters/dante_coords.txt"
     },
@@ -26,13 +29,15 @@
       "speed": 0.07,
       "chasing_speed": 0.15,
       "jump_speed": 0,
+      "attack_damage": 17,
       "file": "../bin/assets/sprites/main_characters/satanas.png",
-      "file_coords":  "../bin/assets/sprites/main_characters/satanas_coords.txt"
+      "file_coords": "../bin/assets/sprites/main_characters/satanas_coords.txt"
     },
     "asmodeo": {
       "speed": 0.05,
       "chasing_speed": 0.15,
       "jump_speed": 0,
+      "attack_damage": 6,
       "file": "../bin/assets/sprites/enemies/enemy1.png",
       "file_coords": "../bin/assets/sprites/enemies/enemy1_coords.txt"
     },
@@ -40,6 +45,7 @@
       "speed": 0.05,
       "chasing_speed": 0.15,
       "jump_speed": 0,
+      "attack_damage": 11,
       "file": "../bin/assets/sprites/enemies/enemy3.png",
       "file_coords": "../bin/assets/sprites/enemies/enemy3_coords.txt"
     },
@@ -47,6 +53,7 @@
       "speed": 0.05,
       "chasing_speed": 0.15,
       "jump_speed": 0,
+      "attack_damage": 9,
       "file": "../bin/assets/sprites/enemies/enemy2.png",
       "file_coords": "../bin/assets/sprites/enemies/enemy2_coords.txt"
     }

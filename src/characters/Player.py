@@ -15,8 +15,8 @@ class Player(Character):
                            data.getPlayerSheet(id),
                            data.getPlayerSheetCoords(id),
                            [5, 6, 5, 4, 1],
-                           data.getCharacterSpeed("player"),
-                           data.getCharacterJumpSpeed("player"),
+                           data.getCharacterSpeed(id),
+                           data.getCharacterJumpSpeed(id),
                            data.getPlayerAnimationDelay())
         # Variables generales
         self.data = data
@@ -35,7 +35,7 @@ class Player(Character):
         self.points = player_stats[3]
         self.maxHealth = player_stats[1]
         self.health = player_stats[2]
-        self.attack = 50
+        self.attack = data.getCharacterAttack(id)
         self.alive = True
 
     def getCollisionRect(self):
@@ -81,13 +81,14 @@ class Player(Character):
     def setHealth(self, value):
         self.health = value
 
-    def increaseHealth(self):
-        if self.health < self.getMaxHealth():
-            self.health = self.health + 10
+    def increaseHealth(self, health_increase):
+        self.health = self.health + health_increase
+        if self.health >= self.getMaxHealth():
+            self.health = self.getMaxHealth()
 
-    def decreaseHealth(self, e):
+    def decreaseHealth(self, amount ,e):
         if self.tiempo_colision < time():
-            self.health = self.health - 10
+            self.health = self.health - amount
             self.backOff(e)
             if self.health <= 0:
                 self.decreaseLives()
