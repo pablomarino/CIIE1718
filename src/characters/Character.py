@@ -16,7 +16,6 @@ SPRITE_WALKING = 1
 SPRITE_JUMPING = 2
 SPRITE_ATTACKING = 3
 SPRITE_DYING = 4
-SPRITE_FALLING = 5
 
 # Variables movimiento
 GRAVITY = 0.0007  # Píxeles / ms2
@@ -41,6 +40,10 @@ class Character(MySprite):
         self.tiempo_colision = 0
         self.invertedSpriteSheet = False
 
+        self.attacking = False
+        self.alive = True
+        self.is_dead_body = False
+
         datos = manager.getLibrary().loadCoordsFile(archivoCoordenadas)  # Leemos las coordenadas de un archivo de texto
         datos = datos.split()
         cont = 0
@@ -63,43 +66,50 @@ class Character(MySprite):
 
     def actualizarPostura(self):
         self.retardoMovimiento -= 1
+        if self.attacking:
+            numPostura = SPRITE_ATTACKING
+        else:
+            numPostura = self.numPostura
+
         if self.retardoMovimiento < 0:
             self.retardoMovimiento = self.retardoAnimacion
             # Si ha pasado, actualizamos la postura
             self.numImagenPostura += 1
 
-            if self.numImagenPostura >= len(self.coordenadasHoja[self.numPostura]):
+            if self.numImagenPostura >= len(self.coordenadasHoja[numPostura]):
+                if self.attacking:
+                    self.setAttacking(False)
                 self.numImagenPostura = 0
 
             if self.numImagenPostura < 0:
-                self.numImagenPostura = len(self.coordenadasHoja[self.numPostura]) - 1
+                self.numImagenPostura = len(self.coordenadasHoja[numPostura]) - 1
 
-            self.image = self.hoja.subsurface(self.coordenadasHoja[self.numPostura][self.numImagenPostura])
+            self.image = self.hoja.subsurface(self.coordenadasHoja[numPostura][self.numImagenPostura])
 
             # Actualizamos la variable rect para que se adapte al sprite
             self.rect = pygame.Rect(self.getGlobalPosition()[0], self.getGlobalPosition()[0],
-                                    self.coordenadasHoja[self.numPostura][self.numImagenPostura].width,
-                                    self.coordenadasHoja[self.numPostura][self.numImagenPostura].height)
+                                    self.coordenadasHoja[numPostura][self.numImagenPostura].width,
+                                    self.coordenadasHoja[numPostura][self.numImagenPostura].height)
 
             # Si esta mirando a la izquiera, cogemos la porcion de la hoja
             if self.mirando == LEFT:
                 if not self.invertedSpriteSheet:
-                    self.image = self.hoja.subsurface(self.coordenadasHoja[self.numPostura][self.numImagenPostura])
+                    self.image = self.hoja.subsurface(self.coordenadasHoja[numPostura][self.numImagenPostura])
                 else:
                     self.image = pygame.transform.flip(
-                        self.hoja.subsurface(self.coordenadasHoja[self.numPostura][self.numImagenPostura]), 1, 0)
+                        self.hoja.subsurface(self.coordenadasHoja[numPostura][self.numImagenPostura]), 1, 0)
             # Si no, si mira a la derecha, invertimos esa imagen
             elif self.mirando == RIGHT:
                 if not self.invertedSpriteSheet:
                     self.image = pygame.transform.flip(
-                        self.hoja.subsurface(self.coordenadasHoja[self.numPostura][self.numImagenPostura]), 1, 0)
+                        self.hoja.subsurface(self.coordenadasHoja[numPostura][self.numImagenPostura]), 1, 0)
                 else:
-                    self.image = self.hoja.subsurface(self.coordenadasHoja[self.numPostura][self.numImagenPostura])
+                    self.image = self.hoja.subsurface(self.coordenadasHoja[numPostura][self.numImagenPostura])
 
     def getVelocidad(self):
         return self.velocidad
 
-    def setVelocidad(self,v):
+    def setVelocidad(self, v):
         self.velocidad = v
 
     def getDoUpdateScroll(self):
@@ -113,6 +123,33 @@ class Character(MySprite):
         elif self.mirando == LEFT:
             self.move(RIGHT)
 
+    def die(self):
+        self.alive = False
+        self.numPostura = SPRITE_DYING
+        self.numImagenPostura = 0
+
+        self.image = self.hoja.subsurface(self.coordenadasHoja[self.numPostura][self.numImagenPostura])
+        # Si esta mirando a la izquiera, cogemos la porcion de la hoja
+        if self.mirando == LEFT:
+            if not self.invertedSpriteSheet:
+                self.image = self.hoja.subsurface(self.coordenadasHoja[self.numPostura][self.numImagenPostura])
+            else:
+                self.image = pygame.transform.flip(
+                    self.hoja.subsurface(self.coordenadasHoja[self.numPostura][self.numImagenPostura]), 1, 0)
+        # Si no, si mira a la derecha, invertimos esa imagen
+        elif self.mirando == RIGHT:
+            if not self.invertedSpriteSheet:
+                self.image = pygame.transform.flip(
+                    self.hoja.subsurface(self.coordenadasHoja[self.numPostura][self.numImagenPostura]), 1, 0)
+            else:
+                self.image = self.hoja.subsurface(self.coordenadasHoja[self.numPostura][self.numImagenPostura])
+
+        # Actualizamos la variable rect para que se adapte al sprite
+        self.rect = pygame.Rect(self.getGlobalPosition()[0], self.getGlobalPosition()[0],
+                                self.coordenadasHoja[self.numPostura][self.numImagenPostura].width,
+                                self.coordenadasHoja[self.numPostura][self.numImagenPostura].height)
+
+
     # Función move en la clase Character
     def move(self, movimiento):
         (vx, vy) = self.velocidad
@@ -120,7 +157,8 @@ class Character(MySprite):
         # Saltar
         if movimiento == UP:
             if vy == 0:
-                self.numPostura = SPRITE_JUMPING
+                if self.numPostura != SPRITE_ATTACKING:
+                    self.numPostura = SPRITE_JUMPING
                 vy = -self.velocidadSalto
                 pygame.mixer.Sound('../bin/assets/sounds/player/salto.wav').play()
 
@@ -140,56 +178,81 @@ class Character(MySprite):
 
         # Atacar
         elif movimiento == ATTACK:
-            # TODO implementar función de ataque
-            print "Aqui debería atacar"
+            self.numImagenPostura = 0
+            self.setAttacking(True)
 
         self.velocidad = (vx, vy)
 
     # Función update de la clase Character
     def update(self, grupoPlataformas, tiempo, scroll):
-        vx, vy = self.velocidad
+        if self.alive:
+            vx, vy = self.velocidad
+            platform_collided = pygame.sprite.spritecollideany(self, grupoPlataformas)
 
-        platform_collided = pygame.sprite.spritecollideany(self, grupoPlataformas)
+            # Comprobar si está atacando
+            if self.attacking:
+                # TODO comprobar que no lleve más de x segundos atacando
+                pass
 
-        # Si tenía postura STOPPED
-        if self.numPostura == SPRITE_STOPPED:
-            if vx > 0 or vx < 0:
-                self.numPostura = SPRITE_WALKING
+            # Si tenía postura STOPPED
+            if self.numPostura == SPRITE_STOPPED:
+                if vx > 0 or vx < 0:
+                    self.numPostura = SPRITE_WALKING
 
-        # Si tenía postura WALKING
-        if self.numPostura == SPRITE_WALKING:
-            if vx == 0:
-                self.numPostura = SPRITE_STOPPED
+            # Si tenía postura WALKING
+            if self.numPostura == SPRITE_WALKING:
+                if vx == 0:
+                    self.numPostura = SPRITE_STOPPED
 
-            if platform_collided is not None:
-                if not self.getCollisionRect().colliderect(platform_collided.getRect()):
+                if platform_collided is not None:
+                    if not self.getCollisionRect().colliderect(platform_collided.getRect()):
+                        self.numPostura = SPRITE_JUMPING
+                else:
                     self.numPostura = SPRITE_JUMPING
-            else:
-                self.numPostura = SPRITE_JUMPING
 
-        if self.numPostura == SPRITE_JUMPING:
-            plataforma = pygame.sprite.spritecollideany(self, grupoPlataformas)
+            if self.numPostura == SPRITE_JUMPING:
+                plataforma = pygame.sprite.spritecollideany(self, grupoPlataformas)
 
-            if (plataforma is not None) and (vy > 0) and (plataforma.rect.bottom > self.rect.bottom):
-                if not self.getCollisionRect().colliderect(plataforma.getRect()):
+                if (plataforma is not None) and (vy > 0) and (plataforma.rect.bottom > self.rect.bottom):
+                    if not self.getCollisionRect().colliderect(plataforma.getRect()):
+                        vy += GRAVITY * tiempo
+                        if vy > 0.25: vy = 0.25
+                    else:
+                        # Lo situamos con la parte de abajo colisionando con la plataforma para detectar cuando se cae
+                        self.setPosition((self.posicion[0], plataforma.posicion[1] - plataforma.rect.height + 10))
+                        self.numPostura = SPRITE_WALKING
+                        # Y estará quieto en el eje y
+                        vy = 0
+                # Si no caemos en una plataforma, aplicamos el efecto de la gravedad
+                else:
                     vy += GRAVITY * tiempo
                     if vy > 0.25: vy = 0.25
-                else:
+
+            self.actualizarPostura()
+            self.velocidad = (vx, vy)
+
+            # Superclase calcula la nueva posición del Sprite con la velocidad
+            MySprite.update(self, tiempo)
+        else:
+            if not self.is_dead_body:
+                vx, vy = self.velocidad
+                platform_collided = pygame.sprite.spritecollideany(self, grupoPlataformas)
+
+                vx = 0
+
+                if (platform_collided is not None) and (vy > 0) and (platform_collided.rect.bottom > self.rect.bottom):
                     # Lo situamos con la parte de abajo colisionando con la plataforma para detectar cuando se cae
-                    self.setPosition((self.posicion[0], plataforma.posicion[1] - plataforma.rect.height + 10))
-                    self.numPostura = SPRITE_WALKING
-                    # Y estará quieto en el eje y
+                    self.setPosition(
+                        (self.posicion[0], platform_collided.posicion[1] - platform_collided.rect.height + 10))
+                    self.is_dead_body = True
                     vy = 0
-            # Si no caemos en una plataforma, aplicamos el efecto de la gravedad
-            else:
-                vy += GRAVITY * tiempo
-                if vy > 0.25: vy = 0.25
-
-        self.actualizarPostura()
-        self.velocidad = (vx, vy)
-
-        # Superclase calcula la nueva posición del Sprite con la velocidad
-        MySprite.update(self, tiempo)
+                # Si no caemos en una plataforma, aplicamos el efecto de la gravedad
+                else:
+                    vy += GRAVITY * tiempo
+                    if vy > 0.25:
+                        vy = 0.25
+                self.velocidad = (vx, vy)
+                MySprite.update(self, tiempo)
 
         if self.getDoUpdateScroll(): self.establecerPosicionPantalla((scroll[0], -scroll[1]))
 
@@ -202,8 +265,6 @@ class Character(MySprite):
             return "SPRITE_JUMPING"
         elif self.numPostura == SPRITE_DYING:
             return "SPRITE_DYING"
-        elif self.numPostura == SPRITE_FALLING:
-            return "SPRITE_FALLING"
         elif self.numPostura == SPRITE_ATTACKING:
             return "SPRITE_ATTACKING"
 
@@ -212,8 +273,6 @@ class Character(MySprite):
             return "MIRANDO RIGHT"
         elif self.mirando == LEFT:
             return "MIRANDO LEFT"
-
-
 
     def setInvertedSpriteSheet(self, b):
         self.invertedSpriteSheet = b

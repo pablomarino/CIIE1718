@@ -90,33 +90,32 @@ class Stage(Scene):
                     self.itemGroup.add(tmp)
 
                 if letter == self.heart_letter:
-                    tmp= heart(self.manager, self.manager.getDataRetriever())
+                    tmp = heart(self.manager, self.manager.getDataRetriever())
                     tmp.setPosition((column_number * self.MAP_UNIT_WIDTH, row_number * self.MAP_UNIT_HEIGHT))
                     self.itemGroup.add(tmp)
 
                 if letter == self.door_letter:
-                    tmp= door(self.manager, self.manager.getDataRetriever())
+                    tmp = door(self.manager, self.manager.getDataRetriever())
                     tmp.setPosition((column_number * self.MAP_UNIT_WIDTH, row_number * self.MAP_UNIT_HEIGHT))
                     self.itemGroup.add(tmp)
 
-
                 if letter == self.chandelier_letter:
-                    tmp= chandelier(self.manager, self.manager.getDataRetriever())
+                    tmp = chandelier(self.manager, self.manager.getDataRetriever())
                     tmp.setPosition((column_number * self.MAP_UNIT_WIDTH, row_number * self.MAP_UNIT_HEIGHT))
                     self.itemGroup.add(tmp)
 
                 if letter == self.wardrove_letter:
-                    tmp= wardrove(self.manager, self.manager.getDataRetriever())
+                    tmp = wardrove(self.manager, self.manager.getDataRetriever())
                     tmp.setPosition((column_number * self.MAP_UNIT_WIDTH, row_number * self.MAP_UNIT_HEIGHT))
                     self.itemGroup.add(tmp)
 
                 if letter == self.salud_letter:
-                    tmp= salud(self.manager, self.manager.getDataRetriever())
+                    tmp = salud(self.manager, self.manager.getDataRetriever())
                     tmp.setPosition((column_number * self.MAP_UNIT_WIDTH, row_number * self.MAP_UNIT_HEIGHT))
                     self.itemGroup.add(tmp)
 
                 if letter == self.moneda_letter:
-                    tmp= moneda(self.manager, self.manager.getDataRetriever())
+                    tmp = moneda(self.manager, self.manager.getDataRetriever())
                     tmp.setPosition((column_number * self.MAP_UNIT_WIDTH, row_number * self.MAP_UNIT_HEIGHT))
                     self.itemGroup.add(tmp)
 
@@ -142,7 +141,7 @@ class Stage(Scene):
             if prev_letter in self.platform_letter:
                 platform = Platform(
                     self.manager,
-                    (column_number * self.MAP_UNIT_WIDTH, row_number *self.MAP_UNIT_HEIGHT),
+                    (column_number * self.MAP_UNIT_WIDTH, row_number * self.MAP_UNIT_HEIGHT),
                     self.platformfiles[int(prev_letter)],
                     platform_size)
                 self.platformGroup.add(platform)
@@ -156,7 +155,7 @@ class Stage(Scene):
         # Calculo la distancia entre la posicion inicial del jugador y la actual
         # Este valor se le pasa a Background y Platform para que realice el scroll
         # solo actualizo el scroll si el jugador esta saltando o cayendo
-        if (self.player.getDoUpdateScroll() & self.getDoUpdateScroll()):
+        if self.player.getDoUpdateScroll() & self.getDoUpdateScroll():
             self.playerDisplacement = (
                 0,  # int(math.ceil(self.playerStartPosition[0]-self.player.getPosition()[0])),
                 int(math.ceil(self.playerStartPosition[1] - self.player.getGlobalPosition()[1]))
@@ -208,7 +207,7 @@ class Stage(Scene):
         self.player.move(pygame.key.get_pressed())
 
     def resetScroll(self):
-        self.playerDisplacement = (0,0)
+        self.playerDisplacement = (0, 0)
 
     def getDoUpdateScroll(self):
         return True

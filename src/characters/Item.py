@@ -45,6 +45,7 @@ class heart(Item):
         player.increaseLives()
         pygame.mixer.Sound(self.sound).play()
 
+
 class salud(Item):
     def __init__(self, manager, data):
         Item.__init__(self, manager, data, "salud")
@@ -55,7 +56,8 @@ class salud(Item):
         for i in itemGroup:
             if i == self: itemGroup.remove(i)
         # Sonido
-        player.increaseHealth()
+        player.increaseHealth(30)
+
 
 class moneda(Item):
     def __init__(self, manager, data):
@@ -76,7 +78,7 @@ class fire(Item):
 
     def onPlayerCollision(self, player, itemGroup):
         # TODO añadir sonido
-        player.decreaseHealth(self)
+        player.decreaseHealth(10, self)
 
 
 class door(Item):
@@ -108,7 +110,6 @@ class wardrove(Item):
 
     def onPlayerCollision(self, player, itemGroup):
         pass
-
 
 
 class dante(Item):

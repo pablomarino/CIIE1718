@@ -193,5 +193,8 @@ class DataRetriever:
     def getCharacterJumpSpeed(self, id):
         return self.instance.players["roster"][id]['jump_speed']
 
+    def getCharacterAttack(self, id):
+        return self.instance.players["roster"][id]['attack_damage']
+
     def getPlayerAnimationDelay(self):
         return self.instance.players["player_animation_delay"]

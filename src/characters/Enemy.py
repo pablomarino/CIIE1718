@@ -28,6 +28,7 @@ class Enemy(Character):
         self.health = 100
         self.alive = True
         self.active = False
+        self.attack_damage = data.getCharacterAttack(id)
 
         # Velocidades del enemigo
         self.speed_x = data.getCharacterSpeed(id)
@@ -52,6 +53,13 @@ class Enemy(Character):
         self.enemyState = ["wander"]
         self.currentState = 0
 
+    def decreaseHealth(self, player_attack, enemyGroup):
+        self.health = self.health - player_attack
+        if self.health <= 0:
+            self.die()
+            # for i in enemyGroup:
+            #     if i == self:
+            #         enemyGroup.remove(i)
 
     def chasePlayer(self, chase):
         self.active = chase
@@ -85,12 +93,11 @@ class Enemy(Character):
         return self.collision_rect
 
     def update(self, platformGroup, clock, player, playerDisplacement):
+        # Actualizamos los rects del enemigo
+        self.updateCollisionRect()
+        self.updateActivityRangeRect()
+
         if self.alive:
-
-            # Actualizamos los rects del enemigo
-            self.updateCollisionRect()
-            self.updateActivityRangeRect()
-
             # Si el enemigo se sale de la pantalla, invertir velocidad X
             if self.posicion[0] == self.screen_width - self.getRect().width or self.posicion[0] == 0:
                 self.invertXSpeed()
@@ -160,7 +167,7 @@ class Asmodeo(Enemy):
         self.setInvertedSpriteSheet(True)
 
     def onPlayerCollision(self, player, enemyGroup):
-        player.decreaseHealth(self)
+        player.decreaseHealth(self.attack_damage, self)
 
 
 class Dante(Enemy):
@@ -169,7 +176,7 @@ class Dante(Enemy):
         #self.setInvertedSpriteSheet(True)
 
     def onPlayerCollision(self, player, enemyGroup):
-        player.decreaseHealth(self)
+        player.decreaseHealth(self.attack_damage, self)
 
 
 
@@ -180,7 +187,7 @@ class Belcebu(Enemy):
         self.setInvertedSpriteSheet(True)
 
     def onPlayerCollision(self, player, enemyGroup):
-        player.decreaseHealth(self)
+        player.decreaseHealth(self.attack_damage, self)
 
 
 class Mammon(Enemy):
@@ -189,7 +196,7 @@ class Mammon(Enemy):
         self.setInvertedSpriteSheet(True)
 
     def onPlayerCollision(self, player, enemyGroup):
-        player.decreaseHealth(self)
+        player.decreaseHealth(self.attack_damage, self)
 
 class FireProjectile(Enemy):
     def __init__(self, manager, data):
@@ -198,7 +205,7 @@ class FireProjectile(Enemy):
         self.ttl = 5000
 
     def onPlayerCollision(self, player, itemGroup):
-        player.decreaseHealth(self)
+        player.decreaseHealth(10, self)
 
     def update(self, platformGroup, clock, player, playerDisplacement):
         self.time = self.time + clock
@@ -227,7 +234,7 @@ class Satan(Enemy):
             self.updateActivityRangeRect()
 
             # Cambio el comportamiento del enemigo
-            if self.count>8000: #ms
+            if self.count>8000:
                 self.count = 0
                 self.currentState = self.currentState + 1
                 if self.currentState > len(self.enemyState)-1:
@@ -284,22 +291,15 @@ class Satan(Enemy):
         pass
 
     def onPlayerCollision(self, player, enemyGroup):
-        player.decreaseHealth(self)
+        player.decreaseHealth(self.attack_damage, self)
 
     def piroclasto(self):
         tmp = FireProjectile(self.manager, self.manager.getDataRetriever())
         tmp.setPosition((randint(55, (self.screen_width - 55)), 0))
         self.enemyGroup.add(tmp)
+        #p.playerDisplacement[1]
 
     def fireArrow(self, p):
         tmp = FireProjectile(self.manager, self.manager.getDataRetriever())
         tmp.setPosition((p.getRect().x, p.getRect().y))
         self.enemyGroup.add(tmp)
-
-class EnemyTest(Enemy):
-    def __init__(self, manager, data):
-        Enemy.__init__(self, manager, data, "mammon")
-        self.setInvertedSpriteSheet(True)
-
-    def onPlayerCollision(self, player, enemyGroup):
-        player.decreaseHealth(self)

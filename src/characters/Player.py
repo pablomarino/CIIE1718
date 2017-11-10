@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from time import time
+
 from characters.Character import *
 
 
@@ -13,9 +14,9 @@ class Player(Character):
                            data,
                            data.getPlayerSheet(id),
                            data.getPlayerSheetCoords(id),
-                           [5, 6, 5, 4],
-                           data.getCharacterSpeed("player"),
-                           data.getCharacterJumpSpeed("player"),
+                           [5, 6, 5, 4, 1],
+                           data.getCharacterSpeed(id),
+                           data.getCharacterJumpSpeed(id),
                            data.getPlayerAnimationDelay())
         # Variables generales
         self.data = data
@@ -34,9 +35,8 @@ class Player(Character):
         self.points = player_stats[3]
         self.maxHealth = player_stats[1]
         self.health = player_stats[2]
-        self.attack = 50
+        self.attack = data.getCharacterAttack(id)
         self.alive = True
-
 
     def getCollisionRect(self):
         return self.collision_rect
@@ -45,6 +45,10 @@ class Player(Character):
         self.collision_rect = pygame.Rect(self.getRect().left + self.getRect().width / 2 - 3,
                                           self.getRect().bottom - 5,
                                           6, 5)
+
+    def setAttacking(self, value):
+        self.attacking = value
+        self.readyToAttack = not value
 
     def getLives(self):
         return self.lives
@@ -64,7 +68,7 @@ class Player(Character):
             self.lives = 0
             # TODO GameOver menu
             print "Game Over!"
-            self.alive = False
+            self.die()
         else:
             self.stage.resetScroll()
             self.setPosition(self.data.getPlayerPositionAt("level_1"))
@@ -77,16 +81,18 @@ class Player(Character):
     def setHealth(self, value):
         self.health = value
 
-    def increaseHealth(self):
-        if self.health < self.getMaxHealth():
-            self.health = self.health + 10
+    def increaseHealth(self, health_increase):
+        self.health = self.health + health_increase
+        if self.health >= self.getMaxHealth():
+            self.health = self.getMaxHealth()
 
-    def decreaseHealth(self, e):
+    def decreaseHealth(self, amount ,e):
         if self.tiempo_colision < time():
-            self.health = self.health - 10
+            self.health = self.health - amount
             self.backOff(e)
             if self.health <= 0:
                 self.decreaseLives()
+                # self.die()
             # TODO mover el sonido para la colisión con el enemigo, no aquí
             pygame.mixer.Sound('../bin/assets/sounds/player/enemy_hit_1.wav').play()
             self.tiempo_colision = time() + 1
@@ -99,10 +105,6 @@ class Player(Character):
 
     def setStage(self, s):
         self.stage = s
-
-    def attack(self, pressedKeys):
-        if pressedKeys[self.data.getSpace()]:
-            Character.attack(self, ATTACK)
 
     def move(self, pressedKeys):
         # Indicamos la acción a realizar según la tecla pulsada para el jugador
@@ -168,8 +170,14 @@ class Player(Character):
             enemyCol = pygame.sprite.spritecollideany(self, enemyGroup)
             itemCol = pygame.sprite.spritecollideany(self, itemGroup)
             if enemyCol is not None:
-                enemyCol.onPlayerCollision(self, enemyGroup)  # cada item realiza una accion propia
+                if self.attacking:
+                    self.setAttacking(False)
+                    enemyCol.decreaseHealth(self.attack, enemyGroup)
+                else:
+                    if enemyCol.alive:
+                        # Colisión con enemigos
+                        enemyCol.onPlayerCollision(self, enemyGroup)  # cada enemigo realiza una accion propia
             if itemCol is not None:
                 itemCol.onPlayerCollision(self, itemGroup)  # cada item realiza una accion propia
-            Character.update(self, platformGroup, clock, playerDisplacement)  # Call update in the super class
             self.updateCollisionRect()  # Update collision rect
+        Character.update(self, platformGroup, clock, playerDisplacement)  # Call update in the super class
