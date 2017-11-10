@@ -68,7 +68,7 @@ class Player(Character):
             self.lives = 0
             # TODO GameOver menu
             print "Game Over!"
-            self.alive = False
+            self.die()
         else:
             self.stage.resetScroll()
             self.setPosition(self.data.getPlayerPositionAt("level_1"))

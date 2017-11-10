@@ -155,7 +155,7 @@ class Stage(Scene):
         # Calculo la distancia entre la posicion inicial del jugador y la actual
         # Este valor se le pasa a Background y Platform para que realice el scroll
         # solo actualizo el scroll si el jugador esta saltando o cayendo
-        if (self.player.getDoUpdateScroll() & self.getDoUpdateScroll()):
+        if self.player.getDoUpdateScroll() & self.getDoUpdateScroll():
             self.playerDisplacement = (
                 0,  # int(math.ceil(self.playerStartPosition[0]-self.player.getPosition()[0])),
                 int(math.ceil(self.playerStartPosition[1] - self.player.getGlobalPosition()[1]))
