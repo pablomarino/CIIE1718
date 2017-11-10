@@ -92,12 +92,11 @@ class Enemy(Character):
         return self.collision_rect
 
     def update(self, platformGroup, clock, player, playerDisplacement):
+        # Actualizamos los rects del enemigo
+        self.updateCollisionRect()
+        self.updateActivityRangeRect()
+
         if self.alive:
-
-            # Actualizamos los rects del enemigo
-            self.updateCollisionRect()
-            self.updateActivityRangeRect()
-
             # Si el enemigo se sale de la pantalla, invertir velocidad X
             if self.posicion[0] == self.screen_width - self.getRect().width or self.posicion[0] == 0:
                 self.invertXSpeed()
