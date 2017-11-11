@@ -21,7 +21,6 @@ class GameLevel:
         self.deadBodiesGroup = pygame.sprite.Group()
 
         if self.level:
-            # TODO pasar los valores de vida del jugador para que no se pierdan de un nivel a otro
             self.player = Player(manager, data, 'player', player_stats)
             self.player.setPosition(data.getPlayerPositionAt(id))
             self.spriteGroup.add(self.player)

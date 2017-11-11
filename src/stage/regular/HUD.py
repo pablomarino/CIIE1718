@@ -81,7 +81,7 @@ class HUD:
             text = str(text)
             font = pygame.font.Font(self.font_type, font_size)
             text = font.render(text, True, color)
-            text_rect = text.get_rect(center=(1024 / 2, 768 / 2))
+            text_rect = text.get_rect(center=(self.data.getWidth() / 2, self.data.getHeight() / 2))
             self.screen.blit(text, text_rect)
 
         except Exception, e:

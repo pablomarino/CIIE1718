@@ -71,6 +71,22 @@ class Enemy(Character):
             self.velocidadCarrera = self.speed_x
             self.move(self.mirando)
 
+    def backoff(self, player):
+        y = -0.3
+        # Saltar en dirección opuesta al jugador
+        if self.posicion[0] - player.posicion[0] < 0:
+            x = -0.3
+        elif self.posicion[0] - player.posicion[0] >0:
+            x = 0.3
+        else:
+            if self.mirando == RIGHT:
+                x = -0.3
+            else:
+                x = 0.3
+
+        # Asignar la nueva velocidad al enemigo
+        self.velocidad = x, y
+
     def onPlayerCollision(self, player):
         pass
 
@@ -113,7 +129,6 @@ class Enemy(Character):
                 # Primero, comprobar si el enemigo tiene que atacar
                 if self.getRect().colliderect(player.getRect()):
                     # TODO enemigo pasa a movimiento ATTACK
-                    # TODO poner velocidad a cero
                     pass
 
                 # Comprobar si el jugador está por debajo del enemigo
@@ -222,7 +237,7 @@ class FireProjectile(Enemy):
 
 class Satan(Enemy):
     def __init__(self, manager, data, enemyGroup, deadBodiesGroup):
-        Enemy.__init__(self, manager, data, "satan", enemyGroup, deadBodiesGroup  )
+        Enemy.__init__(self, manager, data, "satan", enemyGroup, deadBodiesGroup)
         self.setInvertedSpriteSheet(True)
         self.enemyState = ["wander", "attack", "wander", "berserk"]
         self.playerDisplacement = None
@@ -268,7 +283,7 @@ class Satan(Enemy):
         if self.getVelocidad()[0] == 0:
             Character.move(self, LEFT)
         if self.posicion[0] <= (self.screen_width / 3) or self.posicion[0] >= (
-            self.screen_width - self.getRect().width):
+                    self.screen_width - self.getRect().width):
             self.invertXSpeed()
 
     def attack(self):

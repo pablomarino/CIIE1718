@@ -132,7 +132,6 @@ class Player(Character):
             elif not pressedKeys[self.data.getSpace()]:
                 self.readyToAttack = True
         else:
-            # TODO Crear animación de jugador muerto
             Character.move(self, STOPPED)
 
     def backOff(self, enemy):
@@ -171,16 +170,17 @@ class Player(Character):
 
             # Colisión con emeigos
             if enemyCol is not None:
-                # TODO si hay un enemigo muerto en el suelo, comprueba la colisión con él
                 if enemyCol.alive:
                     if self.attacking:
                         if not self.already_attacked:
                             enemyCol.decreaseHealth(self.attack)
+                            enemyCol.backoff(self)
                             pygame.mixer.Sound('../bin/assets/sounds/player/enemy_hit_2.wav').play()
                             # TODO enemyCol.backoff()
                             self.already_attacked = True
                         self.tiempo_ataque = time() + 1
                     else:
+                        # TODO corregir esto, no tiene sentido
                         if self.tiempo_ataque < time():
                             # Colisión con enemigos sin estar atacando
                             enemyCol.onPlayerCollision(self)
