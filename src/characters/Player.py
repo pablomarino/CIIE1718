@@ -191,4 +191,4 @@ class Player(Character):
                 itemCol.onPlayerCollision(self)
 
             self.updateCollisionRect()  # Update collision rect
-        Character.update(self, platformGroup, clock, playerDisplacement)  # Call update in the super class
+        Character.update(self, clock, playerDisplacement)  # Call update in the super class

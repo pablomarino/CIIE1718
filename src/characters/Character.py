@@ -187,10 +187,10 @@ class Character(MySprite):
         self.velocidad = (vx, vy)
 
     # Función update de la clase Character
-    def update(self, grupoPlataformas, tiempo, scroll):
+    def update(self, tiempo, scroll):
         if self.alive:
             vx, vy = self.velocidad
-            platform_collided = pygame.sprite.spritecollideany(self, grupoPlataformas)
+            platform_collided = pygame.sprite.spritecollideany(self, self.manager.getCurrentLevel().getPlatformGroup())
 
             # Si tenía postura STOPPED
             if self.numPostura == SPRITE_STOPPED:
@@ -209,7 +209,7 @@ class Character(MySprite):
                     self.numPostura = SPRITE_JUMPING
 
             if self.numPostura == SPRITE_JUMPING:
-                plataforma = pygame.sprite.spritecollideany(self, grupoPlataformas)
+                plataforma = pygame.sprite.spritecollideany(self, self.manager.getCurrentLevel().getPlatformGroup()  )
 
                 if (plataforma is not None) and (vy > 0) and (plataforma.rect.bottom > self.rect.bottom):
                     if not self.getCollisionRect().colliderect(plataforma.getRect()):
@@ -234,7 +234,7 @@ class Character(MySprite):
         else:
             if not self.is_dead_body:
                 vx, vy = self.velocidad
-                platform_collided = pygame.sprite.spritecollideany(self, grupoPlataformas)
+                platform_collided = pygame.sprite.spritecollideany(self, self.manager.getCurrentLevel().getPlatformGroup())
 
                 vx = 0
 

@@ -24,10 +24,10 @@ class Item(Character):
     def getCollisionRect(self):
         return self.getRect()
 
-    def update(self, platformGroup, clock, playerDisplacement):
+    def update(self,  clock, playerDisplacement):
         self.numPostura = SPRITE_STOPPED
         self.actualizarPostura()
-        Character.update(self, platformGroup, clock, playerDisplacement)
+        Character.update(self,  clock, playerDisplacement)
 
     def getDoUpdateScroll(self):
         return True

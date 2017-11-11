@@ -87,13 +87,10 @@ class Enemy(Character):
         pass
 
     def updateCollisionRect(self):
-        # TODO intentar no crear un nuevo rect cada vez que se llama a la función update
         self.collision_rect = pygame.Rect(self.getRect().left + self.getRect().width / 2 - 3,
                                           self.getRect().bottom - 5,
                                           6, 5)
-
     def updateActivityRangeRect(self):
-        # TODO intentar no crear un nuevo rect cada vez que se llama a la función update
         # Creamos el rect que servirá para comprobar si el jugador está en su rango de visión
         self.activity_range_rect = pygame.Rect(self.getRect().left - self.x_activityrange,
                                                self.getRect().top - self.y_activityrange,
@@ -103,71 +100,72 @@ class Enemy(Character):
     def getCollisionRect(self):
         return self.collision_rect
 
-    def checkBounds(self):
+    def checkScreenBounds(self):
         # Si el enemigo se sale de la pantalla, invertir velocidad X
         if self.posicion[0] == self.screen_width - self.getRect().width or self.posicion[0] == 0:
             self.invertXSpeed()
 
-    def update(self, platformGroup, clock, player, playerDisplacement):
+    def behaviour1(self,player):
+        myposition_x = self.getGlobalPosition()[0]
+        myposition_y = self.getGlobalPosition()[1]
+        playerposition_x = player.getGlobalPosition()[0]
+        playerposition_y = player.getGlobalPosition()[1]
+        # Primero, comprobar si el enemigo tiene que atacar
+        if self.getRect().colliderect(player.getRect()):
+            pass
+        # Comprobar si el jugador está por debajo del enemigo
+        elif myposition_y < playerposition_y - self.y_activityrange:
+            # El enemigo baja el nivel hasta encontrar al jugador
+            pass
+        elif myposition_y - self.top_y_activityrange >= playerposition_y:
+            # Si el jugador está por encima del enemigo, no perseguirle
+            self.chasePlayer(False)
+        else:
+            # Perseguir al jugador en el eje x
+            if playerposition_x > myposition_x:
+                Character.move(self, RIGHT)
+            elif playerposition_x < myposition_x:
+                Character.move(self, LEFT)
+            else:
+                Character.move(self, STOPPED)
+            pass
+        pass
+
+    def behaviour2(self,player):
+        # Comprobamos si el jugador está dentro del rango de visión del jugador
+        if player.getRect().colliderect(self.activity_range_rect):
+            self.chasePlayer(True)
+            return
+
+        # Comprobamos si está en colisión con una plataformas
+        platform = pygame.sprite.spritecollideany(self, self.manager.getCurrentLevel().getPlatformGroup())
+
+        # Comprobamos que el enemigo no se salga de su plataforma
+        if platform is not None:
+            if self.getRect().left < platform.getRect().left:
+                # Si se sale de la plataforma, invertir su velocidadX y situarlo en el borde de la plataforma
+                self.invertXSpeed()
+                new_pos = (platform.getRect().left, self.getGlobalPosition()[1])
+                self.setPosition(new_pos)
+
+            elif self.getRect().right > platform.getRect().right:
+                # Si se sale de la plataforma, invertir su velocidadX y situarlo en el borde de la plataforma
+                self.invertXSpeed()
+                new_pos = (platform.getRect().right - self.getRect().width, self.getGlobalPosition()[1])
+                self.setPosition(new_pos)
+
+    def update(self, clock, player, playerDisplacement):
         # Actualizamos los rects del enemigo
         self.updateCollisionRect()
         self.updateActivityRangeRect()
-
         if self.alive:
-            self.checkBounds()
+            self.checkScreenBounds()
             if self.active:
-                myposition_x = self.getGlobalPosition()[0]
-                myposition_y = self.getGlobalPosition()[1]
-                playerposition_x = player.getGlobalPosition()[0]
-                playerposition_y = player.getGlobalPosition()[1]
-
-                # Primero, comprobar si el enemigo tiene que atacar
-                if self.getRect().colliderect(player.getRect()):
-                    # TODO enemigo pasa a movimiento ATTACK
-                    pass
-
-                # Comprobar si el jugador está por debajo del enemigo
-                elif myposition_y < playerposition_y - self.y_activityrange:
-                    # El enemigo baja el nivel hasta encontrar al jugador
-                    pass
-                elif myposition_y - self.top_y_activityrange >= playerposition_y:
-                    # Si el jugador está por encima del enemigo, no perseguirle
-                    self.chasePlayer(False)
-                else:
-                    # Perseguir al jugador en el eje x
-                    if playerposition_x > myposition_x:
-                        Character.move(self, RIGHT)
-                    elif playerposition_x < myposition_x:
-                        Character.move(self, LEFT)
-                    else:
-                        Character.move(self, STOPPED)
-                    pass
-                pass
+                self.behaviour1(player)
             else:
-                # Comprobamos si el jugador está dentro del rango de visión del jugador
-                if player.getRect().colliderect(self.activity_range_rect):
-                    self.chasePlayer(True)
-                    return
-
-                # Comprobamos si está en colisión con una plataformas
-                platform = pygame.sprite.spritecollideany(self, platformGroup)
-
-                # Comprobamos que el enemigo no se salga de su plataforma
-                if platform is not None:
-                    if self.getRect().left < platform.getRect().left:
-                        # Si se sale de la plataforma, invertir su velocidadX y situarlo en el borde de la plataforma
-                        self.invertXSpeed()
-                        new_pos = (platform.getRect().left, self.getGlobalPosition()[1])
-                        self.setPosition(new_pos)
-
-                    elif self.getRect().right > platform.getRect().right:
-                        # Si se sale de la plataforma, invertir su velocidadX y situarlo en el borde de la plataforma
-                        self.invertXSpeed()
-                        new_pos = (platform.getRect().right - self.getRect().width, self.getGlobalPosition()[1])
-                        self.setPosition(new_pos)
-
+                self.behaviour2(player)
         # Llamada al update de la super clase
-        Character.update(self, platformGroup, clock, playerDisplacement)
+        Character.update(self, clock, playerDisplacement)
 
     def getDoUpdateScroll(self):
         return True
@@ -216,6 +214,7 @@ class Mammon(Enemy):
 class FireProjectile(Enemy):
     def __init__(self, manager, data):
         Enemy.__init__(self, manager, data, "fireprojectile")
+        self.health = 500000
         self.time = 0
         self.ttl = 4000
         (self.sizeX,self.sizeY) = self.image.get_size()
@@ -225,7 +224,7 @@ class FireProjectile(Enemy):
         # TODO añadir sonido
         player.decreaseHealth(10, self)
 
-    def update(self, platformGroup, clock, player, playerDisplacement):
+    def update(self,  clock, player, playerDisplacement):
         self.time = self.time + clock
 
         # muevo el sprite
@@ -245,11 +244,12 @@ class FireProjectile(Enemy):
 class Satan(Enemy):
     def __init__(self, manager, data):
         Enemy.__init__(self, manager, data, "satan")
+        self.health = 500
         self.setInvertedSpriteSheet(True)
         self.enemyState = ["wander", "attack", "wander", "berserk"]
         self.playerDisplacement = None
 
-    def update(self, platformGroup, clock, player, playerDisplacement):
+    def update(self, clock, player, playerDisplacement):
         self.time = self.time + clock
         if self.playerDisplacement == None:
             self.playerDisplacement = playerDisplacement
@@ -282,7 +282,7 @@ class Satan(Enemy):
                 playerposition_y = player.getGlobalPosition()[1]
 
         # Llamada al update de la super clase
-        Character.update(self, platformGroup, clock, playerDisplacement)
+        Character.update(self, clock, playerDisplacement)
 
     def wander(self):
         if self.getVelocidad()[0] == 0:
