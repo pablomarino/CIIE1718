@@ -209,7 +209,7 @@ class Character(MySprite):
                     self.numPostura = SPRITE_JUMPING
 
             if self.numPostura == SPRITE_JUMPING:
-                plataforma = pygame.sprite.spritecollideany(self, self.manager.getCurrentLevel().getPlatformGroup()  )
+                plataforma = pygame.sprite.spritecollideany(self, self.manager.getCurrentLevel().getPlatformGroup())
 
                 if (plataforma is not None) and (vy > 0) and (plataforma.rect.bottom > self.rect.bottom):
                     if not self.getCollisionRect().colliderect(plataforma.getRect()):
