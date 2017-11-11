@@ -2,12 +2,12 @@
 
 import sys
 
-from stage.regular.HUD import HUD
-from stage.regular.Background import *
-from stage.regular.Platform import Platform
-from stage.regular.Scene import Scene
 from characters.Enemy import *
 from characters.Item import *
+from stage.regular.Background import *
+from stage.regular.HUD import HUD
+from stage.regular.Platform import Platform
+from stage.regular.Scene import Scene
 
 
 def str_to_class(str):
@@ -15,7 +15,7 @@ def str_to_class(str):
 
 
 class Stage(Scene):
-    def __init__(self, manager, data, player, platformGroup, spriteGroup, enemyGroup,itemGroup):
+    def __init__(self, manager, data, player, platformGroup, spriteGroup, enemyGroup, itemGroup, deadBodiesGroup):
         Scene.__init__(self, manager)
 
         self.MAP_UNIT_WIDTH = 55
@@ -28,24 +28,29 @@ class Stage(Scene):
         self.door_letter = "d"
         self.wardrove_letter = "w"
         self.chandelier_letter = "c"
-        self.moneda_letter = "$"
-        self.salud_letter = "p"
+        self.coin_letter = "$"
+        self.health_potion_letter = "p"
         self.manager = manager
         self.data = data
         self.player = player
         self.playerStartPosition = self.player.getGlobalPosition()
         self.playerDisplacement = list((0, 0))
+
+        # Initialize groups
         self.spriteGroup = spriteGroup
         self.platformGroup = platformGroup
         self.enemyGroup = enemyGroup
         self.itemGroup = itemGroup
+        self.deadBodiesGroup = deadBodiesGroup
+
         self.setup()
 
     def setup(self):
 
         # cargo el mapa
         self.map = self.data["map"]
-        self.levelDimensions = (1024, (len(self.map)+10)*self.MAP_UNIT_HEIGHT)  # ((int(self.data["dimensions"][0]), int(self.data["dimensions"][1])))
+        self.levelDimensions = (1024, (len(
+            self.map) + 10) * self.MAP_UNIT_HEIGHT)  # ((int(self.data["dimensions"][0]), int(self.data["dimensions"][1])))
         # Genero la capa del Fondo
         self.background = BackGround(self.manager, self.data["bglayers"], self.player, self.levelDimensions)
         self.platformfiles = self.data["platform_files"]
@@ -70,56 +75,59 @@ class Stage(Scene):
                 # Create enemies
                 if letter in self.enemy_letter:
                     if letter == "a":
-                        tmp = Asmodeo(self.manager, self.manager.getDataRetriever())
+                        tmp = Asmodeo(self.manager, self.manager.getDataRetriever(), self.enemyGroup,
+                                      self.deadBodiesGroup)
                     elif letter == "b":
-                        tmp = Belcebu(self.manager, self.manager.getDataRetriever())
+                        tmp = Belcebu(self.manager, self.manager.getDataRetriever(), self.enemyGroup,
+                                      self.deadBodiesGroup)
                     elif letter == "m":
-                        tmp = Mammon(self.manager, self.manager.getDataRetriever())
+                        tmp = Mammon(self.manager, self.manager.getDataRetriever(), self.enemyGroup,
+                                     self.deadBodiesGroup)
                     elif letter == "n":
-                        tmp = Dante(self.manager, self.manager.getDataRetriever())
+                        tmp = Dante(self.manager, self.manager.getDataRetriever(), self.enemyGroup,
+                                    self.deadBodiesGroup)
                     elif letter == "s":
-                        tmp = Satan(self.manager, self.manager.getDataRetriever())
+                        tmp = Satan(self.manager, self.manager.getDataRetriever(), self.enemyGroup,
+                                    self.deadBodiesGroup)
                     tmp.enemyGroup = self.enemyGroup
                     tmp.setPosition((column_number * self.MAP_UNIT_WIDTH, row_number * self.MAP_UNIT_HEIGHT))
                     self.enemyGroup.add(tmp)
 
                 # Create Items
                 if letter == self.fire_letter:
-                    tmp = fire(self.manager, self.manager.getDataRetriever())
+                    tmp = fire(self.manager, self.manager.getDataRetriever(), self.itemGroup)
                     tmp.setPosition((column_number * self.MAP_UNIT_WIDTH, row_number * self.MAP_UNIT_HEIGHT))
                     self.itemGroup.add(tmp)
 
                 if letter == self.heart_letter:
-                    tmp = heart(self.manager, self.manager.getDataRetriever())
+                    tmp = heart(self.manager, self.manager.getDataRetriever(), self.itemGroup)
                     tmp.setPosition((column_number * self.MAP_UNIT_WIDTH, row_number * self.MAP_UNIT_HEIGHT))
                     self.itemGroup.add(tmp)
 
                 if letter == self.door_letter:
-                    tmp = door(self.manager, self.manager.getDataRetriever())
+                    tmp = door(self.manager, self.manager.getDataRetriever(), self.itemGroup)
                     tmp.setPosition((column_number * self.MAP_UNIT_WIDTH, row_number * self.MAP_UNIT_HEIGHT))
                     self.itemGroup.add(tmp)
 
                 if letter == self.chandelier_letter:
-                    tmp = chandelier(self.manager, self.manager.getDataRetriever())
+                    tmp = chandelier(self.manager, self.manager.getDataRetriever(), self.itemGroup)
                     tmp.setPosition((column_number * self.MAP_UNIT_WIDTH, row_number * self.MAP_UNIT_HEIGHT))
                     self.itemGroup.add(tmp)
 
                 if letter == self.wardrove_letter:
-                    tmp = wardrove(self.manager, self.manager.getDataRetriever())
+                    tmp = wardrove(self.manager, self.manager.getDataRetriever(), self.itemGroup)
                     tmp.setPosition((column_number * self.MAP_UNIT_WIDTH, row_number * self.MAP_UNIT_HEIGHT))
                     self.itemGroup.add(tmp)
 
-                if letter == self.salud_letter:
-                    tmp = salud(self.manager, self.manager.getDataRetriever())
+                if letter == self.health_potion_letter:
+                    tmp = health_potion(self.manager, self.manager.getDataRetriever(), self.itemGroup)
                     tmp.setPosition((column_number * self.MAP_UNIT_WIDTH, row_number * self.MAP_UNIT_HEIGHT))
                     self.itemGroup.add(tmp)
 
-                if letter == self.moneda_letter:
-                    tmp = moneda(self.manager, self.manager.getDataRetriever())
+                if letter == self.coin_letter:
+                    tmp = coin(self.manager, self.manager.getDataRetriever(), self.itemGroup)
                     tmp.setPosition((column_number * self.MAP_UNIT_WIDTH, row_number * self.MAP_UNIT_HEIGHT))
                     self.itemGroup.add(tmp)
-
-
 
                 # Creamos plataformas
                 if not letter in self.platform_letter and prev_letter in self.platform_letter:
@@ -171,6 +179,7 @@ class Stage(Scene):
 
         self.player.update(clock, self.playerDisplacement, self.platformGroup, self.enemyGroup, self.itemGroup)
         self.enemyGroup.update(self.platformGroup, clock, self.player, self.playerDisplacement)
+        self.deadBodiesGroup.update(self.platformGroup, clock, self.player, self.playerDisplacement)
         # self.player.enemy_coll(self.enemyGroup, self.player)
         self.HUD.update()
 
@@ -178,15 +187,16 @@ class Stage(Scene):
         self.background.draw()
         self.platformGroup.draw(self.manager.getScreen())
         self.itemGroup.draw(self.manager.getScreen())
-        self.spriteGroup.draw(self.manager.getScreen())
         self.enemyGroup.draw(self.manager.getScreen())
+        self.deadBodiesGroup.draw(self.manager.getScreen())
+        self.spriteGroup.draw(self.manager.getScreen())
         self.HUD.draw()
         # self.draw_rects()
 
     def draw_rects(self):
         # Platform rects
         for item in self.itemGroup:
-             self.draw_transparent_rect(item.getRect(), (255, 255, 255, 50))
+            self.draw_transparent_rect(item.getRect(), (255, 255, 255, 50))
 
         # Enemy rects
         for enemy in self.enemyGroup:

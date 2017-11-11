@@ -4,7 +4,7 @@
     "fire": {
       "file": "../bin/assets/sprites/items/fire.png",
       "file_coords": "../bin/assets/sprites/items/fire_coords.txt",
-      "sound": ""
+      "sound": "../bin/assets/sounds/items/fire.wav"
     },
     "heart": {
       "file": "../bin/assets/sprites/items/heart.png",
@@ -14,7 +14,7 @@
     "door": {
       "file": "../bin/assets/sprites/items/door.png",
       "file_coords": "../bin/assets/sprites/items/door_coords.txt",
-      "sound": ""
+      "sound": "../bin/assets/sounds/items/heart.wav"
     },
     "dante": {
       "file": "../bin/assets/sprites/items/dante.png",
@@ -26,15 +26,15 @@
       "file_coords": "../bin/assets/sprites/items/candelabro_coords.txt",
       "sound": ""
     },
-	"moneda": {
-      "file": "../bin/assets/sprites/items/moneda.png",
-      "file_coords": "../bin/assets/sprites/items/moneda_coords.txt",
-      "sound": ""
+	"coin": {
+      "file": "../bin/assets/sprites/items/coin.png",
+      "file_coords": "../bin/assets/sprites/items/coin_coords.txt",
+      "sound": "../bin/assets/sounds/items/coin.wav"
     },
-	"salud": {
-      "file": "../bin/assets/sprites/items/salud.png",
-      "file_coords": "../bin/assets/sprites/items/salud_coords.txt",
-      "sound": ""
+	"health_potion": {
+      "file": "../bin/assets/sprites/items/health_potion.png",
+      "file_coords": "../bin/assets/sprites/items/health_potion_coords.txt",
+      "sound": "../bin/assets/sounds/items/health_potion.wav"
     },
     "wardrove": {
       "file": "../bin/assets/sprites/items/libreria.png",

@@ -41,6 +41,7 @@ class Character(MySprite):
         self.invertedSpriteSheet = False
 
         self.attacking = False
+        self.already_attacked = False
         self.alive = True
         self.is_dead_body = False
 
@@ -178,7 +179,9 @@ class Character(MySprite):
 
         # Atacar
         elif movimiento == ATTACK:
+            pygame.mixer.Sound('../bin/assets/sounds/player/player_attack.wav').play()
             self.numImagenPostura = 0
+            self.already_attacked = False
             self.setAttacking(True)
 
         self.velocidad = (vx, vy)
@@ -188,11 +191,6 @@ class Character(MySprite):
         if self.alive:
             vx, vy = self.velocidad
             platform_collided = pygame.sprite.spritecollideany(self, grupoPlataformas)
-
-            # Comprobar si está atacando
-            if self.attacking:
-                # TODO comprobar que no lleve más de x segundos atacando
-                pass
 
             # Si tenía postura STOPPED
             if self.numPostura == SPRITE_STOPPED:

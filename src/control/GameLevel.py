@@ -18,6 +18,7 @@ class GameLevel:
         self.platformGroup = pygame.sprite.Group()
         self.itemGroup = pygame.sprite.Group()
         self.enemyGroup = pygame.sprite.Group()
+        self.deadBodiesGroup = pygame.sprite.Group()
 
         if self.level:
             # TODO pasar los valores de vida del jugador para que no se pierdan de un nivel a otro
@@ -26,7 +27,7 @@ class GameLevel:
             self.spriteGroup.add(self.player)
 
             self.stage = Stage(self.manager, self.level, self.player, self.platformGroup, self.spriteGroup,
-                               self.enemyGroup, self.itemGroup)
+                               self.enemyGroup, self.itemGroup, self.deadBodiesGroup)
             self.player.setStage(self.stage)
         else:
             print "Error no existe nivel con id ", id

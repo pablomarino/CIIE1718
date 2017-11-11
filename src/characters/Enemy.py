@@ -1,30 +1,33 @@
 # -*- coding: utf-8 -*-
 
 from random import randint
-from characters.Item import *
+
 from characters.Character import *
 
 
 class Enemy(Character):
-    def __init__(self, manager, data, id):
+    def __init__(self, manager, data, id, enemyGroup, deadBodiesGroup):
 
         Character.__init__(self,
                            manager,
                            data,
                            data.getPlayerSheet(id),
                            data.getPlayerSheetCoords(id),
-                           [3, 4, 5],
+                           [3, 4, 5, 0, 1],
                            data.getCharacterSpeed(id),
                            0,
                            data.getPlayerAnimationDelay())
+
+        self.enemyGroup = enemyGroup
+        self.deadBodiesGroup = deadBodiesGroup
 
         # Crear posición aleatoria para cada personaje
         if randint(0, 1) == 0:
             Character.move(self, LEFT)
         else:
             Character.move(self, RIGHT)
+
         # Variables del enemigo
-        self.enemyGroup = None
         self.health = 100
         self.alive = True
         self.active = False
@@ -53,13 +56,12 @@ class Enemy(Character):
         self.enemyState = ["wander"]
         self.currentState = 0
 
-    def decreaseHealth(self, player_attack, enemyGroup):
+    def decreaseHealth(self, player_attack):
         self.health = self.health - player_attack
         if self.health <= 0:
             self.die()
-            # for i in enemyGroup:
-            #     if i == self:
-            #         enemyGroup.remove(i)
+            self.enemyGroup.remove(self)
+            self.deadBodiesGroup.add(self)
 
     def chasePlayer(self, chase):
         self.active = chase
@@ -69,7 +71,7 @@ class Enemy(Character):
             self.velocidadCarrera = self.speed_x
             self.move(self.mirando)
 
-    def onPlayerCollision(self, player, enemyGroup):
+    def onPlayerCollision(self, player):
         pass
 
     def updateCollisionRect(self):
@@ -162,64 +164,65 @@ class Enemy(Character):
 
 
 class Asmodeo(Enemy):
-    def __init__(self, manager, data):
-        Enemy.__init__(self, manager, data, "asmodeo")
+    def __init__(self, manager, data, enemyGroup, deadBodiesGroup):
+        Enemy.__init__(self, manager, data, "asmodeo", enemyGroup, deadBodiesGroup)
         self.setInvertedSpriteSheet(True)
 
-    def onPlayerCollision(self, player, enemyGroup):
+    def onPlayerCollision(self, player):
+        pygame.mixer.Sound('../bin/assets/sounds/player/enemy_hit_1.wav').play()
         player.decreaseHealth(self.attack_damage, self)
 
 
 class Dante(Enemy):
-    def __init__(self, manager, data):
-        Enemy.__init__(self, manager, data, "dante")
-        #self.setInvertedSpriteSheet(True)
+    def __init__(self, manager, data, enemyGroup, deadBodiesGroup):
+        Enemy.__init__(self, manager, data, "dante", enemyGroup, deadBodiesGroup)
+        # self.setInvertedSpriteSheet(True)
 
-    def onPlayerCollision(self, player, enemyGroup):
+    def onPlayerCollision(self, player):
+        pygame.mixer.Sound('../bin/assets/sounds/player/enemy_hit_1.wav').play()
         player.decreaseHealth(self.attack_damage, self)
 
 
-
-
 class Belcebu(Enemy):
-    def __init__(self, manager, data):
-        Enemy.__init__(self, manager, data, "belcebu")
+    def __init__(self, manager, data, enemyGroup, deadBodiesGroup):
+        Enemy.__init__(self, manager, data, "belcebu", enemyGroup, deadBodiesGroup)
         self.setInvertedSpriteSheet(True)
 
-    def onPlayerCollision(self, player, enemyGroup):
+    def onPlayerCollision(self, player):
+        pygame.mixer.Sound('../bin/assets/sounds/player/enemy_hit_1.wav').play()
         player.decreaseHealth(self.attack_damage, self)
 
 
 class Mammon(Enemy):
-    def __init__(self, manager, data):
-        Enemy.__init__(self, manager, data, "mammon")
+    def __init__(self, manager, data, enemyGroup, deadBodiesGroup):
+        Enemy.__init__(self, manager, data, "mammon", enemyGroup, deadBodiesGroup)
         self.setInvertedSpriteSheet(True)
 
-    def onPlayerCollision(self, player, enemyGroup):
+    def onPlayerCollision(self, player):
+        pygame.mixer.Sound('../bin/assets/sounds/player/enemy_hit_1.wav').play()
         player.decreaseHealth(self.attack_damage, self)
 
+
 class FireProjectile(Enemy):
-    def __init__(self, manager, data):
-        Enemy.__init__(self, manager, data, "fireprojectile")
+    def __init__(self, manager, data, enemyGroup, deadBodiesGroup):
+        Enemy.__init__(self, manager, data, "fireprojectile", enemyGroup, deadBodiesGroup)
         self.time = 0
         self.ttl = 5000
 
-    def onPlayerCollision(self, player, itemGroup):
+    def onPlayerCollision(self, player):
+        # TODO añadir sonido
         player.decreaseHealth(10, self)
 
     def update(self, platformGroup, clock, player, playerDisplacement):
         self.time = self.time + clock
         # elimino el sprite
         if self.time > self.ttl:
-            pygame.transform.scale(self,self.ttl+100-self.time)
-
-
-
+            pygame.transform.scale(self, self.ttl + 100 - self.time)
 
 
 class Satan(Enemy):
-    def __init__(self, manager, data):
-        Enemy.__init__(self, manager, data, "satan")
+    def __init__(self, manager, data, enemyGroup, deadBodiesGroup):
+        Enemy.__init__(self, manager, data, "satan", enemyGroup, deadBodiesGroup  )
         self.setInvertedSpriteSheet(True)
         self.enemyState = ["wander", "attack", "wander", "berserk"]
         self.playerDisplacement = None
@@ -234,10 +237,10 @@ class Satan(Enemy):
             self.updateActivityRangeRect()
 
             # Cambio el comportamiento del enemigo
-            if self.count>8000:
+            if self.count > 8000:
                 self.count = 0
                 self.currentState = self.currentState + 1
-                if self.currentState > len(self.enemyState)-1:
+                if self.currentState > len(self.enemyState) - 1:
                     self.currentState = 0
 
             print self.enemyState[self.currentState]
@@ -263,24 +266,23 @@ class Satan(Enemy):
 
     def wander(self):
         if self.getVelocidad()[0] == 0:
-            Character.move(self,LEFT)
-        if (self.posicion[0] <= (self.screen_width/3) or self.posicion[0]>=(self.screen_width-self.getRect().width)):
+            Character.move(self, LEFT)
+        if self.posicion[0] <= (self.screen_width / 3) or self.posicion[0] >= (
+            self.screen_width - self.getRect().width):
             self.invertXSpeed()
 
-
     def attack(self):
-        if (self.posicion[0] < ((self.screen_width-self.getRect().width)/2)-20):
+        if self.posicion[0] < ((self.screen_width - self.getRect().width) / 2) - 20:
             Character.move(self, RIGHT)
-        elif(self.posicion[0] > ((self.screen_width+self.getRect().width)/2)+20):
+        elif self.posicion[0] > ((self.screen_width + self.getRect().width) / 2) + 20:
             Character.move(self, LEFT)
         else:
-            Character.move(self,STOPPED)
+            Character.move(self, STOPPED)
             if self.count % 1000 < 50:
                 self.fireArrow(self)
 
-
     def berserk(self):
-        if (self.posicion[0] < ((self.screen_width - self.getRect().width)) - 20):
+        if self.posicion[0] < (self.screen_width - self.getRect().width) - 20:
             Character.move(self, RIGHT)
         else:
             Character.move(self, STOPPED)
@@ -290,14 +292,15 @@ class Satan(Enemy):
     def chasePlayer(self, chase):
         pass
 
-    def onPlayerCollision(self, player, enemyGroup):
+    def onPlayerCollision(self, player):
+        # TODO añadir sonido
         player.decreaseHealth(self.attack_damage, self)
 
     def piroclasto(self):
         tmp = FireProjectile(self.manager, self.manager.getDataRetriever())
         tmp.setPosition((randint(55, (self.screen_width - 55)), 0))
         self.enemyGroup.add(tmp)
-        #p.playerDisplacement[1]
+        # p.playerDisplacement[1]
 
     def fireArrow(self, p):
         tmp = FireProjectile(self.manager, self.manager.getDataRetriever())

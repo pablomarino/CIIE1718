@@ -1,10 +1,14 @@
 # -*- coding: utf-8 -*-
+from time import time
+
 from characters.Character import *
 
 
 class Item(Character):
-    def __init__(self, manager, data, id):
+    def __init__(self, manager, data, id, itemGroup):
         self.manager = manager
+        self.itemGroup = itemGroup
+        self.tiempo_colision = 0
 
         # LLamada a constructor de la super clase
         Character.__init__(self,
@@ -28,93 +32,98 @@ class Item(Character):
     def getDoUpdateScroll(self):
         return True
 
-    def onPlayerCollision(self, player, itemGroup):
+    def onPlayerCollision(self, player):
         pass
 
 
 class heart(Item):
-    def __init__(self, manager, data):
-        Item.__init__(self, manager, data, "heart")
+    def __init__(self, manager, data, itemGroup):
+        Item.__init__(self, manager, data, "heart", itemGroup)
         self.sound = data.getItemSound("heart")
 
-    def onPlayerCollision(self, player, itemGroup):
+    def onPlayerCollision(self, player):
+        pygame.mixer.Sound(self.sound).play()
         # Eliminamos el item
-        for i in itemGroup:
-            if i == self: itemGroup.remove(i)
+        self.itemGroup.remove(self)
         # Sonido
         player.increaseLives()
+
+
+
+class health_potion(Item):
+    def __init__(self, manager, data, itemGroup):
+        Item.__init__(self, manager, data, "health_potion", itemGroup)
+        self.sound = data.getItemSound("health_potion")
+
+    def onPlayerCollision(self, player):
         pygame.mixer.Sound(self.sound).play()
-
-
-class salud(Item):
-    def __init__(self, manager, data):
-        Item.__init__(self, manager, data, "salud")
-        self.sound = data.getItemSound("salud")
-
-    def onPlayerCollision(self, player, itemGroup):
         # Eliminamos el item
-        for i in itemGroup:
-            if i == self: itemGroup.remove(i)
+        self.itemGroup.remove(self)
         # Sonido
         player.increaseHealth(30)
 
 
-class moneda(Item):
-    def __init__(self, manager, data):
-        Item.__init__(self, manager, data, "moneda")
-        self.sound = data.getItemSound("moneda")
+class coin(Item):
+    def __init__(self, manager, data, itemGroup):
+        Item.__init__(self, manager, data, "coin", itemGroup)
+        self.sound = data.getItemSound("coin")
 
-    def onPlayerCollision(self, player, itemGroup):
+    def onPlayerCollision(self, player):
+        pygame.mixer.Sound(self.sound).play()
         # Eliminamos el item
-        for i in itemGroup:
-            if i == self: itemGroup.remove(i)
+        self.itemGroup.remove(self)
         # Sonido
         player.increasePoints()
 
 
 class fire(Item):
-    def __init__(self, manager, data):
-        Item.__init__(self, manager, data, "fire")
+    def __init__(self, manager, data, itemGroup):
+        Item.__init__(self, manager, data, "fire", itemGroup)
+        self.sound = data.getItemSound("fire")
 
-    def onPlayerCollision(self, player, itemGroup):
-        # TODO añadir sonido
-        player.decreaseHealth(10, self)
+    def onPlayerCollision(self, player):
+        if self.tiempo_colision < time():
+            pygame.mixer.Sound(self.sound).play()
+            player.decreaseHealth(0.5, self)
+            self.tiempo_colision = time() + 1
 
 
 class door(Item):
-    def __init__(self, manager, data):
+    def __init__(self, manager, data, itemGroup):
         self.active = True
-        Item.__init__(self, manager, data, "door")
+        Item.__init__(self, manager, data, "door", itemGroup)
 
     # TODO modificar el rect para que el jugador tenga que tocar la parte inferior de la puerta, no los bordes
 
-    def onPlayerCollision(self, player, itemGroup):
+    def onPlayerCollision(self, player):
         if self.active:
             self.active = False
+            # TODO añadir sonido
             print "Player health : " + str(player.getHealth())
             self.manager.addNextLevel()
             self.manager.changeScene()
 
 
 class chandelier(Item):
-    def __init__(self, manager, data):
-        Item.__init__(self, manager, data, "chandelier")
+    def __init__(self, manager, data, itemGroup):
+        Item.__init__(self, manager, data, "chandelier", itemGroup)
 
-    def onPlayerCollision(self, player, itemGroup):
+    def onPlayerCollision(self, player):
         pass
 
 
 class wardrove(Item):
-    def __init__(self, manager, data):
-        Item.__init__(self, manager, data, "wardrove")
+    def __init__(self, manager, data, itemGroup):
+        Item.__init__(self, manager, data, "wardrove", itemGroup)
 
-    def onPlayerCollision(self, player, itemGroup):
+    def onPlayerCollision(self, player):
         pass
 
 
+# TODO no usado de momento
 class dante(Item):
-    def __init__(self, manager, data):
-        Item.__init__(self, manager, data, "dante")
+    def __init__(self, manager, data, itemGroup):
+        Item.__init__(self, manager, data, "dante", itemGroup)
 
-    def onPlayerCollision(self, player, itemGroup):
+    def onPlayerCollision(self, player):
         player.die()
