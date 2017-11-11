@@ -200,7 +200,7 @@ class FireProjectile(Enemy):
         Enemy.__init__(self, manager, data, "fireprojectile")
         self.health = 500000
         self.time = 0
-        self.ttl = 4000
+        self.ttl = 6000
         (self.sizeX,self.sizeY) = self.image.get_size()
     '''
     def movement(self, player):
@@ -279,6 +279,8 @@ class Satan(Enemy):
             #evito que el jugador supere al enemigo
             if player.getCollisionRect().left >= (self.getCollisionRect().centerx):
                 player.setPosition((player.getCollisionRect().left - 75, player.getGlobalPosition()[1]))
+        else:
+            self.manager.getCurrentLevel().getEnemyGroup().remove(self)
 
         # Llamada al update de la super clase
         Character.update(self, clock, playerDisplacement)
