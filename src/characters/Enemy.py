@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
-
+import pygame
+from pygame.transform import scale
 from random import randint
-
+from characters.Item import *
 from characters.Character import *
 
 
@@ -26,7 +27,6 @@ class Enemy(Character):
             Character.move(self, LEFT)
         else:
             Character.move(self, RIGHT)
-
         # Variables del enemigo
         self.health = 100
         self.alive = True
@@ -52,8 +52,8 @@ class Enemy(Character):
                                                self.getRect().top - self.y_activityrange,
                                                self.getRect().width + (self.x_activityrange * 2),
                                                self.getRect().height + (self.y_activityrange * 2))
-        self.count = 0
-        self.enemyState = ["wander"]
+        self.time = 0
+        self.enemyState = None
         self.currentState = 0
 
     def decreaseHealth(self, player_attack):
@@ -106,16 +106,18 @@ class Enemy(Character):
     def getCollisionRect(self):
         return self.collision_rect
 
+    def checkBounds(self):
+        # Si el enemigo se sale de la pantalla, invertir velocidad X
+        if self.posicion[0] == self.screen_width - self.getRect().width or self.posicion[0] == 0:
+            self.invertXSpeed()
+
     def update(self, platformGroup, clock, player, playerDisplacement):
         # Actualizamos los rects del enemigo
         self.updateCollisionRect()
         self.updateActivityRangeRect()
 
         if self.alive:
-            # Si el enemigo se sale de la pantalla, invertir velocidad X
-            if self.posicion[0] == self.screen_width - self.getRect().width or self.posicion[0] == 0:
-                self.invertXSpeed()
-
+            self.checkBounds()
             if self.active:
                 myposition_x = self.getGlobalPosition()[0]
                 myposition_y = self.getGlobalPosition()[1]
@@ -218,7 +220,9 @@ class FireProjectile(Enemy):
     def __init__(self, manager, data, enemyGroup, deadBodiesGroup):
         Enemy.__init__(self, manager, data, "fireprojectile", enemyGroup, deadBodiesGroup)
         self.time = 0
-        self.ttl = 5000
+        self.ttl = 4000
+        (self.sizeX,self.sizeY) = self.image.get_size()
+        print self.sizeX,self.sizeY
 
     def onPlayerCollision(self, player):
         # TODO añadir sonido
@@ -226,9 +230,19 @@ class FireProjectile(Enemy):
 
     def update(self, platformGroup, clock, player, playerDisplacement):
         self.time = self.time + clock
+
+        # muevo el sprite
+
         # elimino el sprite
         if self.time > self.ttl:
-            pygame.transform.scale(self, self.ttl + 100 - self.time)
+            if self.sizeX>10 and self.sizeY>10:
+                self.sizeX = self.sizeX-10
+                self.sizeY = self.sizeY-10
+                pygame.transform.scale(self.image,(self.sizeX,self.sizeY))
+                self.manager.getScreen().blit(self.image, (self.getCollisionRect().left, self.getCollisionRect().top))
+
+            else:
+                self.manager.getCurrentLevel().getEnemyGroup().remove(self)
 
 
 class Satan(Enemy):
@@ -239,7 +253,7 @@ class Satan(Enemy):
         self.playerDisplacement = None
 
     def update(self, platformGroup, clock, player, playerDisplacement):
-        self.count = self.count + clock
+        self.time = self.time + clock
         if self.playerDisplacement == None:
             self.playerDisplacement = playerDisplacement
         if self.alive:
@@ -247,14 +261,12 @@ class Satan(Enemy):
             self.updateCollisionRect()
             self.updateActivityRangeRect()
 
-            # Cambio el comportamiento del enemigo
-            if self.count > 8000:
-                self.count = 0
+            # Cambio el comportamiento del enemigo cada 8 segundos
+            if self.time>8000:
+                self.time = 0
                 self.currentState = self.currentState + 1
                 if self.currentState > len(self.enemyState) - 1:
                     self.currentState = 0
-
-            print self.enemyState[self.currentState]
 
             if self.enemyState[self.currentState] == "wander":
                 self.wander()
@@ -277,43 +289,42 @@ class Satan(Enemy):
 
     def wander(self):
         if self.getVelocidad()[0] == 0:
-            Character.move(self, LEFT)
-        if self.posicion[0] <= (self.screen_width / 3) or self.posicion[0] >= (
-                    self.screen_width - self.getRect().width):
+            Character.move(self,LEFT)
+        if (self.posicion[0] <= (self.screen_width/3) or self.posicion[0]>=(self.screen_width-self.getRect().width)):
             self.invertXSpeed()
 
+
     def attack(self):
-        if self.posicion[0] < ((self.screen_width - self.getRect().width) / 2) - 20:
+        if (self.posicion[0] < ((self.screen_width-self.getRect().width)/2)-20):
             Character.move(self, RIGHT)
-        elif self.posicion[0] > ((self.screen_width + self.getRect().width) / 2) + 20:
+        elif(self.posicion[0] > ((self.screen_width+self.getRect().width)/2)+20):
             Character.move(self, LEFT)
         else:
-            Character.move(self, STOPPED)
-            if self.count % 1000 < 50:
+            Character.move(self,STOPPED)
+            if self.time % 1000 < 50:
                 self.fireArrow(self)
 
+
     def berserk(self):
-        if self.posicion[0] < (self.screen_width - self.getRect().width) - 20:
+        if (self.posicion[0] < ((self.screen_width - self.getRect().width)) - 20):
             Character.move(self, RIGHT)
         else:
             Character.move(self, STOPPED)
-            if self.count % 1000 < 100:
+            if self.time % 1000 < 100:
                 self.piroclasto()
 
     def chasePlayer(self, chase):
         pass
 
-    def onPlayerCollision(self, player):
-        # TODO añadir sonido
+    def onPlayerCollision(self, player, enemyGroup):
         player.decreaseHealth(self.attack_damage, self)
 
     def piroclasto(self):
         tmp = FireProjectile(self.manager, self.manager.getDataRetriever())
         tmp.setPosition((randint(55, (self.screen_width - 55)), 0))
         self.enemyGroup.add(tmp)
-        # p.playerDisplacement[1]
 
     def fireArrow(self, p):
         tmp = FireProjectile(self.manager, self.manager.getDataRetriever())
-        tmp.setPosition((p.getRect().x, p.getRect().y))
+        tmp.setPosition((p.getRect().x-15+p.getRect().width/2, p.getRect().y+p.getRect().height/2))
         self.enemyGroup.add(tmp)

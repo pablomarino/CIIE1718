@@ -1,7 +1,6 @@
 # -*- encoding: utf-8 -*-
-
+import pygame
 from characters.Player import Player
-
 from stage.regular.Stage import *
 
 
@@ -48,3 +47,15 @@ class GameLevel:
         self.stage.draw()
         # self.spriteGroup.draw(self.manager.getScreen())
         pass
+
+    def getSpriteGroup(self):
+        return self.spriteGroup
+
+    def getPlatformGroup(self):
+        return self.platformGroup
+
+    def getItemGroup(self):
+        return self.itemGroup
+
+    def getEnemyGroup(self):
+        return self.enemyGroup

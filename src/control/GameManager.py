@@ -101,3 +101,6 @@ class GameManager:
 
     def getStack(self):
         return self.stack
+
+    def getCurrentLevel(self):
+        return self.stack[0]
