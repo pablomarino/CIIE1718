@@ -84,7 +84,9 @@ class Enemy(Character):
         self.velocidad = x, y
 
     def onPlayerCollision(self, player):
-        pass
+        pygame.mixer.Sound('../bin/assets/sounds/player/enemy_hit_1.wav').play()
+        player.decreaseHealth(self.attack_damage, self)
+
 
     def updateCollisionRect(self):
         self.collision_rect = pygame.Rect(self.getRect().left + self.getRect().width / 2 - 3,
@@ -105,7 +107,7 @@ class Enemy(Character):
         if self.posicion[0] == self.screen_width - self.getRect().width or self.posicion[0] == 0:
             self.invertXSpeed()
 
-    def behaviour1(self,player):
+    def movement(self,player):
         myposition_x = self.getGlobalPosition()[0]
         myposition_y = self.getGlobalPosition()[1]
         playerposition_x = player.getGlobalPosition()[0]
@@ -131,12 +133,7 @@ class Enemy(Character):
             pass
         pass
 
-    def behaviour2(self,player):
-        # Comprobamos si el jugador está dentro del rango de visión del jugador
-        if player.getRect().colliderect(self.activity_range_rect):
-            self.chasePlayer(True)
-            return
-
+    def standOnPlatform(self):
         # Comprobamos si está en colisión con una plataformas
         platform = pygame.sprite.spritecollideany(self, self.manager.getCurrentLevel().getPlatformGroup())
 
@@ -161,9 +158,13 @@ class Enemy(Character):
         if self.alive:
             self.checkScreenBounds()
             if self.active:
-                self.behaviour1(player)
+                self.movement(player)
             else:
-                self.behaviour2(player)
+                # Comprobamos si el jugador está dentro del rango de visión del jugador
+                if player.getRect().colliderect(self.activity_range_rect):
+                    self.chasePlayer(True)
+                    return
+                self.standOnPlatform()
         # Llamada al update de la super clase
         Character.update(self, clock, playerDisplacement)
 
@@ -176,19 +177,10 @@ class Asmodeo(Enemy):
         Enemy.__init__(self, manager, data, "asmodeo")
         self.setInvertedSpriteSheet(True)
 
-    def onPlayerCollision(self, player):
-        pygame.mixer.Sound('../bin/assets/sounds/player/enemy_hit_1.wav').play()
-        player.decreaseHealth(self.attack_damage, self)
-
-
 class Dante(Enemy):
     def __init__(self, manager, data):
         Enemy.__init__(self, manager, data, "dante")
         # self.setInvertedSpriteSheet(True)
-
-    def onPlayerCollision(self, player):
-        pygame.mixer.Sound('../bin/assets/sounds/player/enemy_hit_1.wav').play()
-        player.decreaseHealth(self.attack_damage, self)
 
 
 class Belcebu(Enemy):
@@ -196,19 +188,11 @@ class Belcebu(Enemy):
         Enemy.__init__(self, manager, data, "belcebu")
         self.setInvertedSpriteSheet(True)
 
-    def onPlayerCollision(self, player):
-        pygame.mixer.Sound('../bin/assets/sounds/player/enemy_hit_1.wav').play()
-        player.decreaseHealth(self.attack_damage, self)
-
 
 class Mammon(Enemy):
     def __init__(self, manager, data):
         Enemy.__init__(self, manager, data, "mammon")
         self.setInvertedSpriteSheet(True)
-
-    def onPlayerCollision(self, player):
-        pygame.mixer.Sound('../bin/assets/sounds/player/enemy_hit_1.wav').play()
-        player.decreaseHealth(self.attack_damage, self)
 
 
 class FireProjectile(Enemy):
@@ -218,28 +202,39 @@ class FireProjectile(Enemy):
         self.time = 0
         self.ttl = 4000
         (self.sizeX,self.sizeY) = self.image.get_size()
-        print self.sizeX,self.sizeY
+    '''
+    def movement(self, player):
+        Character.move(self, LEFT)
 
-    def onPlayerCollision(self, player):
-        # TODO añadir sonido
-        player.decreaseHealth(10, self)
-
-    def update(self,  clock, player, playerDisplacement):
+    def standOnPlatform(self):
+        # Comprobamos si está en colisión con una plataformas
+        platform = pygame.sprite.spritecollideany(self, self.manager.getCurrentLevel().getPlatformGroup())
+    '''
+    def update(self, clock, player, playerDisplacement):
+        # Actualizamos los rects del enemigo
+        self.updateCollisionRect()
         self.time = self.time + clock
+        '''
+        if self.alive:
 
-        # muevo el sprite
+            self.checkScreenBounds()
 
+            if self.active:
+                self.movement(player)
+            else:
+                self.standOnPlatform()
+        '''
         # elimino el sprite
         if self.time > self.ttl:
-            if self.sizeX>10 and self.sizeY>10:
-                self.sizeX = self.sizeX-10
-                self.sizeY = self.sizeY-10
-                pygame.transform.scale(self.image,(self.sizeX,self.sizeY))
+            if self.sizeX > 10 and self.sizeY > 10:
+                self.sizeX = self.sizeX - 10
+                self.sizeY = self.sizeY - 10
+                pygame.transform.scale(self.image, (self.sizeX, self.sizeY))
                 self.manager.getScreen().blit(self.image, (self.getCollisionRect().left, self.getCollisionRect().top))
-
             else:
                 self.manager.getCurrentLevel().getEnemyGroup().remove(self)
-
+        # Llamada al update de la super clase
+        Character.update(self, clock, (0,0))#playerDisplacement)
 
 class Satan(Enemy):
     def __init__(self, manager, data):
@@ -281,6 +276,10 @@ class Satan(Enemy):
                 playerposition_x = player.getGlobalPosition()[0]
                 playerposition_y = player.getGlobalPosition()[1]
 
+            #evito que el jugador supere al enemigo
+            if player.getCollisionRect().left >= (self.getCollisionRect().centerx):
+                player.setPosition((player.getCollisionRect().left - 75, player.getGlobalPosition()[1]))
+
         # Llamada al update de la super clase
         Character.update(self, clock, playerDisplacement)
 
@@ -312,9 +311,6 @@ class Satan(Enemy):
 
     def chasePlayer(self, chase):
         pass
-
-    def onPlayerCollision(self, player):
-        player.decreaseHealth(self.attack_damage, self)
 
     def piroclasto(self):
         tmp = FireProjectile(self.manager, self.manager.getDataRetriever())
