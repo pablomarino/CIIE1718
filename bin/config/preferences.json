@@ -8,10 +8,12 @@
   "window_title": "Give'Em Hell!",
   "fps_target": "60",
   "music_file": "../bin/assets/sounds/background/musica.ogg",
-  "hud_pos_y": "50",
+  "hud_pos_y": "40",
   "hud_font_color": "",
   "hud_font_size": "20",
   "hud_font_type": "../bin/assets/fonts/fast99.ttf",
+  "hud_coin_file":"../bin/assets/sprites/hud/coin.png",
+  "hud_lives_file":"../bin/assets/sprites/hud/heart.png",
   "button": "../bin/assets/sprites/menu/boton.png",
   "menu_background": "../bin/assets/sprites/menu/fondo.jpg",
   "keys": {

@@ -176,7 +176,6 @@ class Player(Character):
                             enemyCol.decreaseHealth(self.attack)
                             enemyCol.backoff(self)
                             pygame.mixer.Sound('../bin/assets/sounds/player/enemy_hit_2.wav').play()
-                            # TODO enemyCol.backoff()
                             self.already_attacked = True
                         self.tiempo_ataque = time() + 1
                     else:

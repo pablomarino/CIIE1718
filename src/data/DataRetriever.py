@@ -85,6 +85,12 @@ class DataRetriever:
     def getHudFontType(self):
         return self.instance.preferences['hud_font_type']
 
+    def getHudCoinFile(self):
+        return self.instance.preferences['hud_coin_file']
+
+    def getHudLivesFile(self):
+        return self.instance.preferences['hud_lives_file']
+
     def getKeyQuit(self):
         return self.instance.preferences['keys']['quit']
 

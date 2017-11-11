@@ -84,8 +84,8 @@ class fire(Item):
     def onPlayerCollision(self, player):
         if self.tiempo_colision < time():
             pygame.mixer.Sound(self.sound).play()
-            player.decreaseHealth(0.5, self)
-            self.tiempo_colision = time() + 1
+            player.decreaseHealth(0.8, self)
+            self.tiempo_colision = time() + 0.2
 
 
 class door(Item):

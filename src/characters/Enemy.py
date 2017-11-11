@@ -42,7 +42,7 @@ class Enemy(Character):
         self.x_activityrange = 180
 
         # Altura a la que el jugador deja de estar a la vista del enemigo
-        self.test_margin = 100  # TODO buscarle un nombre a esta variable
+        self.top_y_activityrange = 100
 
         # Custom rects
         self.collision_rect = pygame.Rect(self.getRect().left + self.getRect().width / 2 - 3,
@@ -83,7 +83,6 @@ class Enemy(Character):
                 x = -0.3
             else:
                 x = 0.3
-
         # Asignar la nueva velocidad al enemigo
         self.velocidad = x, y
 
@@ -103,9 +102,6 @@ class Enemy(Character):
                                                self.getRect().top - self.y_activityrange,
                                                self.getRect().width + (self.x_activityrange * 2),
                                                self.getRect().height + (self.y_activityrange * 2))
-        # x = self.rect.left - self.activity_range_rect.left - self.activity_range_rect.width / 2 + self.rect.width / 2
-        # y = self.rect.top - self.activity_range_rect.top
-        # self.activity_range_rect = self.activity_range_rect.move(x, y)
 
     def getCollisionRect(self):
         return self.collision_rect
@@ -135,7 +131,7 @@ class Enemy(Character):
                 elif myposition_y < playerposition_y - self.y_activityrange:
                     # El enemigo baja el nivel hasta encontrar al jugador
                     pass
-                elif myposition_y - self.test_margin >= playerposition_y:
+                elif myposition_y - self.top_y_activityrange >= playerposition_y:
                     # Si el jugador está por encima del enemigo, no perseguirle
                     self.chasePlayer(False)
                 else:

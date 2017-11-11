@@ -57,7 +57,7 @@ class Stage(Scene):
         # Creamos el nivel a partir de fichero de texto
         self.create_level()
         # Creamos el HUD
-        self.HUD = HUD(self.manager.getDataRetriever(), self.manager.getScreen(), self.player)
+        self.HUD = HUD(self.manager, self.player)
 
     def create_level(self):
         # Variables

@@ -64,24 +64,23 @@ class BgLayer(MySprite):
 
         # Si se repite Horizontalmente
         if self.data["repeat_x"] == "True":  # Si se repite horizontalmente
-            self.timesX = int(math.ceil(float( self.levelDimensions[0]) / self.imageW))
+            self.timesX = int(math.ceil(float(self.levelDimensions[0]) / self.imageW))
         else:
             self.timesX = 1
 
         # Si se repite verticalmente
         if self.data["repeat_y"] == "True":
-            self.timesY = int(math.ceil(float( self.levelDimensions[1]) / self.imageH))
+            self.timesY = int(math.ceil(float(self.levelDimensions[1]) / self.imageH))
         else:
             self.timesY = 1
 
     def update(self, clock, scroll):
-        # Todo comprobar valores a partir de los que es necesario realizar el scroll
         # me aseguro de que no se salga la pantalla
-        self.establecerPosicionPantalla((-scroll[0] , -scroll[1] ))
+        self.establecerPosicionPantalla((-scroll[0], -scroll[1]))
 
     def draw(self):
         for i in range(0, self.timesX):
             for j in range(0, self.timesY):
                 # self.manager.getScreen().blit(self.image, (self.targetX + self.imageW * i,self.targetY + self.imageH * j))
                 self.manager.getScreen().blit(self.image, (
-                    self.rect.left  + self.imageW * i, self.rect.bottom  + self.imageH * j))
+                    self.rect.left + self.imageW * i, self.rect.bottom + self.imageH * j))
