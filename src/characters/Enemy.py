@@ -1,13 +1,14 @@
 # -*- coding: utf-8 -*-
 import pygame
-from pygame.transform import scale
+from characters.Character import *
+from pygame.transform import *
 from random import randint
 from characters.Item import *
 from characters.Character import *
 
 
 class Enemy(Character):
-    def __init__(self, manager, data, id, enemyGroup, deadBodiesGroup):
+    def __init__(self, manager, data, id):
 
         Character.__init__(self,
                            manager,
@@ -18,10 +19,6 @@ class Enemy(Character):
                            data.getCharacterSpeed(id),
                            0,
                            data.getPlayerAnimationDelay())
-
-        self.enemyGroup = enemyGroup
-        self.deadBodiesGroup = deadBodiesGroup
-
         # Crear posición aleatoria para cada personaje
         if randint(0, 1) == 0:
             Character.move(self, LEFT)
@@ -60,8 +57,8 @@ class Enemy(Character):
         self.health = self.health - player_attack
         if self.health <= 0:
             self.die()
-            self.enemyGroup.remove(self)
-            self.deadBodiesGroup.add(self)
+            self.manager.getCurrentLevel().getEnemyGroup().remove(self)
+            self.manager.getCurrentLevel().getDeadBodiesGroup().add(self)
 
     def chasePlayer(self, chase):
         self.active = chase
@@ -177,8 +174,8 @@ class Enemy(Character):
 
 
 class Asmodeo(Enemy):
-    def __init__(self, manager, data, enemyGroup, deadBodiesGroup):
-        Enemy.__init__(self, manager, data, "asmodeo", enemyGroup, deadBodiesGroup)
+    def __init__(self, manager, data):
+        Enemy.__init__(self, manager, data, "asmodeo")
         self.setInvertedSpriteSheet(True)
 
     def onPlayerCollision(self, player):
@@ -187,8 +184,8 @@ class Asmodeo(Enemy):
 
 
 class Dante(Enemy):
-    def __init__(self, manager, data, enemyGroup, deadBodiesGroup):
-        Enemy.__init__(self, manager, data, "dante", enemyGroup, deadBodiesGroup)
+    def __init__(self, manager, data):
+        Enemy.__init__(self, manager, data, "dante")
         # self.setInvertedSpriteSheet(True)
 
     def onPlayerCollision(self, player):
@@ -197,8 +194,8 @@ class Dante(Enemy):
 
 
 class Belcebu(Enemy):
-    def __init__(self, manager, data, enemyGroup, deadBodiesGroup):
-        Enemy.__init__(self, manager, data, "belcebu", enemyGroup, deadBodiesGroup)
+    def __init__(self, manager, data):
+        Enemy.__init__(self, manager, data, "belcebu")
         self.setInvertedSpriteSheet(True)
 
     def onPlayerCollision(self, player):
@@ -207,8 +204,8 @@ class Belcebu(Enemy):
 
 
 class Mammon(Enemy):
-    def __init__(self, manager, data, enemyGroup, deadBodiesGroup):
-        Enemy.__init__(self, manager, data, "mammon", enemyGroup, deadBodiesGroup)
+    def __init__(self, manager, data):
+        Enemy.__init__(self, manager, data, "mammon")
         self.setInvertedSpriteSheet(True)
 
     def onPlayerCollision(self, player):
@@ -217,8 +214,8 @@ class Mammon(Enemy):
 
 
 class FireProjectile(Enemy):
-    def __init__(self, manager, data, enemyGroup, deadBodiesGroup):
-        Enemy.__init__(self, manager, data, "fireprojectile", enemyGroup, deadBodiesGroup)
+    def __init__(self, manager, data):
+        Enemy.__init__(self, manager, data, "fireprojectile")
         self.time = 0
         self.ttl = 4000
         (self.sizeX,self.sizeY) = self.image.get_size()
@@ -246,8 +243,8 @@ class FireProjectile(Enemy):
 
 
 class Satan(Enemy):
-    def __init__(self, manager, data, enemyGroup, deadBodiesGroup):
-        Enemy.__init__(self, manager, data, "satan", enemyGroup, deadBodiesGroup)
+    def __init__(self, manager, data):
+        Enemy.__init__(self, manager, data, "satan")
         self.setInvertedSpriteSheet(True)
         self.enemyState = ["wander", "attack", "wander", "berserk"]
         self.playerDisplacement = None
@@ -316,15 +313,15 @@ class Satan(Enemy):
     def chasePlayer(self, chase):
         pass
 
-    def onPlayerCollision(self, player, enemyGroup):
+    def onPlayerCollision(self, player):
         player.decreaseHealth(self.attack_damage, self)
 
     def piroclasto(self):
         tmp = FireProjectile(self.manager, self.manager.getDataRetriever())
         tmp.setPosition((randint(55, (self.screen_width - 55)), 0))
-        self.enemyGroup.add(tmp)
+        self.manager.getCurrentLevel().getEnemyGroup().add(tmp)
 
     def fireArrow(self, p):
         tmp = FireProjectile(self.manager, self.manager.getDataRetriever())
         tmp.setPosition((p.getRect().x-15+p.getRect().width/2, p.getRect().y+p.getRect().height/2))
-        self.enemyGroup.add(tmp)
+        self.manager.getCurrentLevel().getEnemyGroup().add(tmp)

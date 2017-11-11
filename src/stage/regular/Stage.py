@@ -75,20 +75,15 @@ class Stage(Scene):
                 # Create enemies
                 if letter in self.enemy_letter:
                     if letter == "a":
-                        tmp = Asmodeo(self.manager, self.manager.getDataRetriever(), self.enemyGroup,
-                                      self.deadBodiesGroup)
+                        tmp = Asmodeo(self.manager, self.manager.getDataRetriever())
                     elif letter == "b":
-                        tmp = Belcebu(self.manager, self.manager.getDataRetriever(), self.enemyGroup,
-                                      self.deadBodiesGroup)
+                        tmp = Belcebu(self.manager, self.manager.getDataRetriever())
                     elif letter == "m":
-                        tmp = Mammon(self.manager, self.manager.getDataRetriever(), self.enemyGroup,
-                                     self.deadBodiesGroup)
+                        tmp = Mammon(self.manager, self.manager.getDataRetriever())
                     elif letter == "n":
-                        tmp = Dante(self.manager, self.manager.getDataRetriever(), self.enemyGroup,
-                                    self.deadBodiesGroup)
+                        tmp = Dante(self.manager, self.manager.getDataRetriever())
                     elif letter == "s":
-                        tmp = Satan(self.manager, self.manager.getDataRetriever(), self.enemyGroup,
-                                    self.deadBodiesGroup)
+                        tmp = Satan(self.manager, self.manager.getDataRetriever())
                     tmp.enemyGroup = self.enemyGroup
                     tmp.setPosition((column_number * self.MAP_UNIT_WIDTH, row_number * self.MAP_UNIT_HEIGHT))
                     self.enemyGroup.add(tmp)

@@ -59,3 +59,6 @@ class GameLevel:
 
     def getEnemyGroup(self):
         return self.enemyGroup
+
+    def getDeadBodiesGroup(self):
+        return self.deadBodiesGroup
