@@ -155,6 +155,7 @@ class Stage(Scene):
             row_number = row_number + 1
             column_number = 0
 
+
     def update(self, clock):
         self.manager.getScreen().fill(int(self.data["bgColor"], 16))  # en windows es necesario =\ en mac no
         # Calculo la distancia entre la posicion inicial del jugador y la actual

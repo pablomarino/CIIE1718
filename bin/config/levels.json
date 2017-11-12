@@ -17,6 +17,14 @@
         "origin_y": "0",
         "repeat_x": "True",
         "repeat_y": "True"
+      },
+      {
+        "image": "../bin/assets/sprites/backgrounds/bottom.png",
+        "color_key": "0",
+        "origin_x": "0",
+        "origin_y": "-1",
+        "repeat_x": "False",
+        "repeat_y": "False"
       }
     ],
     "map": [
@@ -117,6 +125,22 @@
         "origin_y": "0",
         "repeat_x": "True",
         "repeat_y": "True"
+      },
+      {
+        "image": "../bin/assets/sprites/backgrounds/bg_l1_2.png",
+        "color_key": "0",
+        "origin_x": "0",
+        "origin_y": "0",
+        "repeat_x": "True",
+        "repeat_y": "True"
+      },
+      {
+        "image": "../bin/assets/sprites/backgrounds/bottom.png",
+        "color_key": "0",
+        "origin_x": "0",
+        "origin_y": "-1",
+        "repeat_x": "False",
+        "repeat_y": "False"
       }
     ],
     "map": [
@@ -215,6 +239,22 @@
         "origin_y": "0",
         "repeat_x": "True",
         "repeat_y": "True"
+      },
+      {
+        "image": "../bin/assets/sprites/backgrounds/bg_l1_2.png",
+        "color_key": "0",
+        "origin_x": "0",
+        "origin_y": "0",
+        "repeat_x": "True",
+        "repeat_y": "True"
+      },
+      {
+        "image": "../bin/assets/sprites/backgrounds/bottom.png",
+        "color_key": "0",
+        "origin_x": "0",
+        "origin_y": "-1",
+        "repeat_x": "False",
+        "repeat_y": "False"
       }
     ],
     "map": [
@@ -295,7 +335,7 @@
   }
   ,
   
-      "level_4": {
+  "level_4": {
     "bgColor": "0x1e0203",
     "bglayers": [
       {
@@ -305,6 +345,22 @@
         "origin_y": "0",
         "repeat_x": "True",
         "repeat_y": "True"
+      },
+      {
+        "image": "../bin/assets/sprites/backgrounds/bg_l1_2.png",
+        "color_key": "0",
+        "origin_x": "0",
+        "origin_y": "0",
+        "repeat_x": "True",
+        "repeat_y": "True"
+      },
+      {
+        "image": "../bin/assets/sprites/backgrounds/bottom.png",
+        "color_key": "0",
+        "origin_x": "0",
+        "origin_y": "-1",
+        "repeat_x": "False",
+        "repeat_y": "False"
       }
     ],
     "map": [
@@ -403,6 +459,14 @@
         "origin_y": "0",
         "repeat_x": "True",
         "repeat_y": "True"
+      },
+      {
+        "image": "../bin/assets/sprites/backgrounds/bottom.png",
+        "color_key": "0",
+        "origin_x": "0",
+        "origin_y": "1100",
+        "repeat_x": "False",
+        "repeat_y": "False"
       }
     ],
     "map": [

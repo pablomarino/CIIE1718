@@ -168,30 +168,25 @@ class Enemy(Character):
     def getDoUpdateScroll(self):
         return True
 
-
 class Asmodeo(Enemy):
     def __init__(self, manager, data):
         Enemy.__init__(self, manager, data, "asmodeo")
         self.setInvertedSpriteSheet(True)
-
 
 class Dante(Enemy):
     def __init__(self, manager, data):
         Enemy.__init__(self, manager, data, "dante")
         # self.setInvertedSpriteSheet(True)
 
-
 class Belcebu(Enemy):
     def __init__(self, manager, data):
         Enemy.__init__(self, manager, data, "belcebu")
         self.setInvertedSpriteSheet(True)
 
-
 class Mammon(Enemy):
     def __init__(self, manager, data):
         Enemy.__init__(self, manager, data, "mammon")
         self.setInvertedSpriteSheet(True)
-
 
 class FireProjectile(Enemy):
     def __init__(self, manager, data):
@@ -235,7 +230,6 @@ class FireProjectile(Enemy):
                 self.manager.getCurrentLevel().getEnemyGroup().remove(self)
         # Llamada al update de la super clase
         Character.update(self, clock, (0, 0))  # playerDisplacement)
-
 
 class Satan(Enemy):
     def __init__(self, manager, data):
@@ -307,7 +301,7 @@ class Satan(Enemy):
                 self.fireArrow(self)
 
     def berserk(self):
-        if (self.posicion[0] < ((self.screen_width - self.getRect().width)) - 20):
+        if (self.posicion[0] < ((self.screen_width - self.getRect().width)) - 200):
             Character.move(self, RIGHT)
         else:
             Character.move(self, STOPPED)
