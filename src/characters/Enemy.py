@@ -199,7 +199,7 @@ class FireProjectile(Enemy):
         Enemy.__init__(self, manager, data, "fireprojectile")
         self.health = 500000
         self.time = 0
-        self.ttl = 6000
+        self.ttl = 7000
         self.numPostura = 2
         (self.sizeX, self.sizeY) = self.image.get_size()
 
@@ -211,41 +211,23 @@ class FireProjectile(Enemy):
         self.updateActivityRangeRect()
 
         if self.time > self.ttl:
-            '''
-            if self.sizeX > 10 and self.sizeY > 10:
-                self.sizeX = self.sizeX - 10
-                self.sizeY = self.sizeY - 10
-                print(self.sizeX,self.sizeY)
-                pygame.transform.scale(self.image, (self.sizeX, self.sizeY))
-                self.manager.getScreen().blit(self.image,(self.getCollisionRect().left, self.getCollisionRect().top))
-            else:
-            '''
             self.manager.getCurrentLevel().getEnemyGroup().remove(self)
 
         vx, vy = self.velocidad
-        platform = pygame.sprite.spritecollideany(self, self.manager.getCurrentLevel().getPlatformGroup())
 
-        #hay plataforma
-        if platform is not None:
-            #estoy cayendo
-            if self.numPostura == 2:
-                self.numPostura = 1
-                vy = 0;
-                self.setPosition((self.posicion[0], self.posicion[1]))# platform_collided.posicion[1] - 100))
-        #n no hay plataforma
+        if self.posicion[1]>385:
+            vy = 0
+            self.numPostura = 1
+            self.setPosition((self.posicion[0],1385-player.posicion[1]))
         else:
             vy += self.g * clock
             if vy > 0.25: vy = 0.25
 
-        self.setVelocidad((vx,vy))
-        '''
-        Character.actualizarPostura()
-        Character.velocidad = (vx, vy)
+        if self.posicion[0]<20 or self.posicion[0]>980:
+            vx = vx*-1
 
-        # Superclase calcula la nueva posición del Sprite con la velocidad
-        MySprite.update(self, clock)
-        #if self.getDoUpdateScroll(): self.establecerPosicionPantalla((0, 0))
-        '''
+        self.setVelocidad((vx, vy))
+
         MySprite.update(self, clock)
 
 class Satan(Enemy):
