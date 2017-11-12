@@ -30,5 +30,5 @@ if __name__ == '__main__':
     score = 0
 
     player_stats = (lives, max_health, health, score)
-    manager.add(GameLevel(manager, data, "level_5", player_stats))
+    manager.add(GameLevel(manager, data, "level_1", player_stats))
     manager.run()

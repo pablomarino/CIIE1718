@@ -22,7 +22,7 @@
         "image": "../bin/assets/sprites/backgrounds/bottom.png",
         "color_key": "0",
         "origin_x": "0",
-        "origin_y": "-1",
+        "origin_y": "4290 ",
         "repeat_x": "False",
         "repeat_y": "False"
       }
@@ -138,7 +138,7 @@
         "image": "../bin/assets/sprites/backgrounds/bottom.png",
         "color_key": "0",
         "origin_x": "0",
-        "origin_y": "-1",
+        "origin_y": "4125",
         "repeat_x": "False",
         "repeat_y": "False"
       }
@@ -252,7 +252,7 @@
         "image": "../bin/assets/sprites/backgrounds/bottom.png",
         "color_key": "0",
         "origin_x": "0",
-        "origin_y": "-1",
+        "origin_y": "3685",
         "repeat_x": "False",
         "repeat_y": "False"
       }
@@ -358,7 +358,7 @@
         "image": "../bin/assets/sprites/backgrounds/bottom.png",
         "color_key": "0",
         "origin_x": "0",
-        "origin_y": "-1",
+        "origin_y": "4125",
         "repeat_x": "False",
         "repeat_y": "False"
       }
@@ -389,7 +389,7 @@
       "   1111111111111111",
       "········n······b  ·",
       "                   ",
-	  "·······$$$···  ·  p·",
+	  "······$$$···  ·  p·",
       "1111  11111   11111",
       "·····b·····n·······",
 	  "····c····c····c····",
@@ -464,7 +464,7 @@
         "image": "../bin/assets/sprites/backgrounds/bottom.png",
         "color_key": "0",
         "origin_x": "0",
-        "origin_y": "1100",
+        "origin_y": "1045",
         "repeat_x": "False",
         "repeat_y": "False"
       }

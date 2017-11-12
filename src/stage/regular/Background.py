@@ -62,28 +62,23 @@ class BgLayer(MySprite):
         # El rectangulo del Sprite
         self.rect = pygame.Rect(self.position[0], self.position[1], self.imageW, self.imageH)
 
-        print self.scroll, self.position, self.imageW, self.imageH
-
         # Si se repite Horizontalmente
         if self.data["repeat_x"] == "True":  # Si se repite horizontalmente
             self.timesX = int(math.ceil(float(self.levelDimensions[0]) / self.imageW))
         else:
-            self.timesX = 0
+            self.timesX = 1
 
         # Si se repite verticalmente
         if self.data["repeat_y"] == "True":
             self.timesY = int(math.ceil(float(self.levelDimensions[1]) / self.imageH))
         else:
-            self.timesY = 0
+            self.timesY = 1
 
     def update(self, clock, scroll):
         # me aseguro de que no se salga la pantalla
         self.establecerPosicionPantalla((-scroll[0], -scroll[1]))
 
     def draw(self):
-        for i in range(0, self.timesX):
-            for j in range(0, self.timesY):
-                # self.manager.getScreen().blit(self.image, (self.targetX + self.imageW * i,self.targetY + self.imageH * j))
-                # self.manager.getScreen().blit(self.image, (self.rect.left + self.imageW * i, self.rect.bottom + self.imageH * j))
-                self.manager.getScreen().blit(self.image,
-                                              (self.rect.left + self.imageW * i, self.rect.bottom + self.imageH * j))
+            for i in range(0, self.timesY):
+                for j in range(0, self.timesX):
+                    self.manager.getScreen().blit(self.image,(self.rect.left + (self.imageW * j),self.rect.bottom + (self.imageH * i)+self.position[1]))
