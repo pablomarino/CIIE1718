@@ -25,6 +25,7 @@ class Character(MySprite):
     def __init__(self, manager, data, archivoImagen, archivoCoordenadas, numImagenes, velocidadCarrera, velocidadSalto,
                  retardoAnimacion):
         MySprite.__init__(self, manager)
+        self.g = GRAVITY
         self.numberOfPostures = len(numImagenes)
         self.manager = manager
         self.hoja = manager.getLibrary().load(archivoImagen, -1).convert_alpha()  # Se carga la hoja

@@ -154,7 +154,7 @@ class Stage(Scene):
             # Incrementar el contador de filas
             row_number = row_number + 1
             column_number = 0
-        print "-->",(row_number-1)*55
+        # print "posicion bottom-->",(row_number-1)*55
 
     def update(self, clock):
         self.manager.getScreen().fill(int(self.data["bgColor"], 16))  # en windows es necesario =\ en mac no
@@ -190,6 +190,7 @@ class Stage(Scene):
         self.spriteGroup.draw(self.manager.getScreen())
         self.HUD.draw()
         self.draw_lifebar_finalenemy()
+        # TODO COMMENTAR
         # self.draw_rects()
 
     def draw_rects(self):

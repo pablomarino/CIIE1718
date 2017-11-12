@@ -150,6 +150,7 @@ class Enemy(Character):
 
     def update(self, clock, player, playerDisplacement):
         # Actualizamos los rects del enemigo
+        self.time += clock
         self.updateCollisionRect()
         self.updateActivityRangeRect()
         if self.alive:
@@ -168,25 +169,30 @@ class Enemy(Character):
     def getDoUpdateScroll(self):
         return True
 
+
 class Asmodeo(Enemy):
     def __init__(self, manager, data):
         Enemy.__init__(self, manager, data, "asmodeo")
         self.setInvertedSpriteSheet(True)
+
 
 class Dante(Enemy):
     def __init__(self, manager, data):
         Enemy.__init__(self, manager, data, "dante")
         # self.setInvertedSpriteSheet(True)
 
+
 class Belcebu(Enemy):
     def __init__(self, manager, data):
         Enemy.__init__(self, manager, data, "belcebu")
         self.setInvertedSpriteSheet(True)
 
+
 class Mammon(Enemy):
     def __init__(self, manager, data):
         Enemy.__init__(self, manager, data, "mammon")
         self.setInvertedSpriteSheet(True)
+
 
 class FireProjectile(Enemy):
     def __init__(self, manager, data):
@@ -194,42 +200,53 @@ class FireProjectile(Enemy):
         self.health = 500000
         self.time = 0
         self.ttl = 6000
+        self.numPostura = 2
         (self.sizeX, self.sizeY) = self.image.get_size()
 
-    '''
-    def movement(self, player):
-        Character.move(self, LEFT)
-
-    def standOnPlatform(self):
-        # Comprobamos si está en colisión con una plataformas
-        platform = pygame.sprite.spritecollideany(self, self.manager.getCurrentLevel().getPlatformGroup())
-    '''
 
     def update(self, clock, player, playerDisplacement):
         # Actualizamos los rects del enemigo
+        self.time += clock
         self.updateCollisionRect()
-        self.time = self.time + clock
-        '''
-        if self.alive:
+        self.updateActivityRangeRect()
 
-            self.checkScreenBounds()
-
-            if self.active:
-                self.movement(player)
-            else:
-                self.standOnPlatform()
-        '''
-        # elimino el sprite
         if self.time > self.ttl:
+            '''
             if self.sizeX > 10 and self.sizeY > 10:
                 self.sizeX = self.sizeX - 10
                 self.sizeY = self.sizeY - 10
+                print(self.sizeX,self.sizeY)
                 pygame.transform.scale(self.image, (self.sizeX, self.sizeY))
-                self.manager.getScreen().blit(self.image, (self.getCollisionRect().left, self.getCollisionRect().top))
+                self.manager.getScreen().blit(self.image,(self.getCollisionRect().left, self.getCollisionRect().top))
             else:
-                self.manager.getCurrentLevel().getEnemyGroup().remove(self)
-        # Llamada al update de la super clase
-        Character.update(self, clock, (0, 0))  # playerDisplacement)
+            '''
+            self.manager.getCurrentLevel().getEnemyGroup().remove(self)
+
+        vx, vy = self.velocidad
+        platform = pygame.sprite.spritecollideany(self, self.manager.getCurrentLevel().getPlatformGroup())
+
+        #hay plataforma
+        if platform is not None:
+            #estoy cayendo
+            if self.numPostura == 2:
+                self.numPostura = 1
+                vy = 0;
+                self.setPosition((self.posicion[0], self.posicion[1]))# platform_collided.posicion[1] - 100))
+        #n no hay plataforma
+        else:
+            vy += self.g * clock
+            if vy > 0.25: vy = 0.25
+
+        self.setVelocidad((vx,vy))
+        '''
+        Character.actualizarPostura()
+        Character.velocidad = (vx, vy)
+
+        # Superclase calcula la nueva posición del Sprite con la velocidad
+        MySprite.update(self, clock)
+        #if self.getDoUpdateScroll(): self.establecerPosicionPantalla((0, 0))
+        '''
+        MySprite.update(self, clock)
 
 class Satan(Enemy):
     def __init__(self, manager, data):
@@ -287,7 +304,7 @@ class Satan(Enemy):
         if self.getVelocidad()[0] == 0:
             Character.move(self, LEFT)
         if (self.posicion[0] <= (self.screen_width / 3) or self.posicion[0] >= (
-            self.screen_width - self.getRect().width)):
+                    self.screen_width - self.getRect().width)):
             self.invertXSpeed()
 
     def attack(self):
@@ -320,3 +337,23 @@ class Satan(Enemy):
         tmp = FireProjectile(self.manager, self.manager.getDataRetriever())
         tmp.setPosition((p.getRect().x - 15 + p.getRect().width / 2, p.getRect().y + p.getRect().height / 2))
         self.manager.getCurrentLevel().getEnemyGroup().add(tmp)
+
+
+
+
+'''
+def update(self, clock, player, playerDisplacement):
+        # Actualizamos los rects del enemigo
+        # elimino el sprite
+        if self.time > self.ttl:
+            if self.sizeX > 10 and self.sizeY > 10:
+                self.sizeX = self.sizeX - 10
+                self.sizeY = self.sizeY - 10
+                #pygame.transform.scale(self.image, (self.sizeX, self.sizeY))
+                #self.manager.getScreen().blit(self.image,(0,0))# (self.getCollisionRect().left, self.getCollisionRect().top))
+            else:
+                self.manager.getCurrentLevel().getEnemyGroup().remove(self)
+        # Llamada al update de la super clase
+        Character.update(self, clock, playerDisplacement)
+
+'''
