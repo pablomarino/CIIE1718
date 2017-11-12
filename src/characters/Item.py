@@ -36,7 +36,7 @@ class Item(Character):
         pass
 
 
-class heart(Item):
+class Heart(Item):
     def __init__(self, manager, data, itemGroup):
         Item.__init__(self, manager, data, "heart", itemGroup)
         self.sound = data.getItemSound("heart")
@@ -49,8 +49,7 @@ class heart(Item):
         player.increaseLives()
 
 
-
-class health_potion(Item):
+class HealthPotion(Item):
     def __init__(self, manager, data, itemGroup):
         Item.__init__(self, manager, data, "health_potion", itemGroup)
         self.sound = data.getItemSound("health_potion")
@@ -63,7 +62,7 @@ class health_potion(Item):
         player.increaseHealth(30)
 
 
-class coin(Item):
+class Coin(Item):
     def __init__(self, manager, data, itemGroup):
         Item.__init__(self, manager, data, "coin", itemGroup)
         self.sound = data.getItemSound("coin")
@@ -76,7 +75,7 @@ class coin(Item):
         player.increasePoints()
 
 
-class fire(Item):
+class Fire(Item):
     def __init__(self, manager, data, itemGroup):
         Item.__init__(self, manager, data, "fire", itemGroup)
         self.sound = data.getItemSound("fire")
@@ -88,7 +87,7 @@ class fire(Item):
             self.tiempo_colision = time() + 0.2
 
 
-class door(Item):
+class Door(Item):
     def __init__(self, manager, data, itemGroup):
         self.active = True
         Item.__init__(self, manager, data, "door", itemGroup)
@@ -104,7 +103,7 @@ class door(Item):
             self.manager.changeScene()
 
 
-class chandelier(Item):
+class Chandelier(Item):
     def __init__(self, manager, data, itemGroup):
         Item.__init__(self, manager, data, "chandelier", itemGroup)
 
@@ -112,18 +111,9 @@ class chandelier(Item):
         pass
 
 
-class wardrove(Item):
+class Wardrove(Item):
     def __init__(self, manager, data, itemGroup):
         Item.__init__(self, manager, data, "wardrove", itemGroup)
 
     def onPlayerCollision(self, player):
         pass
-
-
-# TODO no usado de momento
-class dante(Item):
-    def __init__(self, manager, data, itemGroup):
-        Item.__init__(self, manager, data, "dante", itemGroup)
-
-    def onPlayerCollision(self, player):
-        player.die()

@@ -1,5 +1,6 @@
 # -*- encoding: utf-8 -*-
-import pygame
+import re
+
 from characters.Player import Player
 from stage.regular.Stage import *
 
@@ -11,6 +12,10 @@ class GameLevel:
         self.manager = manager
         self.data = data
         self.level = data.getLevel(id)
+
+        # Level text
+        self.display_level_time = time() + 5
+        self.opacity = 50
 
         # Creación de grupos de sprites
         self.spriteGroup = pygame.sprite.Group()
@@ -30,8 +35,30 @@ class GameLevel:
         else:
             print "Error no existe nivel con id ", id
 
+    def display_level_name(self, opacity):
+        try:
+            # Variables
+            if int(self.getNumericId()) == len(self.data.getLevels()):
+                text = "Final Level"
+            else:
+                text = "Level " + str(self.getNumericId())
+            color = (200, 200, 200)
+            font_size = opacity
+            # # Display text
+            font = pygame.font.Font(self.data.getHudFontType(), font_size)
+            text = font.render(text, True, color)
+            text_rect = text.get_rect(center=(self.data.getWidth() / 2, self.data.getHeight() / 3))
+            self.manager.getScreen().blit(text, text_rect)
+        except Exception, e:
+            raise e
+
     def getId(self):
         return self.id
+
+    def getNumericId(self):
+        levelid = self.getId()
+        result = re.sub('[^0-9]', '', levelid)
+        return result
 
     def getPlayerStats(self):
         return self.player.getLives(), self.player.getMaxHealth(), self.player.getHealth(), self.player.getPoints()
@@ -45,8 +72,11 @@ class GameLevel:
 
     def draw(self):
         self.stage.draw()
-        # self.spriteGroup.draw(self.manager.getScreen())
-        pass
+        if time() < self.display_level_time:
+            self.display_level_name(self.opacity)
+        elif self.opacity >= 0:
+            self.display_level_name(self.opacity)
+            self.opacity -= 9
 
     def getSpriteGroup(self):
         return self.spriteGroup

@@ -1,9 +1,6 @@
 # -*- coding: utf-8 -*-
-import pygame
-from characters.Character import *
-from pygame.transform import *
 from random import randint
-from characters.Item import *
+
 from characters.Character import *
 
 
@@ -73,7 +70,7 @@ class Enemy(Character):
         # Saltar en dirección opuesta al jugador
         if self.posicion[0] - player.posicion[0] < 0:
             x = -0.3
-        elif self.posicion[0] - player.posicion[0] >0:
+        elif self.posicion[0] - player.posicion[0] > 0:
             x = 0.3
         else:
             if self.mirando == RIGHT:
@@ -87,11 +84,11 @@ class Enemy(Character):
         pygame.mixer.Sound('../bin/assets/sounds/player/enemy_hit_1.wav').play()
         player.decreaseHealth(self.attack_damage, self)
 
-
     def updateCollisionRect(self):
         self.collision_rect = pygame.Rect(self.getRect().left + self.getRect().width / 2 - 3,
                                           self.getRect().bottom - 5,
                                           6, 5)
+
     def updateActivityRangeRect(self):
         # Creamos el rect que servirá para comprobar si el jugador está en su rango de visión
         self.activity_range_rect = pygame.Rect(self.getRect().left - self.x_activityrange,
@@ -107,7 +104,7 @@ class Enemy(Character):
         if self.posicion[0] == self.screen_width - self.getRect().width or self.posicion[0] == 0:
             self.invertXSpeed()
 
-    def movement(self,player):
+    def movement(self, player):
         myposition_x = self.getGlobalPosition()[0]
         myposition_y = self.getGlobalPosition()[1]
         playerposition_x = player.getGlobalPosition()[0]
@@ -177,6 +174,7 @@ class Asmodeo(Enemy):
         Enemy.__init__(self, manager, data, "asmodeo")
         self.setInvertedSpriteSheet(True)
 
+
 class Dante(Enemy):
     def __init__(self, manager, data):
         Enemy.__init__(self, manager, data, "dante")
@@ -201,7 +199,8 @@ class FireProjectile(Enemy):
         self.health = 500000
         self.time = 0
         self.ttl = 6000
-        (self.sizeX,self.sizeY) = self.image.get_size()
+        (self.sizeX, self.sizeY) = self.image.get_size()
+
     '''
     def movement(self, player):
         Character.move(self, LEFT)
@@ -210,6 +209,7 @@ class FireProjectile(Enemy):
         # Comprobamos si está en colisión con una plataformas
         platform = pygame.sprite.spritecollideany(self, self.manager.getCurrentLevel().getPlatformGroup())
     '''
+
     def update(self, clock, player, playerDisplacement):
         # Actualizamos los rects del enemigo
         self.updateCollisionRect()
@@ -234,7 +234,8 @@ class FireProjectile(Enemy):
             else:
                 self.manager.getCurrentLevel().getEnemyGroup().remove(self)
         # Llamada al update de la super clase
-        Character.update(self, clock, (0,0))#playerDisplacement)
+        Character.update(self, clock, (0, 0))  # playerDisplacement)
+
 
 class Satan(Enemy):
     def __init__(self, manager, data):
@@ -246,7 +247,7 @@ class Satan(Enemy):
 
     def update(self, clock, player, playerDisplacement):
         self.time = self.time + clock
-        if self.playerDisplacement == None:
+        if self.playerDisplacement is None:
             self.playerDisplacement = playerDisplacement
         if self.alive:
             # Actualizamos los rects del enemigo
@@ -254,7 +255,7 @@ class Satan(Enemy):
             self.updateActivityRangeRect()
 
             # Cambio el comportamiento del enemigo cada 8 segundos
-            if self.time>8000:
+            if self.time > 8000:
                 self.time = 0
                 self.currentState = self.currentState + 1
                 if self.currentState > len(self.enemyState) - 1:
@@ -276,7 +277,7 @@ class Satan(Enemy):
                 playerposition_x = player.getGlobalPosition()[0]
                 playerposition_y = player.getGlobalPosition()[1]
 
-            #evito que el jugador supere al enemigo
+            # evito que el jugador supere al enemigo
             if player.getCollisionRect().left >= (self.getCollisionRect().centerx):
                 player.setPosition((player.getCollisionRect().left - 75, player.getGlobalPosition()[1]))
         else:
@@ -287,21 +288,20 @@ class Satan(Enemy):
 
     def wander(self):
         if self.getVelocidad()[0] == 0:
-            Character.move(self,LEFT)
-        if (self.posicion[0] <= (self.screen_width/3) or self.posicion[0]>=(self.screen_width-self.getRect().width)):
+            Character.move(self, LEFT)
+        if (self.posicion[0] <= (self.screen_width / 3) or self.posicion[0] >= (
+            self.screen_width - self.getRect().width)):
             self.invertXSpeed()
 
-
     def attack(self):
-        if (self.posicion[0] < ((self.screen_width-self.getRect().width)/2)-20):
+        if (self.posicion[0] < ((self.screen_width - self.getRect().width) / 2) - 20):
             Character.move(self, RIGHT)
-        elif(self.posicion[0] > ((self.screen_width+self.getRect().width)/2)+20):
+        elif (self.posicion[0] > ((self.screen_width + self.getRect().width) / 2) + 20):
             Character.move(self, LEFT)
         else:
-            Character.move(self,STOPPED)
+            Character.move(self, STOPPED)
             if self.time % 1000 < 50:
                 self.fireArrow(self)
-
 
     def berserk(self):
         if (self.posicion[0] < ((self.screen_width - self.getRect().width)) - 20):
@@ -321,5 +321,5 @@ class Satan(Enemy):
 
     def fireArrow(self, p):
         tmp = FireProjectile(self.manager, self.manager.getDataRetriever())
-        tmp.setPosition((p.getRect().x-15+p.getRect().width/2, p.getRect().y+p.getRect().height/2))
+        tmp.setPosition((p.getRect().x - 15 + p.getRect().width / 2, p.getRect().y + p.getRect().height / 2))
         self.manager.getCurrentLevel().getEnemyGroup().add(tmp)

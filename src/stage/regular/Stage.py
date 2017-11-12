@@ -32,6 +32,7 @@ class Stage(Scene):
         self.health_potion_letter = "p"
         self.manager = manager
         self.data = data
+        self.screen = self.manager.getScreen()
         self.player = player
         self.playerStartPosition = self.player.getGlobalPosition()
         self.playerDisplacement = list((0, 0))
@@ -43,6 +44,7 @@ class Stage(Scene):
         self.itemGroup = itemGroup
         self.deadBodiesGroup = deadBodiesGroup
 
+        self.initialize_lifebar_finalenemy()
         self.setup()
 
     def setup(self):
@@ -90,37 +92,37 @@ class Stage(Scene):
 
                 # Create Items
                 if letter == self.fire_letter:
-                    tmp = fire(self.manager, self.manager.getDataRetriever(), self.itemGroup)
+                    tmp = Fire(self.manager, self.manager.getDataRetriever(), self.itemGroup)
                     tmp.setPosition((column_number * self.MAP_UNIT_WIDTH, row_number * self.MAP_UNIT_HEIGHT))
                     self.itemGroup.add(tmp)
 
                 if letter == self.heart_letter:
-                    tmp = heart(self.manager, self.manager.getDataRetriever(), self.itemGroup)
+                    tmp = Heart(self.manager, self.manager.getDataRetriever(), self.itemGroup)
                     tmp.setPosition((column_number * self.MAP_UNIT_WIDTH, row_number * self.MAP_UNIT_HEIGHT))
                     self.itemGroup.add(tmp)
 
                 if letter == self.door_letter:
-                    tmp = door(self.manager, self.manager.getDataRetriever(), self.itemGroup)
+                    tmp = Door(self.manager, self.manager.getDataRetriever(), self.itemGroup)
                     tmp.setPosition((column_number * self.MAP_UNIT_WIDTH, row_number * self.MAP_UNIT_HEIGHT))
                     self.itemGroup.add(tmp)
 
                 if letter == self.chandelier_letter:
-                    tmp = chandelier(self.manager, self.manager.getDataRetriever(), self.itemGroup)
+                    tmp = Chandelier(self.manager, self.manager.getDataRetriever(), self.itemGroup)
                     tmp.setPosition((column_number * self.MAP_UNIT_WIDTH, row_number * self.MAP_UNIT_HEIGHT))
                     self.itemGroup.add(tmp)
 
                 if letter == self.wardrove_letter:
-                    tmp = wardrove(self.manager, self.manager.getDataRetriever(), self.itemGroup)
+                    tmp = Wardrove(self.manager, self.manager.getDataRetriever(), self.itemGroup)
                     tmp.setPosition((column_number * self.MAP_UNIT_WIDTH, row_number * self.MAP_UNIT_HEIGHT))
                     self.itemGroup.add(tmp)
 
                 if letter == self.health_potion_letter:
-                    tmp = health_potion(self.manager, self.manager.getDataRetriever(), self.itemGroup)
+                    tmp = HealthPotion(self.manager, self.manager.getDataRetriever(), self.itemGroup)
                     tmp.setPosition((column_number * self.MAP_UNIT_WIDTH, row_number * self.MAP_UNIT_HEIGHT))
                     self.itemGroup.add(tmp)
 
                 if letter == self.coin_letter:
-                    tmp = coin(self.manager, self.manager.getDataRetriever(), self.itemGroup)
+                    tmp = Coin(self.manager, self.manager.getDataRetriever(), self.itemGroup)
                     tmp.setPosition((column_number * self.MAP_UNIT_WIDTH, row_number * self.MAP_UNIT_HEIGHT))
                     self.itemGroup.add(tmp)
 
@@ -170,11 +172,11 @@ class Stage(Scene):
             p.update(clock, self.playerDisplacement)
 
         for i in self.itemGroup:
-            i.update( clock, self.playerDisplacement)
+            i.update(clock, self.playerDisplacement)
 
         self.player.update(clock, self.playerDisplacement, self.platformGroup, self.enemyGroup, self.itemGroup)
         self.enemyGroup.update(clock, self.player, self.playerDisplacement)
-        self.deadBodiesGroup.update( clock, self.player, self.playerDisplacement)
+        self.deadBodiesGroup.update(clock, self.player, self.playerDisplacement)
         # self.player.enemy_coll(self.enemyGroup, self.player)
         self.HUD.update()
 
@@ -186,6 +188,7 @@ class Stage(Scene):
         self.deadBodiesGroup.draw(self.manager.getScreen())
         self.spriteGroup.draw(self.manager.getScreen())
         self.HUD.draw()
+        self.draw_lifebar_finalenemy()
         # self.draw_rects()
 
     def draw_rects(self):
@@ -207,6 +210,34 @@ class Stage(Scene):
         tmp = pygame.Surface((rect.width, rect.height), pygame.SRCALPHA, 32)
         tmp.fill(colour)
         self.manager.getScreen().blit(tmp, (rect.left, rect.top))
+
+    def initialize_lifebar_finalenemy(self):
+        self.healthbar_length = 200
+        self.healthbar_height = 20
+
+    def draw_lifebar_finalenemy(self):
+        for enemy in self.enemyGroup:
+            if type(enemy).__name__ == "Satan":
+                if not enemy.health == 500:
+                    health = enemy.health
+                    x = enemy.getRect().left + enemy.getRect().width / 2 - self.healthbar_length / 2
+                    y = enemy.getRect().top - 50
+
+                    # Escogemos color para la barra de salud
+                    if health < 20:
+                        foreground_color = (255, 0, 0)
+                    else:
+                        foreground_color = (0, 255, 0)
+
+                    # Calculamos tamaño de la barra de salud
+                    health_value = (float(health) / 500 * self.healthbar_length)
+                    outline_rect = pygame.Rect(x, y, self.healthbar_length, self.healthbar_height)
+                    fill_rect = pygame.Rect(x, y, health_value, self.healthbar_height)
+
+                    # Dibujamos
+                    pygame.draw.rect(self.screen, (70, 70, 70), outline_rect)
+                    pygame.draw.rect(self.screen, foreground_color, fill_rect)
+                    pygame.draw.rect(self.screen, (0, 0, 0), outline_rect, 3)
 
     def events(self, events_list):
         self.player.move(pygame.key.get_pressed())

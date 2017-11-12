@@ -91,7 +91,7 @@ class Player(Character):
         # if self.tiempo_colision < time():
         self.health = self.health - amount
         self.backOff(e)
-        if self.health <= 0:
+        if self.health < 1:
             self.decreaseLives()
             # self.die()
             # self.tiempo_colision = time() + 1

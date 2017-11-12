@@ -158,8 +158,20 @@ class Menu(Scene):
 
         self.clicked_element = None
 
+    def getNumericId(self):
+        return 0
+
+    def getPlayerStats(self):
+        return 3, 100, 100, 0
+
     def update(self, *args):
         pass
+
+    def getPlatformGroup(self):
+        return pygame.sprite.Group()
+
+    def getEnemyGroup(self):
+        return pygame.sprite.Group()
 
     def events(self, events_list):
         for evento in events_list:
@@ -183,8 +195,8 @@ class Menu(Scene):
 
             # If enter key is pressed
             if evento.type == KEYDOWN and evento.key == int(self.data.getKeyReturn()):
+                self.manager.addNextLevel()
                 self.manager.changeScene()
-                self.manager.add(GameLevel(self.manager, self.manager.getDataRetriever(), "level_1"))
                 pass
 
     def draw(self):

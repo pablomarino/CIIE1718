@@ -1,11 +1,10 @@
 # -*- coding: utf-8 -*-
 
-import re
 import sys
 
 import pygame
 
-from stage.menu.Menu import Menu
+from stage.menu.MenuVictory import MenuVictory
 from utils.AssetLoader import AssetLoader
 
 
@@ -23,6 +22,7 @@ class GameManager:
 
         # Música de fondo
         pygame.mixer.music.load(self.data.getMusicFile())
+        # TODO descomentar música
         # pygame.mixer.music.play()
 
         # Inicializamos la pantalla y el modo grafico
@@ -46,9 +46,7 @@ class GameManager:
 
         # Get numeric id of the new level
         actual_level = self.stack.__getitem__(0)
-        levelid = actual_level.getId()
-        result = re.sub('[^0-9]', '', levelid)
-        levelnumber = int(result) + 1
+        levelnumber = int(actual_level.getNumericId()) + 1
 
         # Check if the new level exists
         if levelnumber <= self.data.getNumberOfLevels():
@@ -57,7 +55,7 @@ class GameManager:
         else:
             print "Victoria"
             # TODO crear un menú de victoria
-            self.add(Menu(self))
+            self.add(MenuVictory(self, actual_level.getPlayerStats()))
 
     def changeScene(self):
         self.finished_scene = True
