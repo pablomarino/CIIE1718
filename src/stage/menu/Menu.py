@@ -39,7 +39,14 @@ class ElementoGUI:
     def start_game(self):
         print "Starting game..."
         self.manager.changeScene()
-        self.manager.add(GameLevel(self.manager, self.manager.getDataRetriever(), "level_1"))
+        # Player stats (lives, maxHealth, health, score)
+        lives = 3
+        max_health = 100
+        health = 100
+        score = 0
+        player_stats = (lives, max_health, health, score)
+        self.manager.add(GameLevel(self.manager, self.manager.getDataRetriever(), "level_1", player_stats))
+        #self.manager.add(GameLevel(self.manager, self.manager.getDataRetriever(), "level_1"))
         # pass
 
 

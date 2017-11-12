@@ -20,15 +20,15 @@ if __name__ == '__main__':
     # Creamos el director
     manager = GameManager(data)
 
-    # menu = Menu(manager)
-    # manager.add(menu)
+    menu = Menu(manager)
+    manager.add(menu)
 
     # Player stats (lives, maxHealth, health, score)
-    lives = 3
-    max_health = 100
-    health = 100
-    score = 0
+    # lives = 3
+    # max_health = 100
+    # health = 100
+    # score = 0
 
-    player_stats = (lives, max_health, health, score)
-    manager.add(GameLevel(manager, data, "level_1", player_stats))
+    #player_stats = (lives, max_health, health, score)
+    #manager.add(GameLevel(manager, data, "level_1", player_stats))
     manager.run()
