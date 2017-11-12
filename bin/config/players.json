@@ -30,8 +30,8 @@
       "chasing_speed": 0.15,
       "jump_speed": 0,
       "attack_damage": 17,
-      "file": "../bin/assets/sprites/main_characters/satanas.png",
-      "file_coords": "../bin/assets/sprites/main_characters/satanas_coords.txt"
+      "file": "../bin/assets/sprites/main_characters/satan.png",
+      "file_coords": "../bin/assets/sprites/main_characters/satan_coords.txt"
     },
     "asmodeo": {
       "speed": 0.05,

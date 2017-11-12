@@ -245,6 +245,9 @@ class Satan(Enemy):
         self.enemyState = ["wander", "attack", "wander", "berserk"]
         self.playerDisplacement = None
 
+    def backoff(self, player):
+        pass
+
     def update(self, clock, player, playerDisplacement):
         self.time = self.time + clock
         if self.playerDisplacement is None:
