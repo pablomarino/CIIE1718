@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from random import randint
-
+import math
 from characters.Character import *
 
 
@@ -218,7 +218,9 @@ class FireProjectile(Enemy):
         if self.posicion[1]>385:
             vy = 0
             self.numPostura = 1
-            self.setPosition((self.posicion[0],1385-player.posicion[1]))
+            antijump = math.ceil(1000 - player.posicion[1])
+            print antijump
+            self.setPosition((self.posicion[0],385+antijump))
         else:
             vy += self.g * clock
             if vy > 0.25: vy = 0.25
@@ -279,6 +281,9 @@ class Satan(Enemy):
         else:
             self.manager.getCurrentLevel().getEnemyGroup().remove(self)
 
+        if self.health<=10:
+            for e in self.manager.getCurrentLevel().getEnemyGroup():
+                self.manager.getCurrentLevel().getEnemyGroup().remove(e)
         # Llamada al update de la super clase
         Character.update(self, clock, playerDisplacement)
 
@@ -321,21 +326,3 @@ class Satan(Enemy):
         self.manager.getCurrentLevel().getEnemyGroup().add(tmp)
 
 
-
-
-'''
-def update(self, clock, player, playerDisplacement):
-        # Actualizamos los rects del enemigo
-        # elimino el sprite
-        if self.time > self.ttl:
-            if self.sizeX > 10 and self.sizeY > 10:
-                self.sizeX = self.sizeX - 10
-                self.sizeY = self.sizeY - 10
-                #pygame.transform.scale(self.image, (self.sizeX, self.sizeY))
-                #self.manager.getScreen().blit(self.image,(0,0))# (self.getCollisionRect().left, self.getCollisionRect().top))
-            else:
-                self.manager.getCurrentLevel().getEnemyGroup().remove(self)
-        # Llamada al update de la super clase
-        Character.update(self, clock, playerDisplacement)
-
-'''
