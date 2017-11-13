@@ -2,6 +2,7 @@
 import pygame
 from pygame.locals import *
 
+from stage.menu.Menu import Menu
 from stage.regular.Scene import Scene
 
 
@@ -27,7 +28,7 @@ class MenuVictory(Scene):
 
         # Variables de los elementos gráficos
         self.pos_y = self.height / 3
-        self.font_type = self.data.getHudFontType()
+        self.font_type = self.data.getFontType()
         self.font_size = 30
         # Dimensiones
         self.score_image_position = (125, self.pos_y)
@@ -94,13 +95,10 @@ class MenuVictory(Scene):
 
     def events(self, events_list):
         for evento in events_list:
-            # If enter key is pressed
+            # If enter key is pressed go back to menu
             if evento.type == KEYDOWN and evento.key == int(self.data.getKeyReturn()):
-                # self.manager.changeScene()
-                # self.manager.add(GameLevel(self.manager, self.manager.getDataRetriever(), "level_1"))
-                # TODO pasar al menú de créditos
-                print "Pasar al menú de créditos"
-                pass
+                self.manager.changeScene()
+                self.manager.add(Menu(self.manager))
 
     def draw(self):
         # Dibujamos primero la imagen de fondo
@@ -116,3 +114,11 @@ class MenuVictory(Scene):
 
         # Dibujamos puntuación del jugador
         self.draw_score(self.player_stats[3], "score", self.pos_y + 120)
+
+        # Pulsar enter para salir
+        self.text_to_screen(
+            "Press ENTER",
+            self.data.getWidth() / 2, self.data.getHeight() / 1.25,
+            23, self.COLOR_NORMALTEXT,
+            True, True
+        )

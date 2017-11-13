@@ -73,6 +73,9 @@ class DataRetriever:
     def getMusicFile(self):
         return self.instance.preferences['music_file']
 
+    def getFontType(self):
+        return self.instance.preferences['hud_font_type']
+
     def getHudPosY(self):
         return int(self.instance.preferences['hud_pos_y'])
 
@@ -81,9 +84,6 @@ class DataRetriever:
 
     def getHudFontColor(self):
         return self.instance.preferences['hud_font_color']
-
-    def getHudFontType(self):
-        return self.instance.preferences['hud_font_type']
 
     def getHudCoinFile(self):
         return self.instance.preferences['hud_coin_file']
@@ -99,18 +99,6 @@ class DataRetriever:
 
     def getBackgroundFile(self):
         return self.instance.preferences['menu_background']
-
-    # def getKeyUp(self):
-    #     return self.instance.preferences['keys']['up']
-
-    # def getKeyDown(self):
-    #     return self.instance.preferences['keys']['down']
-
-    # def getKeyLeft(self):
-    #     return self.instance.preferences['keys']['left']
-
-    # def getKeyRight(self):
-    #     return self.instance.preferences['keys']['right']
 
     def getSpace(self):
         return self.instance.SPACE
@@ -149,7 +137,8 @@ class DataRetriever:
         return self.instance.levels[id]
 
     def getPlayerPositionAt(self, id):
-        return (512,384)#(int(self.instance.levels[id]["player"]["x"]), int(self.instance.levels[id]["player"]["y"]))
+        return (
+        512, 384)  # (int(self.instance.levels[id]["player"]["x"]), int(self.instance.levels[id]["player"]["y"]))
 
     def getDimensions(self, id):
         return self.instance.levels[id]['dimensions']

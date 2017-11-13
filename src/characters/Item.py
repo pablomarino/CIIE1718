@@ -98,7 +98,6 @@ class Door(Item):
         if self.active:
             self.active = False
             # TODO añadir sonido
-            print "Player health : " + str(player.getHealth())
             self.manager.addNextLevel()
             self.manager.changeScene()
 

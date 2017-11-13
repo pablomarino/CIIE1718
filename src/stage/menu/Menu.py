@@ -46,7 +46,7 @@ class ElementoGUI:
         score = 0
         player_stats = (lives, max_health, health, score)
         self.manager.add(GameLevel(self.manager, self.manager.getDataRetriever(), "level_1", player_stats))
-        #self.manager.add(GameLevel(self.manager, self.manager.getDataRetriever(), "level_1"))
+        # self.manager.add(GameLevel(self.manager, self.manager.getDataRetriever(), "level_1"))
         # pass
 
 
@@ -79,7 +79,7 @@ class BotonJugar(Boton):
         Boton.__init__(self, pantalla, (860, 650), manager)
 
     def action(self):
-        print "Action BotonJugar"
+        # print "Action BotonJugar"
         self.start_game()
 
 
@@ -88,7 +88,7 @@ class BotonSalir(Boton):
         Boton.__init__(self, pantalla, (860, 700), manager)
 
     def action(self):
-        print "Action BotonSalir"
+        # print "Action BotonSalir"
         self.end_game()
 
 
@@ -110,23 +110,25 @@ class TextoGUI(ElementoGUI):
 
 class TextoJugar(TextoGUI):
     def __init__(self, pantalla, manager):
-        # TODO Obtener datos del gestor de recursos
-        fuente = pygame.font.SysFont('arial', 26)
-        TextoGUI.__init__(self, pantalla, manager, fuente, (224, 224, 224), 'Jugar', (900, 650))
+        self.font_size = 26
+        self.font_type = manager.getDataRetriever().getFontType()
+        self.font = pygame.font.Font(self.font_type, self.font_size)
+        TextoGUI.__init__(self, pantalla, manager, self.font, (200, 200, 200), 'Jugar', (900, 650))
 
     def action(self):
-        print "Accion TextoJugar"
+        # print "Accion TextoJugar"
         self.start_game()
 
 
 class TextoSalir(TextoGUI):
     def __init__(self, pantalla, manager):
-        # TODO Obtener datos del gestor de recursos
-        fuente = pygame.font.SysFont('arial', 26)
-        TextoGUI.__init__(self, pantalla, manager, fuente, (224, 224, 224), 'Salir', (900, 700))
+        self.font_size = 26
+        self.font_type = manager.getDataRetriever().getFontType()
+        self.font = pygame.font.Font(self.font_type, self.font_size)
+        TextoGUI.__init__(self, pantalla, manager, self.font, (200, 200, 200), 'Salir', (900, 700))
 
     def action(self):
-        print "Accion TextoGUI"
+        # print "Accion TextoGUI"
         self.end_game()
 
 

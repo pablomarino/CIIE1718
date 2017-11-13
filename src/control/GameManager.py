@@ -22,8 +22,7 @@ class GameManager:
 
         # Música de fondo
         pygame.mixer.music.load(self.data.getMusicFile())
-        # TODO descomentar música
-        # pygame.mixer.music.play()
+        pygame.mixer.music.play()
 
         # Inicializamos la pantalla y el modo grafico
         pygame.display.set_caption(self.data.getWindowTitle())
@@ -53,8 +52,6 @@ class GameManager:
             self.add(
                 GameLevel(self, self.getDataRetriever(), "level_" + str(levelnumber), actual_level.getPlayerStats()))
         else:
-            print "Victoria"
-            # TODO crear un menú de victoria
             self.add(MenuVictory(self, actual_level.getPlayerStats()))
 
     def changeScene(self):

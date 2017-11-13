@@ -12,7 +12,7 @@ class HUD:
         self.player = player
 
         # Recuperar datos del DataRetriever
-        self.font_type = self.data.getHudFontType()
+        self.font_type = self.data.getFontType()
         self.font_size = self.data.getHudFontSize()
         self.font_color = self.data.getHudFontColor()
         self.pos_y = self.data.getHudPosY()
@@ -151,11 +151,17 @@ class HUD:
             raise e
 
     def update(self):
-        if (self.player.getHealth() == 0) & (self.player.getLives() == 0):
+        if (self.player.getHealth() <= 0) & (self.player.getLives() <= 0) & (not self.gameOver):
             self.gameOver = True
 
-    def events(self):
-        pass
+    def events(self, events_list):
+        if self.gameOver:
+            for evento in events_list:
+                # If enter key is pressed go back to menu
+                if evento.type == pygame.KEYDOWN and evento.key == int(self.data.getKeyReturn()):
+                    from stage.menu.Menu import Menu
+                    self.manager.changeScene()
+                    self.manager.add(Menu(self.manager))
 
     def draw(self):
         # Gameover alert
@@ -164,8 +170,14 @@ class HUD:
                 "GAME OVER",
                 150
             )
-        else:
-            # Dibujamos vidas del jugador
+
+            self.text_to_screen(
+                "Press ENTER",
+                self.data.getWidth() / 2, self.data.getHeight() / 1.25,
+                50, (200, 200, 200),
+                True, True
+            )
+        else:  # Dibujamos vidas del jugador
             self.draw_lives(self.player.getLives())
 
             # Dibujamos puntuación del jugador

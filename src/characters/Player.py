@@ -67,8 +67,6 @@ class Player(Character):
         self.lives = self.lives - 1
         if self.lives <= 0:
             self.lives = 0
-            # TODO GameOver menu
-            print "Game Over!"
             self.die()
         else:
             self.stage.resetScroll()
@@ -92,6 +90,7 @@ class Player(Character):
         self.health = self.health - amount
         self.backOff(e)
         if self.health < 1:
+            self.health = 0
             self.decreaseLives()
             # self.die()
             # self.tiempo_colision = time() + 1

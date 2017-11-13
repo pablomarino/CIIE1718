@@ -219,7 +219,7 @@ class FireProjectile(Enemy):
             vy = 0
             self.numPostura = 1
             antijump = math.ceil(1000 - player.posicion[1])
-            print antijump
+            # print antijump
             self.setPosition((self.posicion[0],385+antijump))
         else:
             vy += self.g * clock

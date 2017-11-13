@@ -45,7 +45,7 @@ class GameLevel:
             color = (200, 200, 200)
             font_size = opacity
             # # Display text
-            font = pygame.font.Font(self.data.getHudFontType(), font_size)
+            font = pygame.font.Font(self.data.getFontType(), font_size)
             text = font.render(text, True, color)
             text_rect = text.get_rect(center=(self.data.getWidth() / 2, self.data.getHeight() / 3))
             self.manager.getScreen().blit(text, text_rect)

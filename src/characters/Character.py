@@ -151,7 +151,6 @@ class Character(MySprite):
                                 self.coordenadasHoja[self.numPostura][self.numImagenPostura].width,
                                 self.coordenadasHoja[self.numPostura][self.numImagenPostura].height)
 
-
     # Función move en la clase Character
     def move(self, movimiento):
         (vx, vy) = self.velocidad
@@ -235,7 +234,8 @@ class Character(MySprite):
         else:
             if not self.is_dead_body:
                 vx, vy = self.velocidad
-                platform_collided = pygame.sprite.spritecollideany(self, self.manager.getCurrentLevel().getPlatformGroup())
+                platform_collided = pygame.sprite.spritecollideany(self,
+                                                                   self.manager.getCurrentLevel().getPlatformGroup())
 
                 vx = 0
 

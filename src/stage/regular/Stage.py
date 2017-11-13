@@ -154,7 +154,7 @@ class Stage(Scene):
             # Incrementar el contador de filas
             row_number = row_number + 1
             column_number = 0
-        # print "posicion bottom-->",(row_number-1)*55
+            # print "posicion bottom-->",(row_number-1)*55
 
     def update(self, clock):
         self.manager.getScreen().fill(int(self.data["bgColor"], 16))  # en windows es necesario =\ en mac no
@@ -190,10 +190,10 @@ class Stage(Scene):
         self.spriteGroup.draw(self.manager.getScreen())
         self.HUD.draw()
         self.draw_lifebar_finalenemy()
-        # TODO COMMENTAR
-        # self.draw_rects()
+        # Descomentar esta línea para mostrar los rects de colisión de todos los elementos del juego
+        # self.draw_collision_rects()
 
-    def draw_rects(self):
+    def draw_collision_rects(self):
         # Platform rects
         for item in self.itemGroup:
             self.draw_transparent_rect(item.getRect(), (255, 255, 255, 50))
@@ -243,6 +243,7 @@ class Stage(Scene):
 
     def events(self, events_list):
         self.player.move(pygame.key.get_pressed())
+        self.HUD.events(events_list)
 
     def resetScroll(self):
         self.playerDisplacement = (0, 0)
