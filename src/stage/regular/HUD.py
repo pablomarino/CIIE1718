@@ -160,8 +160,8 @@ class HUD:
                 # If enter key is pressed go back to menu
                 if evento.type == pygame.KEYDOWN and evento.key == int(self.data.getKeyReturn()):
                     from stage.menu.Menu import Menu
-                    self.manager.changeScene()
                     self.manager.add(Menu(self.manager))
+                    self.manager.changeScene()
 
     def draw(self):
         # Gameover alert
